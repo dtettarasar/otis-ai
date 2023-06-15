@@ -1,2 +1,2 @@
 # otis-ai
-Otis AI: Your Digital Scribe ! 
+Otis AI: Your Digital SEO Scribe! 
