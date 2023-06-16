@@ -1,0 +1,27 @@
+{
+  "name": "otis-ai",
+  "version": "1.0.0",
+  "description": "a package to build search engine optimized content with the help of open ai",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dtettarasar/otis-ai.git"
+  },
+  "keywords": [
+    "ai",
+    "seo"
+  ],
+  "author": "Dylan Tettarasar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dtettarasar/otis-ai/issues"
+  },
+  "homepage": "https://github.com/dtettarasar/otis-ai#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
