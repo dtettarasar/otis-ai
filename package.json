@@ -17,6 +17,7 @@
   ],
   "author": "Dylan Tettarasar",
   "license": "ISC",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/dtettarasar/otis-ai/issues"
   },
