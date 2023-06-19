@@ -9,14 +9,35 @@ const configuration = new Configuration(configData);
 
 const openai = new OpenAIApi(configuration);
 
+const language = {
+    fr: 'french',
+    en: 'english',
+    es: 'spanish'
+}
+
+const textRequest = `write an article about ecology & datacenter. it should be written in markdown format. the language of the article should be ${language.en}. the article should contain subtitles for each section.`;
+
+console.log(textRequest);
+
+class ArticleReq {
+    constructor(keywords) {
+        this.keywords = [keywords];
+    }
+}
+
+const myArticleTest = new ArticleReq(["datacenter", "ecology"]);
+console.log(myArticleTest);
+
+/*
 const chatCompletion = await openai.createChatCompletion({
     model:"gpt-3.5-turbo",
     messages: [
-        {role: "user", content: "write an article about SEO in markdown format"},
+        {role: "user", content: textRequest},
     ]
 });
 
 console.log(chatCompletion.data.choices[0].message);
+*/
 
 // Build 2 functions
 // Generate article from a topics (string)
