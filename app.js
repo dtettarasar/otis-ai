@@ -5,22 +5,16 @@ let rawdata = fs.readFileSync('configuration_files/config.json');
 let configData = JSON.parse(rawdata);
 console.log(configData);
 
-const configuration = new Configuration({
-    "organization": configData.organization,
-    "apiKey": configData.apiKey
-});
+const configuration = new Configuration(configData);
 
 const openai = new OpenAIApi(configuration);
 
 const chatCompletion = await openai.createChatCompletion({
     model:"gpt-3.5-turbo",
     messages: [
-        {role: "user", content: "hello world"},
+        {role: "user", content: "write an article about SEO in markdown format"},
     ]
 });
-
-
-// exemple de requête : écris moi un article de 600 mots sur la data fabric, au format markdown
 
 console.log(chatCompletion.data.choices[0].message);
 
