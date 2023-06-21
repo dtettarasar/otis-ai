@@ -15,7 +15,9 @@ const language = {
     es: 'spanish'
 }
 
-const textRequest = `write an article about ecology & datacenter. it should be written in markdown format. the language of the article should be ${language.en}. the article should contain subtitles for each section.`;
+const textRequest = `write an article optimized for search engine. to define the topics of the article and the lexical field, use the following keywords: datacenter, ecology, environment. 
+it should be written in markdown format. the language of the article should be ${language.en}.
+the article should contain subtitles for each section. at the end of the article, add a section add a section in which you mention the sources used to create the article`;
 
 console.log(textRequest);
 
@@ -38,6 +40,7 @@ const chatCompletion = await openai.createChatCompletion({
 
 console.log(chatCompletion.data.choices[0].message);
 */
+
 
 // Build 2 functions
 // Generate article from a topics (string)
