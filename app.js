@@ -31,31 +31,24 @@ class ArticleReq {
         return this.textRequest;
     }
 
-    /*
-    generateArticle = await openai.createChatCompletion({
-        model:"gpt-3.5-turbo",
-        messages: [
-            {role: "user", content: this.textRequest},
-        ]
-    });
-    */
+    async generateArticle() {
+
+        const chatCompletion = await openai.createChatCompletion({
+            model:"gpt-3.5-turbo",
+            messages: [
+                {role: "user", content: this.textRequest},
+            ]
+        });
+
+        console.log(chatCompletion.data.choices[0].message);
+    }
 
 }
 
 const articleObj = new ArticleReq(["datacenter", "ecology", "environmental issues"], 'fr');
 //console.log(articleObj);
-console.log(articleObj.getTextRequest());
-
-/*
-const chatCompletion = await openai.createChatCompletion({
-    model:"gpt-3.5-turbo",
-    messages: [
-        {role: "user", content: textRequest},
-    ]
-});
-
-console.log(chatCompletion.data.choices[0].message);
-*/
+//console.log(articleObj.getTextRequest());
+articleObj.generateArticle();
 
 
 // Build 2 functions
