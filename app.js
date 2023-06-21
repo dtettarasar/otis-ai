@@ -9,7 +9,7 @@ const configuration = new Configuration(configData);
 
 const openai = new OpenAIApi(configuration);
 
-class ArticleReq {
+class Article {
 
     constructor(keywords, chosenLanguage) {
 
@@ -45,7 +45,7 @@ class ArticleReq {
 
 }
 
-const articleObj = new ArticleReq(["datacenter", "ecology", "environmental issues"], 'fr');
+const articleObj = new Article(["datacenter", "ecology", "environmental issues"], 'fr');
 //console.log(articleObj);
 //console.log(articleObj.getTextRequest());
 articleObj.generateArticle();
