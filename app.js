@@ -23,7 +23,8 @@ class Article {
 
         this.textRequest = `write an article optimized for search engine. to define the topics of the article and the lexical field, use the following keywords: ${this.keywords}. 
         it should be written in markdown format. the language of the article should be ${this.language[chosenLanguage]}.
-        the article should contain subtitles for each section. at the end of the article, add a section in which you mention the sources used to create the article`;
+        the article should contain subtitles for each section. at the end of the article, add a section in which you mention the sources used to create the article.
+        Make sure the sources you're adding are pages that exists`;
 
     }
 
@@ -40,17 +41,22 @@ class Article {
             ]
         });
 
-        console.log(chatCompletion.data.choices[0].message);
+        const openAiResponse = chatCompletion.data.choices[0].message
+
+        console.log(openAiResponse);
     }
 
 }
 
-const articleObj = new Article(["datacenter", "ecology", "environmental issues"], 'fr');
+const articleObj = new Article(["data fabric", "ai", "environment issues", "ecology"], 'fr');
 //console.log(articleObj);
 //console.log(articleObj.getTextRequest());
 articleObj.generateArticle();
 
 
-// Build 2 functions
-// Generate article from a topics (string)
-// Generate article from an array of keywords
+//TODO
+//convert API response to markdown file
+//Error handler for confidguration process 
+//Error handler for API call
+//improve the prompt to test sources mentionned in the article (make sure the links doesn't points to pages or content that don't exist)
+
