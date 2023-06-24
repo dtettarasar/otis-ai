@@ -20,6 +20,8 @@ class Article {
         the article should contain subtitles for each section. at the end of the article, add a section in which you mention the sources used to create the article.
         Make sure the sources you're using are pages that are available on the web, and not fake or dead links`;
 
+        this.generatedArticle = "";
+
     }
 
     initApiConfig() {
@@ -54,6 +56,10 @@ class Article {
         return this.apiFileLink;
     }
 
+    getGeneratedArticle() {
+        return this.generatedArticle;
+    }
+
     async generateArticle() {
 
         const openai = this.initApiConfig();
@@ -68,8 +74,10 @@ class Article {
             });
     
             const openAiResponse = chatCompletion.data.choices[0].message
-    
-            console.log(openAiResponse);
+
+            this.generatedArticle = openAiResponse.content;
+
+            console.log(this.getGeneratedArticle());
 
         } else {
 
@@ -82,10 +90,8 @@ class Article {
 }
 
 const articleObj = new Article(["data fabric", "ai", "environment issues", "ecology"], 'fr', 'config.json');
-//console.log(articleObj);
-//console.log(articleObj.getTextRequest());
-//console.log(articleObj.getApiFileLink());
 articleObj.generateArticle();
+//console.log(articleObj.getGeneratedArticle());
 
 
 //TODO
