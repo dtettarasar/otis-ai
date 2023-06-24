@@ -3,7 +3,7 @@ import * as fs from 'fs';
 
 class Article {
 
-    constructor(keywords, chosenLanguage) {
+    constructor(keywords, chosenLanguage, apiFileName) {
 
         this.keywords = [keywords];
 
@@ -12,6 +12,8 @@ class Article {
             en: 'english',
             es: 'spanish'
         };
+
+        this.apiFileLink = 'configuration_files/' + apiFileName;
 
         this.textRequest = `write an article optimized for search engine. to define the topics of the article and the lexical field, use the following keywords: ${this.keywords}. 
         it should be written in markdown format. the language of the article should be ${this.language[chosenLanguage]}.
@@ -26,7 +28,7 @@ class Article {
 
         try {
 
-            let rawdata = fs.readFileSync('configuration_files/config.json');
+            let rawdata = fs.readFileSync(this.getApiFileLink());
             configData = JSON.parse(rawdata);
         
         } catch (error) {
@@ -46,6 +48,10 @@ class Article {
 
     getTextRequest() {
         return this.textRequest;
+    }
+
+    getApiFileLink() {
+        return this.apiFileLink;
     }
 
     async generateArticle() {
@@ -75,9 +81,10 @@ class Article {
 
 }
 
-const articleObj = new Article(["data fabric", "ai", "environment issues", "ecology"], 'fr');
+const articleObj = new Article(["data fabric", "ai", "environment issues", "ecology"], 'fr', 'config.json');
 //console.log(articleObj);
 //console.log(articleObj.getTextRequest());
+//console.log(articleObj.getApiFileLink());
 articleObj.generateArticle();
 
 
