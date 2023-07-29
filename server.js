@@ -3,6 +3,11 @@ const cors = require('cors');
 const cookieSession = require("cookie-session");
 const app = express();
 
+const dataBase = require('./app/config/db.config');
+console.log(dataBase);
+
+dataBase.config.initDB();
+
 const corsOptions = {
     origin: "http://localhost:8081"
 }

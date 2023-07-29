@@ -1,5 +1,13 @@
-module.exports = {
-    HOST: "0.0.0.0",
-    PORT: 27017,
-    DB: "otis_db"
-};
+require('dotenv').config()
+const mongoose = require('mongoose');
+
+const databaseObj = {
+
+    initDB: () => {
+        mongoose.connect(process.env.DB_URL);
+        console.log(mongoose);
+    }
+
+}
+
+exports.config = databaseObj;
