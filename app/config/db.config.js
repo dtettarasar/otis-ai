@@ -1,5 +1,7 @@
 require('dotenv').config()
 const mongoose = require('mongoose');
+const roleModel = require('../models/role.model');
+const userModel = require('../models/user.model');
 
 const databaseObj = {
 
@@ -12,7 +14,10 @@ const databaseObj = {
             console.error("Connection error", err);
             process.exit();
         }
-    }
+    },
+
+    roleDoc: roleModel,
+    userDoc: userModel
 
 }
 
