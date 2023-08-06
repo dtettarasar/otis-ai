@@ -28,8 +28,10 @@ app.use(
     
 );
 
-app.get("/", (req, res) => {
-    res.json({ message: "Welcome to Otis AI!" });
+
+// routes
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/views/index.html')
 });
 
 const PORT = process.env.PORT || 8080;
