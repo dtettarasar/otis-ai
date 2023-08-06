@@ -31,7 +31,11 @@ app.use(
 
 // routes
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/views/index.html')
+    res.sendFile(__dirname + '/views/index.html');
+});
+
+app.get('/new-user', (req, res) => {
+    res.sendFile(__dirname + '/views/new-user.html');
 });
 
 const PORT = process.env.PORT || 8080;
