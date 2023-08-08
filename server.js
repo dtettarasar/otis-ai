@@ -38,6 +38,18 @@ app.get('/new-user', (req, res) => {
     res.sendFile(__dirname + '/views/new-user.html');
 });
 
+app.post('/new-user', (req, res) => {
+    
+    const userObj = {
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.psw
+    };
+
+    res.json(userObj);
+
+})
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
