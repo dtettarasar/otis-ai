@@ -1,5 +1,5 @@
-import { Configuration, OpenAIApi } from "openai";
-import * as fs from 'fs';
+const { Configuration, OpenAIApi } = require("openai");
+const fs = require('fs');
 
 class Article {
 
