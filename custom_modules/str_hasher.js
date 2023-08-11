@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-const password = "mypass123"
+//const password = "mypass123"
 const saltRounds = 10
 
 const strHasher = {
@@ -26,7 +26,11 @@ const strHasher = {
 
 }
 
+/*
 const hashed = strHasher.getHash(password);
 console.log(hashed);
+*/
+
+exports.config = strHasher;
 
 //console.log();
