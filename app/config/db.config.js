@@ -16,6 +16,12 @@ const databaseObj = {
         }
     },
 
+    createUser: async () => {
+
+        
+
+    },
+
     roleDoc: roleModel,
     userDoc: userModel
 
