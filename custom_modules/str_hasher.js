@@ -1,6 +1,8 @@
 const bcrypt = require("bcryptjs");
-//const password = "mypass123"
-const saltRounds = 10
+const password = "mypass123";
+const passwordHash = "$2a$10$8xPneLBVQajfh4HaDCsmfeRd11vv9t8xCBt1ICcql6CYIkkKu/INy";
+const passwordWrongHash = "$2a$10$jPOp0sr7w.eWVS5yLjR3KO6cMYnA7zJHnAMBapOKMW4b4eoCdbyvS";
+const saltRounds = 10;
 
 const strHasher = {
 
@@ -22,14 +24,30 @@ const strHasher = {
     
         })
 
+    },
+
+    checkHash: (pwdToCheck, hashToCheck) => {
+
+        bcrypt.compare(pwdToCheck, hashToCheck, (err, isMatch) => {
+
+            if (err) {
+                throw err;
+              } else if (!isMatch) {
+                console.log("Password doesn't match!");
+              } else {
+                console.log("Password matches!");
+              }
+
+        })
+
     }
 
 }
 
-/*
-const hashed = strHasher.getHash(password);
-console.log(hashed);
-*/
+strHasher.getHash(password);
+strHasher.checkHash(password, passwordHash);
+//console.log(hashed);
+
 
 exports.config = strHasher;
 
