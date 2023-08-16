@@ -22,12 +22,11 @@ const UserSch = new mongoose.Schema({
 });
 
 // pre middleware function, to hash users' passwords
-/*
-UserSch.pre("save", (next) => {
+UserSch.pre("save", function (next) {
 
     const user = this;
 
-    if (this.isNew) {
+    if (this.isModified("password") || this.isNew) {
 
         bcrypt.genSalt(10, (saltErr, salt) => {
 
@@ -56,10 +55,13 @@ UserSch.pre("save", (next) => {
 
         })
 
+    } else {
+
+        return next();
+
     }
 
 })
-*/
 
 const User = mongoose.model(
     "User", UserSch
