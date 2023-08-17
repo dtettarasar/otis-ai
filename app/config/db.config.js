@@ -41,6 +41,14 @@ const databaseObj = {
     
         }
 
+    }, 
+
+    searchUserByName: async (req, res) => {
+
+    },
+
+    searchUserByEmail: async (req, res) => {
+        
     }
 
 }
