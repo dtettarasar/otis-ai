@@ -5,10 +5,6 @@ const app = express();
 
 const dataBase = require('./app/config/db.config');
 dataBase.obj.initDB();
-/*
-const userDoc = dataBase.config.userDoc;
-//console.log(dataBase.config.userDoc);
-*/
 
 const corsOptions = {
     origin: "http://localhost:8081"
