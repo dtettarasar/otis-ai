@@ -5,6 +5,9 @@ const userModel = require('../models/user.model');
 
 const databaseObj = {
 
+    roleDoc: roleModel,
+    userDoc: userModel,
+
     initDB: async () => {
 
         try {
@@ -16,15 +19,30 @@ const databaseObj = {
         }
     },
 
-    createUser: async () => {
+    createUser: async (req, res) => {
 
+        const userObj = new userModel({
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.psw
+        });
+    
         
+        try {
 
-    },
+            const user = await userObj.save();
+            console.log(user);
+            res.json(user);
 
-    roleDoc: roleModel,
-    userDoc: userModel
+        } catch (err) {
+    
+            console.log(err);
+            res.json({Error: err});
+    
+        }
+
+    }
 
 }
 
-exports.config = databaseObj;
+exports.obj = databaseObj;

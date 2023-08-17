@@ -4,9 +4,11 @@ const cookieSession = require("cookie-session");
 const app = express();
 
 const dataBase = require('./app/config/db.config');
-dataBase.config.initDB();
+dataBase.obj.initDB();
+/*
 const userDoc = dataBase.config.userDoc;
 //console.log(dataBase.config.userDoc);
+*/
 
 const corsOptions = {
     origin: "http://localhost:8081"
@@ -40,28 +42,11 @@ app.get('/new-user', (req, res) => {
     res.sendFile(__dirname + '/views/new-user.html');
 });
 
+//app.post('/new-user', dataBase.config.createUser(req, res));
+
 app.post('/new-user', async (req, res) => {
-    
-    const userObj = new userDoc({
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.psw
-    });
-
-    
-    try {
-        const user = await userObj.save();
-        console.log(user);
-        res.json(user);
-    } catch (err) {
-
-        console.log(err);
-        res.json({Error: err});
-
-    }
-
-
-    //res.json(userObj);
+  
+    dataBase.obj.createUser(req, res);
 
 });
 
