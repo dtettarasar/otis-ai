@@ -4,18 +4,9 @@ const cookieSession = require("cookie-session");
 const app = express();
 require('dotenv').config();
 
-/*
-const dataBase = require('./app/config/db.config');
-dataBase.obj.initDB();
-*/
-
 const dataBaseClass = require('./app/config/db.config');
-const dataBase = new dataBaseClass(process.env.DB_URL);
+const dataBase = new dataBaseClass();
 dataBase.initDB();
-
-/*
-console.log(process.env.DB_URL);
-*/
 
 const corsOptions = {
     origin: "http://localhost:8081"
@@ -49,8 +40,6 @@ app.get('/new-user', (req, res) => {
     res.sendFile(__dirname + '/views/new-user.html');
 });
 
-//app.post('/new-user', dataBase.config.createUser(req, res));
-
 app.post('/new-user', async (req, res) => {
   
     dataBase.createUser(req, res);
@@ -58,6 +47,7 @@ app.post('/new-user', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 8080;
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
