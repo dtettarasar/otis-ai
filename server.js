@@ -2,9 +2,20 @@ const express = require('express');
 const cors = require('cors');
 const cookieSession = require("cookie-session");
 const app = express();
+require('dotenv').config();
 
+/*
 const dataBase = require('./app/config/db.config');
 dataBase.obj.initDB();
+*/
+
+const dataBaseClass = require('./app/config/db.config');
+const dataBase = new dataBaseClass(process.env.DB_URL);
+dataBase.initDB();
+
+/*
+console.log(process.env.DB_URL);
+*/
 
 const corsOptions = {
     origin: "http://localhost:8081"
@@ -42,7 +53,7 @@ app.get('/new-user', (req, res) => {
 
 app.post('/new-user', async (req, res) => {
   
-    dataBase.obj.createUser(req, res);
+    dataBase.createUser(req, res);
 
 });
 
