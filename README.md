@@ -1,10 +1,9 @@
 # otis-ai
 Otis AI: Your Digital SEO Scribe! 
 
-## Add your configuration and API : 
-create a json file, named config.json, inside the configuration_files folder, and use the following format to include your org datas : 
+## Connect your Database first
+create a .env file and store in it the connection string, using the variable name "DB_URL"
 
-{
-    "organization": "your org ID",
-    "apiKey": "your API key"
-}
+~~~
+DB_URL="mongodb+srv://<username>:<password>@<clustername>.0a0a0a0.mongodb.net/?retryWrites=true&w=majority"
+~~~
