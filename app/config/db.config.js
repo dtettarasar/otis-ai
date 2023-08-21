@@ -32,37 +32,64 @@ class DataBase {
             password: req.body.psw
         });
 
+        // Check if username already exist in database
         const usernameInDB = await this.findUserByName(userObj.username);
-        console.log("check if username already exist");
-        console.log(usernameInDB);
-        
-        try {
 
-            const user = await userObj.save();
-            console.log(user);
-            res.json(user);
+        // Check if email already exist in database
+        const emailInDB = await this.findUserByEmail(userObj.email);
+
+        if (usernameInDB.length !== 0) {
+
+            console.log("username already exist in database");
+            console.log(usernameInDB);
+
+            res.json({Error: "username already used"});
+
+        }   else if (emailInDB.length !== 0) {
+
+            console.log('email already exist in database');
+            console.log(emailInDB);
+
+            res.json({Error: "email already used"});
+
+        } else {
             
-        } catch (err) {
-    
-            console.log(err);
-            res.json({Error: err});
-    
+            console.log("username & email doesn't exist in database");
+
+            try {
+
+                const user = await userObj.save();
+                console.log(user);
+                res.json(user);
+                
+            } catch (err) {
+        
+                console.log(err);
+                res.json({Error: err});
+        
+            }
+
         }
 
     }
 
-    async findUserByName(username) {
+    async findUserByName(userName) {
 
-        //console.log("find username method");
-        //console.log("username to check: " + username);
-
-        const query = UserModel.find({username: username});
-        query.select('username');
+        const query = UserModel.find({username: userName});
+        query.select('username email');
         const userFound = await query.exec();
-        //console.log(typeof userFound);
 
         return userFound;
 
+    }
+
+    async findUserByEmail(userEmail) {
+
+        const query = UserModel.find({email: userEmail});
+        query.select('username email');
+        const userFound = await query.exec();
+
+        return userFound;
 
     }
 
