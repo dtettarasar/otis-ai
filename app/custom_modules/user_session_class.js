@@ -1,4 +1,5 @@
 const env = require('dotenv').config();
+const bcrypt = require("bcryptjs");
 const mongoose = require('mongoose');
 const UserModel = require('../models/user.model');
 
@@ -11,7 +12,7 @@ class UserSession {
 
     }
 
-    async createSession (req, res) {
+    async checkUserPsw (req, res) {
 
         const userObj = {
             username: req.body.username,
@@ -21,6 +22,12 @@ class UserSession {
         const usernameInDB = await dataBase.findUserByName(userObj.username);
         const userHashedPsw = await dataBase.getUserPsw(usernameInDB[0]._id);
         console.log(userHashedPsw);
+
+    }
+
+    async createSession (req, res) {
+
+        const checkPSw = await checkUserPsw(req, res);
         
         res.json(userObj);
     }

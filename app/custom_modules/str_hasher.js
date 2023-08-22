@@ -26,9 +26,9 @@ const strHasher = {
 
     },
 
-    checkHash: (pwdToCheck, hashToCheck) => {
+    checkHash: (strToCheck, hashToCheck) => {
 
-        bcrypt.compare(pwdToCheck, hashToCheck, (err, isMatch) => {
+        bcrypt.compare(strToCheck, hashToCheck, (err, isMatch) => {
 
             if (err) {
                 throw err;
@@ -44,13 +44,11 @@ const strHasher = {
 
 }
 
-/*
+
 strHasher.getHash(password);
 strHasher.checkHash(password, passwordHash);
-*/
+
 //console.log(hashed);
 
 
 exports.config = strHasher;
-
-//console.log();
