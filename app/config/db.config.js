@@ -93,6 +93,16 @@ class DataBase {
 
     }
 
+    async getUserPsw(userID) {
+
+        const query = UserModel.findById(userID);
+        query.select('_id password');
+        const userPsw = await query.exec();
+
+        return userPsw;
+
+    }
+
 }
 
 module.exports = DataBase;

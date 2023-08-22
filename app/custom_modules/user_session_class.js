@@ -19,8 +19,9 @@ class UserSession {
         };
 
         const usernameInDB = await dataBase.findUserByName(userObj.username);
-        console.log(usernameInDB);
-
+        const userHashedPsw = await dataBase.getUserPsw(usernameInDB[0]._id);
+        console.log(userHashedPsw);
+        
         res.json(userObj);
     }
 
