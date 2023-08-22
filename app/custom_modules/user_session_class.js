@@ -36,10 +36,19 @@ class UserSession {
         };
 
         const usernameInDB = await dataBase.findUserByName(userObj.username);
-        const hashObj = await dataBase.getUserPsw(usernameInDB[0]._id);
-        console.log(hashObj);
 
-        await this.checkHash(userObj.password, hashObj.password);
+        if (usernameInDB.length === 0) {
+
+            res.json({Error: "invalid username"});
+            
+        } else {
+
+            const hashObj = await dataBase.getUserPsw(usernameInDB[0]._id);
+            console.log(hashObj);
+
+            await this.checkHash(userObj.password, hashObj.password);
+
+        }
 
     }
 
