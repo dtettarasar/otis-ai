@@ -8,6 +8,9 @@ const dataBaseClass = require('./app/config/db.config');
 const dataBase = new dataBaseClass();
 dataBase.initDB();
 
+const userSessionClass = require('./app/custom_modules/user_session_class');
+const userSession = new userSessionClass();
+
 const corsOptions = {
     origin: "http://localhost:8081"
 }
@@ -48,7 +51,11 @@ app.post('/new-user', async (req, res) => {
 
 app.get('/login', (req, res) => {
     res.sendFile(__dirname + '/views/login.html');
-})
+});
+
+app.post('/login', async (req, res) => {
+    userSession.createSession(req, res);
+});
 
 const PORT = process.env.PORT || 8080;
 

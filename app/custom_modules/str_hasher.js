@@ -44,8 +44,10 @@ const strHasher = {
 
 }
 
+/*
 strHasher.getHash(password);
 strHasher.checkHash(password, passwordHash);
+*/
 //console.log(hashed);
 
 
