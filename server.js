@@ -46,6 +46,10 @@ app.post('/new-user', async (req, res) => {
 
 });
 
+app.get('/login', (req, res) => {
+    res.sendFile(__dirname + '/views/login.html');
+})
+
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
