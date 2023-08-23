@@ -40,12 +40,37 @@ const strHasher = {
 
         })
 
+    },
+
+    genHashedStr: async (strToHash) => {
+
+        try {
+
+            const salt = await bcrypt.genSalt();
+            const hashedStr = await bcrypt.hash(strToHash, salt);
+            return hashedStr;
+
+        } catch (err) {
+
+            console.log(err);
+            return false;
+
+        }
+
     }
 
 }
 
 
-//strHasher.getHash(password);
+const testHash = async () => {
+
+    const result = await strHasher.genHashedStr(password);
+    console.log(result);
+
+}
+
+testHash();
+
 //strHasher.checkHash(password, passwordHash);
 
 //console.log(hashed);
