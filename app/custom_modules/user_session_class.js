@@ -9,11 +9,7 @@ const dataBase = new dataBaseClass();
 
 class UserSession {
 
-    constructor () {
-
-    }
-
-    async checkUserPsw (req, res) {
+    async checkUserAuth (req, res) {
 
         const userObj = {
             username: req.body.username,
@@ -24,7 +20,9 @@ class UserSession {
 
         if (usernameInDB.length === 0) {
 
-            res.json({Error: "invalid username"});
+            console.log('Error: invalid username')
+            res.json({Error: "invalid login"});
+            return false;
             
         } else {
 
@@ -34,15 +32,27 @@ class UserSession {
             const checkHash = await strHasher.method.checkHash(userObj.password, hashObj.password);
             console.log(checkHash);
 
+            if (!checkHash) {
+
+                console.log('Error: invalid password');
+                res.json({Error: "invalid login"});
+                return false;
+
+            }
+
+            return checkHash;
+
         }
 
     }
 
     async createSession (req, res) {
 
-        const checkPsw = await this.checkUserPsw(req, res);
+        const checkAuth = await this.checkUserAuth(req, res);
 
-        res.json({test: "test"});
+        if (checkAuth) {
+            res.json({Success: "login is valid"});
+        }
     }
 
 } 

@@ -29,12 +29,10 @@ const strHasher = {
 
             if (testStr) {
 
-                console.log("Password matches!");
                 return true;
 
             } else {
 
-                console.log("Password doesn't match!");
                 return false;
 
             }
