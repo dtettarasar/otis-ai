@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const cookieSession = require("cookie-session");
+const jwt = require("jsonwebtoken");
 const app = express();
 require('dotenv').config();
 
@@ -54,11 +55,22 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-    
+
+    const username = req.body.username;
+    //console.log("test username: " + username);
+
+    const user = {
+        username: req.body.username
+    }
+
     const checkAuth = await userSession.createSession(req, res);
 
     if (checkAuth) {
-        res.json({Success: "login is valid"});
+        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+        res.json({
+            Success: "login is valid",
+            AcessToken: accessToken
+        });
     }
 
 });

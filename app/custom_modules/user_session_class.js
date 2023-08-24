@@ -51,6 +51,11 @@ class UserSession {
         const checkAuth = await this.checkUserAuth(req, res);
         return checkAuth;
 
+        /*
+        if (checkAuth) {
+            res.json({Success: "login is valid"});
+        }
+        */
     }
 
 } 
