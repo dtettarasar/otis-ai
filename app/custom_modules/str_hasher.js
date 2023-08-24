@@ -67,4 +67,4 @@ const testHashChecker = async () => {
 //testHash();
 //testHashChecker();
 
-exports.config = strHasher;
+exports.method = strHasher;

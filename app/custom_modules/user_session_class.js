@@ -2,6 +2,7 @@ const env = require('dotenv').config();
 const bcrypt = require("bcryptjs");
 const mongoose = require('mongoose');
 const UserModel = require('../models/user.model');
+const strHasher = require('./str_hasher');
 
 const dataBaseClass = require('../config/db.config');
 const dataBase = new dataBaseClass();
@@ -9,22 +10,6 @@ const dataBase = new dataBaseClass();
 class UserSession {
 
     constructor () {
-
-    }
-
-    async checkHash (strToCheck, hashToCheck) {
-
-        bcrypt.compare(strToCheck, hashToCheck, (err, isMatch) => {
-
-            if (err) {
-                console.log(err);
-              } else if (!isMatch) {
-                console.log("Password doesn't match!");
-              } else {
-                console.log("Password matches!");
-              }
-
-        })
 
     }
 
@@ -46,7 +31,8 @@ class UserSession {
             const hashObj = await dataBase.getUserPsw(usernameInDB[0]._id);
             console.log(hashObj);
 
-            await this.checkHash(userObj.password, hashObj.password);
+            const checkHash = await strHasher.method.checkHash(userObj.password, hashObj.password);
+            console.log(checkHash);
 
         }
 
