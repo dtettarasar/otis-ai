@@ -27,10 +27,10 @@ class UserSession {
         } else {
 
             const hashObj = await dataBase.getUserPsw(usernameInDB[0]._id);
-            console.log(hashObj);
+            //console.log(hashObj);
 
             const checkHash = await strHasher.method.checkHash(userObj.password, hashObj.password);
-            console.log(checkHash);
+            //console.log(checkHash);
 
             if (!checkHash) {
 
@@ -49,10 +49,8 @@ class UserSession {
     async createSession (req, res) {
 
         const checkAuth = await this.checkUserAuth(req, res);
+        return checkAuth;
 
-        if (checkAuth) {
-            res.json({Success: "login is valid"});
-        }
     }
 
 } 

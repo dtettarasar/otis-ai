@@ -54,7 +54,13 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-    userSession.createSession(req, res);
+    
+    const checkAuth = await userSession.createSession(req, res);
+
+    if (checkAuth) {
+        res.json({Success: "login is valid"});
+    }
+
 });
 
 const PORT = process.env.PORT || 8080;
