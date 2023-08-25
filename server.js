@@ -9,8 +9,8 @@ const dataBaseClass = require('./app/config/db.config');
 const dataBase = new dataBaseClass();
 dataBase.initDB();
 
-const userSessionClass = require('./app/custom_modules/user_session_class');
-const userSession = new userSessionClass();
+const userTokenClass = require('./app/custom_modules/user_token_class');
+const userToken = new userTokenClass();
 
 const corsOptions = {
     origin: "http://localhost:8081"
@@ -56,14 +56,7 @@ app.get('/login', (req, res) => {
 
 app.post('/login', async (req, res) => {
 
-    const username = req.body.username;
-    //console.log("test username: " + username);
-
-    const user = {
-        username: req.body.username
-    }
-
-    const checkAuth = await userSession.createSession(req, res);
+    const token = await userToken.createToken(req, res);
 
 });
 
