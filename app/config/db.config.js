@@ -76,7 +76,7 @@ class DataBase {
     async findUserByName(userName) {
 
         const query = UserModel.find({username: userName});
-        query.select('username email');
+        query.select('username');
         const userFound = await query.exec();
 
         return userFound;
@@ -86,7 +86,7 @@ class DataBase {
     async findUserByEmail(userEmail) {
 
         const query = UserModel.find({email: userEmail});
-        query.select('username email');
+        query.select('email');
         const userFound = await query.exec();
 
         return userFound;

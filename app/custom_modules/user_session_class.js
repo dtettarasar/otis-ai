@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const mongoose = require('mongoose');
 const UserModel = require('../models/user.model');
 const strHasher = require('./str_hasher');
+const jwt = require("jsonwebtoken");
 
 const dataBaseClass = require('../config/db.config');
 const dataBase = new dataBaseClass();
@@ -11,6 +12,7 @@ class UserSession {
 
     async checkUserAuth (req, res) {
 
+        // Data filled by the user on the login form
         const userObj = {
             username: req.body.username,
             password: req.body.psw
@@ -26,7 +28,9 @@ class UserSession {
             
         } else {
 
-            const hashObj = await dataBase.getUserPsw(usernameInDB[0]._id);
+            const userToCheckAuth = usernameInDB[0];
+
+            const hashObj = await dataBase.getUserPsw(userToCheckAuth._id);
             //console.log(hashObj);
 
             const checkHash = await strHasher.method.checkHash(userObj.password, hashObj.password);
@@ -40,22 +44,31 @@ class UserSession {
 
             }
 
-            return checkHash;
+            return usernameInDB[0];
 
         }
 
     }
 
+    generateAccessToken (userObj) {
+
+        const token = jwt.sign(userObj.toJSON(), process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1h'});
+        return token;
+
+    }
+
     async createSession (req, res) {
 
-        const checkAuth = await this.checkUserAuth(req, res);
-        return checkAuth;
+        //Get the user fo which we create the token
+        const user = await this.checkUserAuth(req, res);
 
-        /*
-        if (checkAuth) {
-            res.json({Success: "login is valid"});
+        if (user) {
+            const accessToken = await this.generateAccessToken(user);
+            res.json({
+                Success: true,
+                AcessToken: accessToken
+            });
         }
-        */
     }
 
 } 

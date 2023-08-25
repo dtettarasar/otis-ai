@@ -65,20 +65,7 @@ app.post('/login', async (req, res) => {
 
     const checkAuth = await userSession.createSession(req, res);
 
-    if (checkAuth) {
-        const accessToken = generateAccessToken(user);
-        res.json({
-            Success: "login is valid",
-            AcessToken: accessToken
-        });
-    }
-
 });
-
-const generateAccessToken = (user) => {
-    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1h'});
-    return token;
-}
 
 const PORT = process.env.PORT || 8080;
 
