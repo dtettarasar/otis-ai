@@ -60,6 +60,46 @@ app.post('/login', async (req, res) => {
 
 });
 
+app.get('/user-account', (req, res) => {
+    console.log(req.rawHeaders);
+    res.json({test: "test"});
+})
+
+function authToken(req, res, next) {
+
+    const token = null;
+
+    try {
+        const user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        req.user = user;
+        next();
+    } catch (err) {
+        res.clearCookie("token");
+        return res.redirect("/");
+    }
+
+    /*const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (token === null) {
+        return res.sendStatus(401);
+    }
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) {
+
+            return res.sendStatus(403);
+
+        } else {
+
+            req.user = user;
+            next();
+
+        }
+    })*/
+
+} 
+
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
