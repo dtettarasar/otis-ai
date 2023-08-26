@@ -1,9 +1,12 @@
 const express = require('express');
 const cors = require('cors');
-const cookieSession = require("cookie-session");
-const jwt = require("jsonwebtoken");
+//const cookieSession = require("cookie-session");
 const app = express();
 require('dotenv').config();
+
+const jwt = require("jsonwebtoken");
+const cookies = require("cookie-parser");
+app.use(cookies());
 
 const dataBaseClass = require('./app/config/db.config');
 const dataBase = new dataBaseClass();
@@ -23,17 +26,6 @@ app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
-
-app.use(
-
-    cookieSession({
-      name: "otis-ai-session",
-      keys: ["COOKIE_SECRET"], // should use as secret environment variable
-      httpOnly: true
-    })
-    
-);
-
 
 // routes
 app.get('/', (req, res) => {
@@ -61,9 +53,32 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/user-account', (req, res) => {
-    console.log(req.rawHeaders);
+
+    const token = req.cookies.token;
+
+    res.json({
+        Success: true,
+        AccessToken: token
+    });
+    
+})
+
+
+/* This is to understand concept of middleware and the use of next() */
+const middlewareOne = (req, res, next) => {
+    console.log('middleware 1');
+    next();
+}
+
+const middlewareTwo = (req, res, next) => {
+    console.log('middleware 2');
+    next();
+}
+
+app.get('/test-middleware', middlewareTwo, middlewareOne, (req, res) => {
     res.json({test: "test"});
 })
+/* ----------------- */
 
 function authToken(req, res, next) {
 
