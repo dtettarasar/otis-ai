@@ -52,7 +52,7 @@ class UserToken {
 
     async createToken (req, res) {
 
-        //Get the user fo which we create the token
+        //Get the user for which we create the token
         const user = await this.checkUserAuth(req, res);
 
         if (user) {
