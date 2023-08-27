@@ -1,7 +1,4 @@
 const env = require('dotenv').config();
-const bcrypt = require("bcryptjs");
-const mongoose = require('mongoose');
-const UserModel = require('../models/user.model');
 const strHasher = require('./str_hasher');
 const jwt = require("jsonwebtoken");
 
@@ -57,7 +54,7 @@ class UserToken {
 
         if (user) {
 
-            const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1h'});
+            const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10s'});
 
             res.cookie("token", accessToken, {
                 httpOnly: true
@@ -65,6 +62,25 @@ class UserToken {
 
             return res.redirect("/user-account");
         }
+    }
+
+    authToken(req, res, next) {
+
+        const token = req.cookies.token;
+    
+        try {
+    
+            const user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+            req.user = user;
+            next();
+    
+        } catch (err) {
+    
+            res.clearCookie("token");
+            return res.redirect("/login");
+            
+        }
+    
     }
 
 } 
