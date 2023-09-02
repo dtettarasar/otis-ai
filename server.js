@@ -19,6 +19,8 @@ const corsOptions = {
     origin: "http://localhost:8081"
 }
 
+app.set('view engine', 'ejs');
+
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
@@ -29,11 +31,13 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/views/index.html');
+    //res.sendFile(__dirname + '/views/index.html');
+    res.render('index');
 });
 
 app.get('/new-user', (req, res) => {
-    res.sendFile(__dirname + '/views/new-user.html');
+    //res.sendFile(__dirname + '/views/new-user.html');
+    res.render('new-user');
 });
 
 app.post('/new-user', async (req, res) => {
@@ -43,7 +47,8 @@ app.post('/new-user', async (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.sendFile(__dirname + '/views/login.html');
+    //res.sendFile(__dirname + '/views/login.html');
+    res.render('login');
 });
 
 app.post('/login', async (req, res) => {
