@@ -60,7 +60,7 @@ class UserToken {
                 httpOnly: true
             });
 
-            return res.redirect("/user-account");
+            return res.redirect("/user/account");
         }
     }
 
@@ -77,7 +77,7 @@ class UserToken {
         } catch (err) {
     
             res.clearCookie("token");
-            return res.redirect("/login");
+            return res.redirect("/user/login");
             
         }
     
