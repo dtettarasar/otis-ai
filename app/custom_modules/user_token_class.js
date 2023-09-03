@@ -60,7 +60,7 @@ class UserToken {
                 httpOnly: true
             });
 
-            return res.redirect("/user/account");
+            return res.redirect("/user/my-account");
         }
     }
 

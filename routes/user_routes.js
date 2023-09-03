@@ -34,13 +34,15 @@ router.post('/login', async (req, res) => {
 
 });
 
-router.get('/account', userToken.authToken, (req, res) => {
-    
-    res.json({
+router.get('/my-account', userToken.authToken, (req, res) => {
+
+    const userInfo = {
         Success: true,
         AccessToken: req.cookies.token,
         user: req.user
-    });
+    }
+    
+    res.render('user-account', userInfo);
     
 })
 
