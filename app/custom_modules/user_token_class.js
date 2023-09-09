@@ -83,6 +83,31 @@ class UserToken {
         }
     }
 
+    async createRefreshToken (req, res, next) {
+
+        //Get the user for which we create the token
+
+        // Data filled by the user on the login form
+        const user = res.locals.userData;
+
+        if (user) {
+
+            const refreshToken = jwt.sign(user.toJSON(), process.env.REFRESH_TOKEN_SECRET, {expiresIn: '24h'});
+
+            res.cookie("refreshToken", refreshToken, {
+                httpOnly: true
+            });
+
+            next();
+
+        } else {
+
+            res.json({Error: "create refresh token error"});
+            return false;
+
+        }
+    }
+
     authToken(req, res, next) {
 
         const token = req.cookies.token;
@@ -99,6 +124,28 @@ class UserToken {
             return res.redirect("/user/login");
             
         }
+    
+    }
+
+    authRefreshToken(req, res, next) {
+
+        const refreshToken = req.cookies.refreshToken;
+
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+
+            if (err) {
+                return res.sendStatus(401);
+                // TODO : Check that user has still access right and that it still exists in database
+                delete user.iat;
+                delete user.exp;
+
+                /*
+                Generate a new token in the route, pass the middlewares in the following orders: 
+                authToken, authRefreshToken, createToken
+                */
+            }
+
+        })
     
     }
 

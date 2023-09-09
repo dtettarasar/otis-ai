@@ -28,7 +28,7 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.post('/login', userToken.checkUserAuth, userToken.createToken, async (req, res) => {
+router.post('/login', userToken.checkUserAuth, userToken.createToken, userToken.createRefreshToken, async (req, res) => {
 
     //const token = await userToken.createToken(req, res);
 
@@ -46,6 +46,10 @@ router.post('/login', userToken.checkUserAuth, userToken.createToken, async (req
     //res.json({test: 'test'});
 
 });
+
+router.post('refresh-token', (req, res) => {
+    
+})
 
 router.get('/my-account', userToken.authToken, (req, res) => {
 
