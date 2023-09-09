@@ -7,13 +7,15 @@ const dataBase = new dataBaseClass();
 
 class UserToken {
 
-    async checkUserAuth (req, res) {
+    async checkUserAuth (req, res, next) {
 
+        
         // Data filled by the user on the login form
         const userObj = {
             username: req.body.username,
             password: req.body.psw
         };
+        
 
         const usernameInDB = await dataBase.findUserByName(userObj.username);
 
@@ -41,16 +43,29 @@ class UserToken {
 
             }
 
-            return usernameInDB[0];
+            //return usernameInDB[0];
+            //console.log(usernameInDB[0]);
+            res.locals.userData = usernameInDB[0];
+            next();
 
         }
 
     }
 
-    async createToken (req, res) {
+    async createToken (req, res, next) {
 
         //Get the user for which we create the token
-        const user = await this.checkUserAuth(req, res);
+
+        // Data filled by the user on the login form
+        const user = res.locals.userData;
+
+        console.log(user);
+
+        //console.log(this.checkUserAuth());
+
+        //const user = await this.checkUserAuth(userObj);
+
+        //console.log(user);
 
         if (user) {
 
@@ -60,7 +75,11 @@ class UserToken {
                 httpOnly: true
             });
 
-            return res.redirect("/user/my-account");
+            //return res.redirect("/user/my-account");
+            next();
+        } else {
+            res.json({Error: "create token error"});
+            return false;
         }
     }
 

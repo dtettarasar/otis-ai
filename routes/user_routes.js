@@ -28,9 +28,22 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', userToken.checkUserAuth, userToken.createToken, async (req, res) => {
 
-    const token = await userToken.createToken(req, res);
+    //const token = await userToken.createToken(req, res);
+
+    return res.redirect("/user/my-account");
+
+    /*
+    const userObj = {
+        username: req.body.username,
+        password: req.body.psw
+    };*/
+
+    //const testUser = await userToken.checkUserAuth(req, res);
+    //console.log(testUser);
+
+    //res.json({test: 'test'});
 
 });
 
