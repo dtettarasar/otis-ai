@@ -47,7 +47,11 @@ router.post('/login', userToken.checkUserAuth, userToken.createToken, userToken.
 
 });
 
-router.post('refresh-token', (req, res) => {
+router.post('/refresh-token', userToken.authToken, userToken.authRefreshToken, (req, res) => {
+
+    //res.json(req.user);
+
+    return res.redirect("/user/my-account");
     
 })
 

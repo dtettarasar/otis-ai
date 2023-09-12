@@ -59,27 +59,22 @@ class UserToken {
         // Data filled by the user on the login form
         const user = res.locals.userData;
 
-        console.log(user);
-
-        //console.log(this.checkUserAuth());
-
-        //const user = await this.checkUserAuth(userObj);
-
-        //console.log(user);
-
         if (user) {
 
-            const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10s'});
+            const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
 
             res.cookie("token", accessToken, {
-                httpOnly: true
+                httpOnly: true,
+                secure: true
             });
 
-            //return res.redirect("/user/my-account");
             next();
+
         } else {
+
             res.json({Error: "create token error"});
             return false;
+
         }
     }
 
@@ -95,7 +90,8 @@ class UserToken {
             const refreshToken = jwt.sign(user.toJSON(), process.env.REFRESH_TOKEN_SECRET, {expiresIn: '24h'});
 
             res.cookie("refreshToken", refreshToken, {
-                httpOnly: true
+                httpOnly: true,
+                secure: true
             });
 
             next();
@@ -135,17 +131,34 @@ class UserToken {
 
             if (err) {
                 return res.sendStatus(401);
-                // TODO : Check that user has still access right and that it still exists in database
+                
+            } else {
+
+                console.log('user in refresh token');
+
                 delete user.iat;
                 delete user.exp;
 
+                console.log(user);
+
+                const newAccessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
+
+                res.cookie("token", newAccessToken, {
+                    httpOnly: true,
+                    secure: true
+                });
+                
+
+                // TODO : Check that user has still access right and that it still exists in database
                 /*
                 Generate a new token in the route, pass the middlewares in the following orders: 
                 authToken, authRefreshToken, createToken
                 */
+
+                next();
             }
 
-        })
+        });
     
     }
 
