@@ -7,7 +7,8 @@ const app = express();
 require('dotenv').config();
 
 const cookies = require("cookie-parser");
-app.use(cookies());
+//TODO : replace cookies secret by a .env variable
+app.use(cookies('yourSecretGoesHere')); 
 
 const corsOptions = {
     origin: "http://localhost:8081"

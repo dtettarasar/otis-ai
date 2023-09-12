@@ -65,7 +65,8 @@ class UserToken {
 
             res.cookie("token", accessToken, {
                 httpOnly: true,
-                secure: true
+                secure: true,
+                signed: true
             });
 
             next();
@@ -91,7 +92,8 @@ class UserToken {
 
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
-                secure: true
+                secure: true,
+                signed: true
             });
 
             next();
@@ -106,7 +108,7 @@ class UserToken {
 
     authToken(req, res, next) {
 
-        const token = req.cookies.token;
+        const token = req.signedCookies.token;
     
         try {
     
@@ -125,7 +127,7 @@ class UserToken {
 
     authRefreshToken(req, res, next) {
 
-        const refreshToken = req.cookies.refreshToken;
+        const refreshToken = req.signedCookies.refreshToken;
 
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
 
@@ -145,7 +147,8 @@ class UserToken {
 
                 res.cookie("token", newAccessToken, {
                     httpOnly: true,
-                    secure: true
+                    secure: true,
+                    signed: true
                 });
                 
 

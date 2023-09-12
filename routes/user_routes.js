@@ -30,26 +30,11 @@ router.get('/login', (req, res) => {
 
 router.post('/login', userToken.checkUserAuth, userToken.createToken, userToken.createRefreshToken, async (req, res) => {
 
-    //const token = await userToken.createToken(req, res);
-
     return res.redirect("/user/my-account");
-
-    /*
-    const userObj = {
-        username: req.body.username,
-        password: req.body.psw
-    };*/
-
-    //const testUser = await userToken.checkUserAuth(req, res);
-    //console.log(testUser);
-
-    //res.json({test: 'test'});
 
 });
 
 router.post('/refresh-token', userToken.authToken, userToken.authRefreshToken, (req, res) => {
-
-    //res.json(req.user);
 
     return res.redirect("/user/my-account");
     
