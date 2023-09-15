@@ -61,12 +61,13 @@ class UserToken {
 
         if (user) {
 
-            const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
+            const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {expiresIn: '25m'});
 
             res.cookie("token", accessToken, {
                 httpOnly: true,
                 secure: true,
-                signed: true
+                signed: true,
+                sameSite: 'strict'
             });
 
             next();
@@ -88,12 +89,13 @@ class UserToken {
 
         if (user) {
 
-            const refreshToken = jwt.sign(user.toJSON(), process.env.REFRESH_TOKEN_SECRET, {expiresIn: '24h'});
+            const refreshToken = jwt.sign(user.toJSON(), process.env.REFRESH_TOKEN_SECRET, {expiresIn: '4h'});
 
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
                 secure: true,
-                signed: true
+                signed: true,
+                sameSite: 'strict'
             });
 
             next();
@@ -143,12 +145,13 @@ class UserToken {
 
                 console.log(user);
 
-                const newAccessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
+                const newAccessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '25m'});
 
                 res.cookie("token", newAccessToken, {
                     httpOnly: true,
                     secure: true,
-                    signed: true
+                    signed: true,
+                    sameSite: 'strict'
                 });
                 
 
