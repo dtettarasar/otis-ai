@@ -14,7 +14,7 @@ router.get('/test', (req, res) => {
 
 router.get('/register', (req, res) => {
     //res.sendFile(__dirname + '/views/new-user.html');
-    res.render('new-user');
+    res.render('user/new-user');
 });
 
 router.post('/register', async (req, res) => {
@@ -25,7 +25,7 @@ router.post('/register', async (req, res) => {
 
 router.get('/login', (req, res) => {
     //res.sendFile(__dirname + '/views/login.html');
-    res.render('login');
+    res.render('user/login');
 });
 
 router.post('/login', userToken.checkUserAuth, userToken.createToken, userToken.createRefreshToken, async (req, res) => {
@@ -48,7 +48,7 @@ router.get('/my-account', userToken.authToken, (req, res) => {
         user: req.user
     }
     
-    res.render('user-account', userInfo);
+    res.render('user/user-account', userInfo);
     
 })
 

@@ -127,13 +127,14 @@ class UserToken {
     
     }
 
-    authRefreshToken(req, res, next) {
+    async authRefreshToken(req, res, next) {
 
         const refreshToken = req.signedCookies.refreshToken;
 
-        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, user) => {
 
             if (err) {
+
                 return res.sendStatus(401);
                 
             } else {
@@ -145,15 +146,22 @@ class UserToken {
 
                 console.log(user);
 
-                const newAccessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '25m'});
+                const checkUserID = await dataBase.findUserById(user['_id']);
 
-                res.cookie("token", newAccessToken, {
-                    httpOnly: true,
-                    secure: true,
-                    signed: true,
-                    sameSite: 'strict'
-                });
-                
+                console.log(checkUserID);
+
+                if (checkUserID) {
+
+                    const newAccessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '25m'});
+
+                    res.cookie("token", newAccessToken, {
+                        httpOnly: true,
+                        secure: true,
+                        signed: true,
+                        sameSite: 'strict'
+                    });
+
+                }
 
                 // TODO : Check that user has still access right and that it still exists in database
                 /*

@@ -93,6 +93,15 @@ class DataBase {
 
     }
 
+    async findUserById(userID) {
+
+        const query = UserModel.findById(userID);
+        const userFound = await query.exec();
+
+        return userFound;
+
+    }
+
     async getUserPsw(userID) {
 
         const query = UserModel.findById(userID);
