@@ -24,13 +24,18 @@ router.post('/register', async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    //res.sendFile(__dirname + '/views/login.html');
     res.render('user/login');
 });
 
 router.post('/login', userToken.checkUserAuth, userToken.createToken, userToken.createRefreshToken, async (req, res) => {
 
     return res.redirect("/user/my-account");
+
+});
+
+router.get('/logout', userToken.authToken, userToken.logout, (req, res) => {
+
+    return res.redirect("/");
 
 });
 

@@ -30,10 +30,8 @@ class UserToken {
             const userToCheckAuth = usernameInDB[0];
 
             const hashObj = await dataBase.getUserPsw(userToCheckAuth._id);
-            //console.log(hashObj);
 
             const checkHash = await strHasher.method.checkHash(userObj.password, hashObj.password);
-            //console.log(checkHash);
 
             if (!checkHash) {
 
@@ -43,8 +41,6 @@ class UserToken {
 
             }
 
-            //return usernameInDB[0];
-            //console.log(usernameInDB[0]);
             res.locals.userData = usernameInDB[0];
             next();
 
@@ -61,7 +57,7 @@ class UserToken {
 
         if (user) {
 
-            const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {expiresIn: '25m'});
+            const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
 
             res.cookie("token", accessToken, {
                 httpOnly: true,
@@ -127,6 +123,25 @@ class UserToken {
     
     }
 
+    logout(req, res, next) {
+
+        try {
+
+            res.clearCookie("token");
+            res.clearCookie("refreshToken");
+
+            next();
+
+        } catch (errMsg) {
+
+            res.json({
+                error: errMsg
+            })
+
+        }
+
+    }
+
     async authRefreshToken(req, res, next) {
 
         const refreshToken = req.signedCookies.refreshToken;
@@ -162,12 +177,6 @@ class UserToken {
                     });
 
                 }
-
-                // TODO : Check that user has still access right and that it still exists in database
-                /*
-                Generate a new token in the route, pass the middlewares in the following orders: 
-                authToken, authRefreshToken, createToken
-                */
 
                 next();
             }
