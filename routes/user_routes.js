@@ -13,7 +13,6 @@ router.get('/test', (req, res) => {
 })
 
 router.get('/register', (req, res) => {
-    //res.sendFile(__dirname + '/views/new-user.html');
     res.render('user/new-user');
 });
 
@@ -49,11 +48,31 @@ router.get('/my-account', userToken.authToken, (req, res) => {
 
     const userInfo = {
         Success: true,
-        AccessToken: req.cookies.token,
+        accessToken: req.signedCookies.token,
+        refreshToken: req.signedCookies.refreshToken,
         user: req.user
     }
     
+    console.log("access to /my-account route");
+    console.log(userInfo);
+
     res.render('user/user-account', userInfo);
+    
+})
+
+router.get('/api-keys' , userToken.authToken, (req, res) => {
+
+    const userInfo = {
+        Success: true,
+        accessToken: req.signedCookies.token,
+        refreshToken: req.signedCookies.refreshToken,
+        user: req.user
+    }
+
+    console.log("access to /api-keys route");
+    console.log(userInfo);
+
+    res.render('user/api-keys', userInfo);
     
 })
 
