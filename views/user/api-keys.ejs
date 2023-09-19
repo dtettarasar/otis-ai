@@ -8,5 +8,23 @@
         <h2>Welcome <%= user.username %>!</h2>
         <h3>Your API Keys</h3>
 
+        <h4>Create a new API key</h4>
+
+        <form action="/user/add-api-key" method="post">
+            <div class="container">
+                <p>Please use the form below to add your API keys.</p>
+                <hr>
+
+                <label for="org-id"><b>Organization ID</b></label>
+                <input type="text" placeholder="Enter Organization ID" name="org-id" id="org-id" required>
+            
+                <label for="secret-key"><b>Key</b></label>
+                <input type="password" placeholder="Enter you secret API Key" name="secret-key" id="secret-key" required>
+            
+                <button type="submit">Add API Key</button>
+            </div>
+            
+        </form>
+
     </body>
 </html>
