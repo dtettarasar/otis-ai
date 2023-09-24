@@ -76,4 +76,24 @@ router.get('/api-keys' , userToken.authToken, (req, res) => {
     
 })
 
+router.post('/add-api-key', userToken.authToken, (req, res) => {
+
+    console.log("req body: ")
+    console.log(req.body);
+
+    const apiKeyData = {
+        keyName: req.body.keyname,
+        orgId: req.body.orgid,
+        secretKey: req.body.secretkey,
+        primaryKey: req.body.primarykey === 'true' ? true : false,
+        userId: req.user._id
+    }
+
+    console.log("api Key Data");
+    console.log(apiKeyData);
+
+    res.json(apiKeyData);
+
+})
+
 module.exports = router;
