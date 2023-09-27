@@ -76,8 +76,9 @@ router.get('/api-keys' , userToken.authToken, (req, res) => {
     
 })
 
-router.post('/add-api-key', userToken.authToken, (req, res) => {
+router.post('/add-api-key', userToken.authToken, dataBase.addApiKey, (req, res) => {
 
+    /*
     console.log("req body: ")
     console.log(req.body);
 
@@ -91,8 +92,9 @@ router.post('/add-api-key', userToken.authToken, (req, res) => {
 
     console.log("api Key Data");
     console.log(apiKeyData);
+    */
 
-    res.json(apiKeyData);
+    res.send('test add api key');
 
 })
 

@@ -2,6 +2,7 @@ const env = require('dotenv').config();
 const mongoose = require('mongoose');
 const roleModel = require('../models/role.model');
 const UserModel = require('../models/user.model');
+const ApiKeyModel = require('../models/apikey.model');
 
 class DataBase {
 
@@ -109,6 +110,40 @@ class DataBase {
         const userPsw = await query.exec();
 
         return userPsw;
+
+    }
+
+    async addApiKey(req, res, next) {
+
+        console.log("req body: ")
+        console.log(req.body);
+
+        const apiKeyData = {
+            keyName: req.body.keyname,
+            orgId: req.body.orgid,
+            secretKey: req.body.secretkey,
+            primaryKey: req.body.primarykey === 'true' ? true : false,
+            userId: req.user._id
+        }
+
+        const apiKeyObj = new ApiKeyModel(apiKeyData);
+
+        console.log("api Key Data");
+        console.log(apiKeyData);
+
+        try {
+
+            const apikey = await apiKeyObj.save();
+            console.log(apikey);
+            //res.json(apikey);
+            
+        } catch (err) {
+    
+            console.log(err);
+            res.json({Error: err});
+        }
+
+        next();
 
     }
 
