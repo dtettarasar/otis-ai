@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-start": "nodemon server.js",
     "start": "node server.js",
-    "get-secrets" : "node secrets_generator.js"
+    "get-secrets": "node secrets_generator.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "jsonwebtoken": "^9.0.1",
     "mongodb": "^5.7.0",
     "mongoose": "^7.4.1",
-    "openai": "^3.3.0"
+    "openai": "^3.3.0",
+    "stripe": "^13.9.0"
   }
 }
