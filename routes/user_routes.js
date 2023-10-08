@@ -52,6 +52,17 @@ router.get('/my-account', userToken.authToken, (req, res) => {
         refreshToken: req.signedCookies.refreshToken,
         user: req.user
     }
+
+    /*
+    TODO: 
+
+    - ne passer dans le token que le userID
+
+    - récupérer ici le userID pour faire une requête dans laquelle on va récupérer les données à afficher sur la page à savoir le username et le solde de crédit.
+
+    - dans render, inutile de passer tous les éléments comme les token, ne passer que les infos dont on a besoin pour la view (username + crédit).
+    
+    */
     
     console.log("access to /my-account route");
     console.log(userInfo);
