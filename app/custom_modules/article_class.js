@@ -1,5 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai");
-const fs = require('fs');
+const env = require('dotenv').config();
 
 class Article {
 
@@ -26,19 +26,10 @@ class Article {
 
     initApiConfig() {
 
-        let configData = null;
-
-        try {
-
-            let rawdata = fs.readFileSync(this.getApiFileLink());
-            configData = JSON.parse(rawdata);
-        
-        } catch (error) {
-        
-            console.log(error);
-            return false;
-        
-        }
+        let configData = {
+            organization: process.env.OPEN_AI_ORG,
+            apiKey: process.env.OPEN_AI_KEY
+        };
 
         console.log(configData);
         const configuration = new Configuration(configData);
@@ -91,8 +82,7 @@ class Article {
 
 const articleObj = new Article(["data fabric", "ai", "environment issues", "ecology"], 'fr', 'config.json');
 articleObj.generateArticle();
-//console.log(articleObj.getGeneratedArticle());
-
+console.log(articleObj.getGeneratedArticle());
 
 //TODO
 //convert API response to markdown file
