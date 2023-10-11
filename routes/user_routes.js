@@ -46,17 +46,23 @@ router.post('/refresh-token', userToken.authToken, userToken.authRefreshToken, (
 
 router.get('/my-account', userToken.authToken, (req, res) => {
 
-    const userInfo = {
+    const tokenData = {
         Success: true,
         accessToken: req.signedCookies.token,
         refreshToken: req.signedCookies.refreshToken,
         user: req.user
     }
 
+    const userInfo = {
+        username: req.user.username
+    }
+
     /*
     TODO: 
 
     - ne passer dans le token que le userID
+
+    - créer dans db.config.js une fonction qui permet de récup le username et le credit pour la page my account
 
     - récupérer ici le userID pour faire une requête dans laquelle on va récupérer les données à afficher sur la page à savoir le username et le solde de crédit.
 

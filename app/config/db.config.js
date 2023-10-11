@@ -113,6 +113,16 @@ class DataBase {
 
     }
 
+    async getUserCrd(userID) {
+
+        const query = UserModel.findById(userID);
+        query.select('_id credit');
+        const userCrd = await query.exec();
+
+        return userCrd;
+
+    }
+
     async addApiKey(req, res, next) {
 
         console.log("req body: ")
