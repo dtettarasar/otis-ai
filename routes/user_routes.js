@@ -44,7 +44,7 @@ router.post('/refresh-token', userToken.authToken, userToken.authRefreshToken, (
     
 })
 
-router.get('/my-account', userToken.authToken, (req, res) => {
+router.get('/my-account', userToken.authToken, async (req, res) => {
 
     const tokenData = {
         Success: true,
@@ -54,8 +54,9 @@ router.get('/my-account', userToken.authToken, (req, res) => {
     }
 
     const userInfo = {
-        username: req.user.username
-    }
+        username: await dataBase.getUserName(req.user['_id']),
+        credit: await dataBase.getUserCrd(req.user['_id'])
+    };
 
     /*
     TODO: 
