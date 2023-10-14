@@ -12,8 +12,14 @@ DB_URL="mongodb+srv://<username>:<password>@<clustername>.0a0a0a0.mongodb.net/ot
 in th .env file, add the required variables to build the connection with your Open AI account
 
 ~~~
-OPEN_AI_ORG='your open ai org id'
-OPEN_AI_KEY='your open ai api key'
+OPEN_AI_ORG='org-6Z*********************m'
+OPEN_AI_KEY='sk-ty********************************************cp'
+~~~
+
+## Add to Stripe API Key to handle payments: 
+
+~~~
+STRIPE_KEY='sk_51********************************************************************************************ps'
 ~~~
 
 ## Generate the required secrets 
