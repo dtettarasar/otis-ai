@@ -16,7 +16,7 @@ OPEN_AI_ORG='org-6Z*********************m'
 OPEN_AI_KEY='sk-ty********************************************cp'
 ~~~
 
-## Add to Stripe API Key to handle payments: 
+## Add the Stripe API Key to handle payments: 
 In the .env file, add the Stripe secret API key to handle payments
 
 ~~~
