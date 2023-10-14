@@ -78,6 +78,27 @@ router.get('/my-account', userToken.authToken, async (req, res) => {
     
 })
 
+router.get('/add-credits', userToken.authToken, async (req, res) => {
+
+    const tokenData = {
+        Success: true,
+        accessToken: req.signedCookies.token,
+        refreshToken: req.signedCookies.refreshToken,
+        user: req.user
+    }
+
+    const userInfo = {
+        username: await dataBase.getUserName(req.user['_id']),
+        credit: await dataBase.getUserCrd(req.user['_id'])
+    };
+
+    console.log("access to /add-credits");
+    console.log(userInfo);
+
+    res.render('user/add-credits', userInfo);
+
+})
+
 router.get('/api-keys' , userToken.authToken, (req, res) => {
 
     const userInfo = {
