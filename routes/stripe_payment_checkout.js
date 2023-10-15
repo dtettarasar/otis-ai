@@ -15,27 +15,30 @@ const YOUR_DOMAIN = `http://localhost:${PORT}`;
 
 router.post('/create-checkout-session', async(req, res) => {
 
-    const product = await stripe.products.create({
-        name:'Otis-Credit'
+
+    const session = await stripe.checkout.sessions.create({
+
+        line_items: [
+            {
+                price_data: {
+                    currency: 'eur',
+                    product_data: {
+                        name:'Otis-Credit'
+                    },
+                    unit_amount: 100
+                },
+                quantity: 1
+            }
+        ],
+        mode: 'payment',
+        success_url: `${YOUR_DOMAIN}/payment-checkout/success`,
+        cancel_url: `${YOUR_DOMAIN}/payment-checkout/cancel`
+
     });
 
-    
-    const price = await stripe.prices.create({
-        
-        product: product.id,
-        unit_amount: 100,
-        currency: 'eur',
+    console.log(session);
 
-    });
-    
-
-    res.json({
-        domain:YOUR_DOMAIN,
-        post: "create-checkout-session",
-        stripeKey: process.env.STRIPE_KEY,
-        productData: product,
-        priceData: price
-    })
+    res.redirect(303, session.url);
 })
 
 
