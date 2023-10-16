@@ -10,12 +10,17 @@ const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 const PORT = process.env.PORT || 8080;
 
-const YOUR_DOMAIN = `http://localhost:${PORT}`;
+//const YOUR_DOMAIN = `http://localhost:${PORT}`;
 
 
 router.post('/create-checkout-session', async(req, res) => {
 
     const crdQuantity = req.body.quantity;
+
+    /* build the address for the success url and cancel url */
+    const urlHost = req.headers['x-forwarded-host'];
+    const urlProto = req.headers['x-forwarded-proto'];
+    const address = `${urlProto}://${urlHost}`;
 
     const session = await stripe.checkout.sessions.create({
 
@@ -32,8 +37,8 @@ router.post('/create-checkout-session', async(req, res) => {
             }
         ],
         mode: 'payment',
-        success_url: `${YOUR_DOMAIN}/payment-checkout/success`,
-        cancel_url: `${YOUR_DOMAIN}/payment-checkout/cancel`
+        success_url: `${address}/payment-checkout/success`,
+        cancel_url: `${address}/payment-checkout/cancel`
 
     });
 
