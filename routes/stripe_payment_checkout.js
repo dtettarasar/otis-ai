@@ -15,6 +15,7 @@ const YOUR_DOMAIN = `http://localhost:${PORT}`;
 
 router.post('/create-checkout-session', async(req, res) => {
 
+    const crdQuantity = req.body.quantity;
 
     const session = await stripe.checkout.sessions.create({
 
@@ -27,7 +28,7 @@ router.post('/create-checkout-session', async(req, res) => {
                     },
                     unit_amount: 100
                 },
-                quantity: 1
+                quantity: crdQuantity
             }
         ],
         mode: 'payment',
@@ -35,8 +36,6 @@ router.post('/create-checkout-session', async(req, res) => {
         cancel_url: `${YOUR_DOMAIN}/payment-checkout/cancel`
 
     });
-
-    console.log(session);
 
     res.redirect(303, session.url);
 })
