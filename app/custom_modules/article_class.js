@@ -13,8 +13,6 @@ class Article {
             es: 'spanish'
         };
 
-        this.apiFileLink = 'configuration_files/' + apiFileName;
-
         this.textRequest = `write an article optimized for search engine. to define the topics of the article and the lexical field, use the following keywords: ${this.keywords}. 
         it should be written in markdown format. the language of the article should be ${this.language[chosenLanguage]}.
         the article should contain subtitles for each section. at the end of the article, add a section in which you mention the sources used to create the article.
