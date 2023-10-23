@@ -45,5 +45,12 @@ router.post('/create-checkout-session', async(req, res) => {
     res.redirect(303, session.url);
 })
 
+router.get('/success', (req, res) => {
+    res.render('payment/success');
+})
+
+router.get('/cancel', (req, res) => {
+    res.render('payment/cancel');
+})
 
 module.exports = router;
