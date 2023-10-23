@@ -2,6 +2,7 @@
 Documentation: 
 https://stripe.com/docs/payments/accept-a-payment?platform=web&ui=checkout
 https://stripe.com/docs/checkout/quickstart
+https://stripe.com/docs/webhooks/quickstart?lang=node
 */
 
 const express = require('express');
