@@ -60,6 +60,8 @@ router.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
 
         try {
 
+            // To check: wrong variable name:  endpointSecret should be replaced by stripeEndpointSecret
+
             event = stripe.webhooks.constructEvent(
                 request.body,
                 signature,
