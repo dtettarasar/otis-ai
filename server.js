@@ -19,15 +19,24 @@ app.set('view engine', 'ejs');
 
 app.use(cors(corsOptions));
 
+// necessary condition to avoid using express.json in the stripe_payment route
+app.use((req, res, next) => {
+    if (req.originalUrl.includes('/user')) {
+        express.json()(req, res, next);
+    } else {
+        next();
+    }
+});
+
 // parse requests of content-type - application/json
-app.use(express.json());
+//app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.use('/user', userRouter);
-app.use('/payment-checkout', stripePaymentRouter);
+app.use('/payment-api', stripePaymentRouter);
 
 app.get('/', (req, res) => {
     //res.sendFile(__dirname + '/views/index.html');

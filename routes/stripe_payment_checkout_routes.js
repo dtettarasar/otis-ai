@@ -14,6 +14,57 @@ const stripeEndpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 
 const PORT = process.env.PORT || 8080;
 
+router.use(express.json({
+    limit: '5mb',
+    verify: (req, res, buf) => {
+        req.rawBody = buf.toString();
+    }
+}));
+
+router.post('/webhook', (request, response) => {
+
+    console.log('start webhook route -------------------------------');
+
+    const sig = request.headers['stripe-signature'];
+    console.log("sig data");
+    console.log(sig);
+    let event;
+
+    try {
+        event = stripe.webhooks.constructEvent(request.rawBody, sig, stripeEndpointSecret);
+    } catch (err) {
+        console.log(`Webhook Error: ${err.message}`);
+        response.status(400).send(`Webhook Error: ${err.message}`);
+        return;
+    }
+
+    switch (event.type) {
+
+        case 'payment_intent.succeeded':
+            const paymentIntent = event.data.object;
+            console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
+            // Then define and call a method to handle the successful payment intent.
+            // handlePaymentIntentSucceeded(paymentIntent);
+            break;
+        
+        case 'payment_method.attached':
+            const paymentMethod = event.data.object;
+            // Then define and call a method to handle the successful attachment of a PaymentMethod.
+            // handlePaymentMethodAttached(paymentMethod);
+            break;
+
+        default:
+            // Unexpected event type
+            console.log(`Unhandled event type ${event.type}.`);
+
+    }
+
+    console.log('end webhook route -------------------------------');
+
+    // Renvoie une réponse 200 pour confirmer la réception de l'événement
+    response.send();
+});
+
 router.post('/create-checkout-session', async(req, res) => {
 
     const crdQuantity = req.body.quantity;
@@ -38,72 +89,36 @@ router.post('/create-checkout-session', async(req, res) => {
             }
         ],
         mode: 'payment',
-        success_url: `${address}/payment-checkout/success`,
-        cancel_url: `${address}/payment-checkout/cancel`
+        success_url: `${address}/payment-api/success`,
+        cancel_url: `${address}/payment-api/cancel`
 
     });
 
     res.redirect(303, session.url);
 })
 
-router.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {   
+function addRawBody(req, res, next) {
+    req.setEncoding('utf8');
+  
+    var data = '';
+  
+    req.on('data', function(chunk) {
+      data += chunk;
+    });
+  
+    req.on('end', function() {
+      req.rawBody = data;
+  
+      next();
+    });
+}
 
-    // Only verify the event if you have an endpoint secret defined.
-    // Otherwise use the basic event deserialized with JSON.parse
-
-    let event = req.body;
-
-    if (stripeEndpointSecret) {
-
-        // Get the signature sent by Stripe
-        const signature = request.headers['stripe-signature'];
-
-        try {
-
-            // To check: wrong variable name:  endpointSecret should be replaced by stripeEndpointSecret
-
-            event = stripe.webhooks.constructEvent(
-                request.body,
-                signature,
-                endpointSecret
-            );
-
-
-        } catch (err) {
-
-            console.log(`Webhook signature verification failed.`, err.message);
-            return response.sendStatus(400);
-
-        }
-
-    }
-
-    // Handle event
-    switch (event.type) {
-
-        case 'payment_intent.succeeded':
-            const paymentIntent = event.data.object;
-            console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
-            // Then define and call a method to handle the successful payment intent.
-            // handlePaymentIntentSucceeded(paymentIntent);
-            break;
-        
-        case 'payment_method.attached':
-            const paymentMethod = event.data.object;
-            // Then define and call a method to handle the successful attachment of a PaymentMethod.
-            // handlePaymentMethodAttached(paymentMethod);
-            break;
-
-        default:
-            // Unexpected event type
-            console.log(`Unhandled event type ${event.type}.`);
-
-    }
-
-    // Return a 200 response to acknowledge receipt of the event
-    response.sendStatus(200);
-
-})
+router.get('/webhook', (req, res) => {
+    console.log(stripeEndpointSecret);
+    res.json({
+        endpoint: 'test'
+    })
+} )
 
 router.get('/success', (req, res) => {
     res.render('payment/success');
