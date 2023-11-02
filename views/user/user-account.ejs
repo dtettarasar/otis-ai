@@ -5,7 +5,8 @@
     </head>
     <body>
         <h1>Otis AI</h1>
-        <h2>Welcome <%= user.username %>!</h2>
+        <h2>Welcome <%= username %>!</h2>
+        <h3>Your credit: <%= credit %></h3>
         <h3>Your SEO content</h3>
         <ul>
             <li><a href="#">my articles</a></li>
@@ -13,7 +14,7 @@
         </ul>
         <h3>Settings</h3>
         <ul>
-            <li><a href="/user/api-keys">manage api keys</a></li>
+            <li><a href="/user/add-credits">buy credits</a></li>
             <li><a href="#">change password</a></li>
         </ul>
         <a href="/user/logout">logout</a>
