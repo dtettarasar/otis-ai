@@ -26,8 +26,6 @@ router.post('/webhook', (request, response) => {
     console.log('start webhook route -------------------------------');
 
     const sig = request.headers['stripe-signature'];
-    console.log("sig data");
-    console.log(sig);
     let event;
 
     try {
@@ -38,19 +36,35 @@ router.post('/webhook', (request, response) => {
         return;
     }
 
+    // Handle all Stripe event
     switch (event.type) {
 
         case 'payment_intent.succeeded':
-            const paymentIntent = event.data.object;
-            console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
+            const paymentIntentSuccess = event.data.object;
+            console.log(`PaymentIntent for ${paymentIntentSuccess.amount} was successful!`);
             // Then define and call a method to handle the successful payment intent.
             // handlePaymentIntentSucceeded(paymentIntent);
+            break;
+
+        case 'payment_intent.created':
+            const paymentIntentCreated = event.data.object;
+            console.log(`PaymentIntent for ${paymentIntentCreated.amount} is created`);
             break;
         
         case 'payment_method.attached':
             const paymentMethod = event.data.object;
             // Then define and call a method to handle the successful attachment of a PaymentMethod.
             // handlePaymentMethodAttached(paymentMethod);
+            break;
+        
+        case 'charge.succeeded':
+            const chargeData = event.data.object;
+            console.log('Charge succeeded');
+            break;
+        
+        case 'checkout.session.completed':
+            const checkoutData = event.data.object;
+            console.log("checkout session complete");
             break;
 
         default:
