@@ -17,10 +17,11 @@ OPEN_AI_KEY='sk-ty********************************************cp'
 ~~~
 
 ## Add the Stripe API Key to handle payments: 
-In the .env file, add the Stripe secret API key to handle payments
+In the .env file, add the Stripe secret API key to handle payments, & the endpoint secret to handle webhooks
 
 ~~~
 STRIPE_KEY='sk_51********************************************************************************************ps'
+STRIPE_ENDPOINT_SECRET="whsec_8mb**********************************************************79m"
 ~~~
 
 ## Generate the required secrets 
