@@ -8,7 +8,6 @@ const app = express();
 require('dotenv').config();
 
 const cookies = require("cookie-parser");
-//TODO : replace cookies secret by a .env variable
 app.use(cookies(process.env.COOKIE_SIGNATURE_SECRET));
 
 const corsOptions = {
@@ -19,6 +18,7 @@ app.set('view engine', 'ejs');
 
 app.use(cors(corsOptions));
 
+// parse requests of content-type - application/json
 // necessary condition to avoid using express.json in the stripe_payment route
 app.use((req, res, next) => {
     if (req.originalUrl.includes('/user')) {
@@ -27,9 +27,6 @@ app.use((req, res, next) => {
         next();
     }
 });
-
-// parse requests of content-type - application/json
-//app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
