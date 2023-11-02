@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 
 const userRouter = require('./routes/user_routes');
-const stripePaymentRouter = require('./routes/stripe_payment_checkout_routes');
+const stripePaymentRouter = require('./routes/stripe_api_routes');
 
 const app = express();
 require('dotenv').config();

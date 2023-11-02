@@ -50,6 +50,11 @@ router.post('/webhook', (request, response) => {
             const paymentIntentCreated = event.data.object;
             console.log(`PaymentIntent for ${paymentIntentCreated.amount} is created`);
             break;
+
+        case 'payment_intent.payment_failed':
+            const paymentIntentFail = event.data.object;
+            console.log(`Error: PaymentIntent for ${paymentIntentFail.amount} has failed.`);
+            break;
         
         case 'payment_method.attached':
             const paymentMethod = event.data.object;
@@ -57,14 +62,23 @@ router.post('/webhook', (request, response) => {
             // handlePaymentMethodAttached(paymentMethod);
             break;
         
+        case 'payment_intent.requires_action':
+            const paymentActionRequired = event.data.object;
+            break;
+        
         case 'charge.succeeded':
-            const chargeData = event.data.object;
+            const chargeSuccess = event.data.object;
             console.log('Charge succeeded');
             break;
         
         case 'checkout.session.completed':
             const checkoutData = event.data.object;
             console.log("checkout session complete");
+            break;
+
+        case 'charge.failed':
+            const chargeFail = event.data.object;
+            console.log('Error: Charge failed');
             break;
 
         default:
