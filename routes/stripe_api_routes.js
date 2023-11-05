@@ -14,6 +14,10 @@ const stripeEndpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 
 const PORT = process.env.PORT || 8080;
 
+// page links required by Stripe for the checkout sessions
+const successUrl = `https://${process.env.WEBSITE_DOMAIN}/payment-api/success`;
+const cancelUrl = `https://${process.env.WEBSITE_DOMAIN}/payment-api/cancel`;
+
 router.use(express.json({
     limit: '5mb',
     verify: (req, res, buf) => {
@@ -98,9 +102,9 @@ router.post('/create-checkout-session', async(req, res) => {
     const crdQuantity = req.body.quantity;
 
     /* build the address for the success url and cancel url */
-    const urlHost = req.headers['x-forwarded-host'];
-    const urlProto = req.headers['x-forwarded-proto'];
-    const address = `${urlProto}://${urlHost}`;
+    // const urlHost = req.headers['x-forwarded-host'];
+    // const urlProto = req.headers['x-forwarded-proto'];
+    // const address = `${urlProto}://${urlHost}`;
 
     const session = await stripe.checkout.sessions.create({
 
@@ -117,8 +121,8 @@ router.post('/create-checkout-session', async(req, res) => {
             }
         ],
         mode: 'payment',
-        success_url: `${address}/payment-api/success`,
-        cancel_url: `${address}/payment-api/cancel`
+        success_url: successUrl,
+        cancel_url: cancelUrl
 
     });
 
