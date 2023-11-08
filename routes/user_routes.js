@@ -54,6 +54,7 @@ router.get('/my-account', userToken.authToken, async (req, res) => {
     }
 
     const userInfo = {
+        userId: req.user['_id'],
         username: await dataBase.getUserName(req.user['_id']),
         credit: await dataBase.getUserCrd(req.user['_id'])
     };
@@ -88,6 +89,7 @@ router.get('/add-credits', userToken.authToken, async (req, res) => {
     }
 
     const userInfo = {
+        userId: req.user['_id'],
         username: await dataBase.getUserName(req.user['_id']),
         credit: await dataBase.getUserCrd(req.user['_id'])
     };
