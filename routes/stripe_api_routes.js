@@ -34,6 +34,7 @@ router.post('/webhook', (request, response) => {
 
     try {
         event = stripe.webhooks.constructEvent(request.rawBody, sig, stripeEndpointSecret);
+        //console.log(event);
     } catch (err) {
         console.log(`Webhook Error: ${err.message}`);
         response.status(400).send(`Webhook Error: ${err.message}`);
@@ -78,6 +79,13 @@ router.post('/webhook', (request, response) => {
         case 'checkout.session.completed':
             const checkoutData = event.data.object;
             console.log("checkout session complete");
+            // TODO : create the order object here + update credit balance here.
+            // In the order object store the 2 following datas:
+            console.log("event id");
+            console.log(event.id);
+            console.log('----');
+            console.log('checkout session ID');
+            console.log(event.data.object.id);
             break;
 
         case 'charge.failed':
@@ -99,12 +107,9 @@ router.post('/webhook', (request, response) => {
 
 router.post('/create-checkout-session', async(req, res) => {
 
-    const crdQuantity = req.body.quantity;
+    console.log('start checkout session route -------------------------------');
 
-    /* build the address for the success url and cancel url */
-    // const urlHost = req.headers['x-forwarded-host'];
-    // const urlProto = req.headers['x-forwarded-proto'];
-    // const address = `${urlProto}://${urlHost}`;
+    const crdQuantity = req.body.quantity;
 
     const session = await stripe.checkout.sessions.create({
 
@@ -125,6 +130,8 @@ router.post('/create-checkout-session', async(req, res) => {
         cancel_url: cancelUrl
 
     });
+
+    console.log('end checkout session route -------------------------------');
 
     res.redirect(303, session.url);
 })
