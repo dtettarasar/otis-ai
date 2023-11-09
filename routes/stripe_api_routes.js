@@ -9,6 +9,13 @@ const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 
+const userTokenClass = require('../app/custom_modules/user_token_class');
+const userToken = new userTokenClass();
+
+const dataBaseClass = require('../app/config/db.config');
+const dataBase = new dataBaseClass();
+dataBase.initDB();
+
 // get the secret here: https://dashboard.stripe.com/webhooks
 const stripeEndpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 
@@ -25,7 +32,7 @@ router.use(express.json({
     }
 }));
 
-router.post('/webhook', (request, response) => {
+router.post('/webhook', async (request, response) => {
 
     console.log('start webhook route -------------------------------');
 
@@ -105,9 +112,24 @@ router.post('/webhook', (request, response) => {
     response.send();
 });
 
-router.post('/create-checkout-session', async(req, res) => {
+router.post('/create-checkout-session', userToken.authToken, async(req, res) => {
 
     console.log('start checkout session route -------------------------------');
+
+    const tokenData = {
+        Success: true,
+        accessToken: req.signedCookies.token,
+        refreshToken: req.signedCookies.refreshToken,
+        user: req.user
+    }
+
+    const userInfo = {
+        userId: req.user['_id'],
+        username: await dataBase.getUserName(req.user['_id']),
+        credit: await dataBase.getUserCrd(req.user['_id'])
+    };
+
+    console.log(userInfo);
 
     const crdQuantity = req.body.quantity;
 
