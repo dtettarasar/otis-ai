@@ -84,18 +84,43 @@ router.post('/webhook', async (request, response) => {
             break;
         
         case 'checkout.session.completed':
+
+            const orderObj = {};
+
             const checkoutData = event.data.object;
             console.log("checkout session complete");
             // TODO : create the order object here + update credit balance here.
             // In the order object store the 2 following datas:
+
+            const eventId = event.id;
+            const checkoutSessionId = event.data.object.id;
+
             console.log('checkout data');
-            console.log(checkoutData)
+            console.log(checkoutData);
             console.log('----');
             console.log("event id");
-            console.log(event.id);
+            console.log(eventId);
             console.log('----');
             console.log('checkout session ID');
-            console.log(event.data.object.id);
+            console.log(checkoutSessionId);
+            console.log('----');
+
+            // get customer data
+            await stripe.customers.retrieve(checkoutData.customer).then((customer) => {
+                console.log('customer data');
+                console.log(customer);
+            });
+
+            await stripe.checkout.sessions.listLineItems(checkoutSessionId,{ limit: 1 },
+                function(err, lineItems) {
+                    console.log(lineItems);
+                }
+            );
+
+            console.log('----');
+            console.log('orderObj');
+            console.log(orderObj);
+
             break;
 
         case 'charge.failed':
