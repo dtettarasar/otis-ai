@@ -95,29 +95,39 @@ router.post('/webhook', async (request, response) => {
             const eventId = event.id;
             const checkoutSessionId = event.data.object.id;
 
+            orderObj.stripeEventId = event.id;
+            orderObj.stripeSessionId = event.data.object.id;
+            orderObj.stripeCustomerId = checkoutData.customer;
+
             console.log('checkout data');
             console.log(checkoutData);
-            console.log('----');
-            console.log("event id");
-            console.log(eventId);
-            console.log('----');
-            console.log('checkout session ID');
-            console.log(checkoutSessionId);
             console.log('----');
 
             // get customer data
             await stripe.customers.retrieve(checkoutData.customer).then((customer) => {
                 console.log('customer data');
                 console.log(customer);
+                orderObj.otisUserId = customer.metadata.otisUserId;
             });
 
-            await stripe.checkout.sessions.listLineItems(checkoutSessionId,{ limit: 1 },
+            await stripe.checkout.sessions.listLineItems(orderObj.stripeSessionId,{ limit: 1 },
                 function(err, lineItems) {
                     console.log(lineItems);
                 }
             );
 
             console.log('----');
+
+            //build orderObj
+            /*
+            const orderObj = {
+                stripeEventId: eventId,
+                stripeSessionId: checkoutSessionId
+            };
+            */
+
+
+
             console.log('orderObj');
             console.log(orderObj);
 
