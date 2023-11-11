@@ -48,7 +48,7 @@ router.post('/webhook', async (request, response) => {
         return;
     }
 
-    // Handle all Stripe event
+    // Handle Stripe events
     switch (event.type) {
 
         case 'payment_intent.succeeded':
@@ -89,8 +89,6 @@ router.post('/webhook', async (request, response) => {
 
             const checkoutData = event.data.object;
             console.log("checkout session complete");
-            // TODO : create the order object here + update credit balance here.
-            // In the order object store the 2 following datas:
 
             const eventId = event.id;
             const checkoutSessionId = event.data.object.id;
@@ -103,31 +101,17 @@ router.post('/webhook', async (request, response) => {
             console.log(checkoutData);
             console.log('----');
 
-            // get customer data
+            // get Otis User ID from Stripe customer data
             await stripe.customers.retrieve(checkoutData.customer).then((customer) => {
-                console.log('customer data');
-                console.log(customer);
                 orderObj.otisUserId = customer.metadata.otisUserId;
-            });
+            }).catch((err) => {console.log(err.message)});
 
-            await stripe.checkout.sessions.listLineItems(orderObj.stripeSessionId,{ limit: 1 },
-                function(err, lineItems) {
-                    console.log(lineItems);
-                }
-            );
+            // get credit bought datas
+            const lineItems = await stripe.checkout.sessions.listLineItems(orderObj.stripeSessionId);
+            orderObj.crdQuantity = lineItems.data[0].quantity;
+            orderObj.amountPaid = lineItems.data[0].amount_total;
 
             console.log('----');
-
-            //build orderObj
-            /*
-            const orderObj = {
-                stripeEventId: eventId,
-                stripeSessionId: checkoutSessionId
-            };
-            */
-
-
-
             console.log('orderObj');
             console.log(orderObj);
 
@@ -171,8 +155,17 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
 
     console.log(userInfo);
 
+    // TODO
+    /*
+
+        Pour éviter de créer plusieurs objets customer dans la base de Stripe à chaque fois qu'un utilisateur achète des crédits: 
+        - ajouter un attribut stripe customer id, sur l'objet user, initié à null
+        - lors d'un achat de crédit : vérifier si l'utilisateur à un id customer stripe. Si oui, on passe cet id existant dans la cheskout session creation.
+        - Sinon on crée un customer Stripe pour l'utilisateur, puis sauvegarder l'id customer dans l'objet user
+
+    */
+
     const customer = await stripe.customers.create({
-        description: 'My First Test Customer (created for API docs at https://www.stripe.com/docs/api)',
         metadata:{
             otisUserId: userInfo.userId
         }
