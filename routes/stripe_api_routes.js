@@ -88,6 +88,9 @@ router.post('/webhook', async (request, response) => {
             console.log("checkout session complete");
             // TODO : create the order object here + update credit balance here.
             // In the order object store the 2 following datas:
+            console.log('checkout data');
+            console.log(checkoutData)
+            console.log('----');
             console.log("event id");
             console.log(event.id);
             console.log('----');
@@ -116,6 +119,8 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
 
     console.log('start checkout session route -------------------------------');
 
+    
+
     const tokenData = {
         Success: true,
         accessToken: req.signedCookies.token,
@@ -130,6 +135,16 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
     };
 
     console.log(userInfo);
+
+    const customer = await stripe.customers.create({
+        description: 'My First Test Customer (created for API docs at https://www.stripe.com/docs/api)',
+        metadata:{
+            otisUserId: userInfo.userId
+        }
+    });
+
+    console.log("customer data");
+    console.log(customer);
 
     const crdQuantity = req.body.quantity;
 
@@ -148,10 +163,14 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
             }
         ],
         mode: 'payment',
+        customer: customer.id,
         success_url: successUrl,
         cancel_url: cancelUrl
 
     });
+
+    console.log('session data');
+    console.log(session);
 
     console.log('end checkout session route -------------------------------');
 
