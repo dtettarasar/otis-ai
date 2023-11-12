@@ -150,7 +150,8 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
     const userInfo = {
         userId: req.user['_id'],
         username: await dataBase.getUserName(req.user['_id']),
-        credit: await dataBase.getUserCrd(req.user['_id'])
+        credit: await dataBase.getUserCrd(req.user['_id']),
+        stripeCustomerId: await dataBase.getUserStripeId(req.user['_id'])
     };
 
     console.log(userInfo);
@@ -164,7 +165,7 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
         - Sinon on crée un customer Stripe pour l'utilisateur, puis sauvegarder l'id customer dans l'objet user
 
     */
-
+    
     const customer = await stripe.customers.create({
         metadata:{
             otisUserId: userInfo.userId
@@ -173,6 +174,15 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
 
     console.log("customer data");
     console.log(customer);
+    
+
+    /*
+    let customer;
+
+    if (userInfo.stripeCustomerId) {
+
+    }
+    */
 
     const crdQuantity = req.body.quantity;
 

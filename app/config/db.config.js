@@ -122,6 +122,16 @@ class DataBase {
 
     }
 
+    async getUserStripeId(userID) {
+
+        const query = UserModel.findById(userID);
+        query.select('_id stripeCustomerId');
+        const result = await query.exec();
+
+        return result.stripeCustomerId;
+
+    }
+
     async getUserName(userID) {
 
         const query = UserModel.findById(userID);
