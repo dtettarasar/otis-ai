@@ -137,9 +137,7 @@ router.post('/webhook', async (request, response) => {
 router.post('/create-checkout-session', userToken.authToken, async(req, res) => {
 
     console.log('start checkout session route -------------------------------');
-
     
-
     const tokenData = {
         Success: true,
         accessToken: req.signedCookies.token,
@@ -154,9 +152,8 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
         stripeCustomerId: await dataBase.getUserStripeId(req.user['_id'])
     };
 
-    console.log(userInfo);
+    //console.log(userInfo);
 
-    // TODO
     /*
 
         Pour éviter de créer plusieurs objets customer dans la base de Stripe à chaque fois qu'un utilisateur achète des crédits: 
@@ -166,23 +163,34 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
 
     */
     
-    const customer = await stripe.customers.create({
-        metadata:{
-            otisUserId: userInfo.userId
-        }
-    });
-
-    console.log("customer data");
-    console.log(customer);
-    
-
-    /*
-    let customer;
+    let customer = {};
 
     if (userInfo.stripeCustomerId) {
 
+        customer = await stripe.customers.retrieve(userInfo.stripeCustomerId);
+        //TODO : process de gestion d'erreur : si l'object customer n'existe pas : créer l'objet customer Stripe
+
+    } else {
+
+        customer = await stripe.customers.create({
+            metadata:{
+                otisUserId: userInfo.userId
+            }
+        });
+
+        let userToUpdate = await dataBase.findUserById(userInfo.userId);
+
+        if (!userToUpdate) {
+            throw new NotFoundError();
+        } else {
+            userToUpdate.set({stripeCustomerId: customer.id});
+            await userToUpdate.save();
+        }
+
+        //console.log(userToUpdate);
+
     }
-    */
+    
 
     const crdQuantity = req.body.quantity;
 
