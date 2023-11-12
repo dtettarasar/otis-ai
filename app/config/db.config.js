@@ -132,6 +132,12 @@ class DataBase {
 
     }
 
+    async createCustomerStripeObj(userID) {
+
+        //TODO
+
+    }
+
     async getUserName(userID) {
 
         const query = UserModel.findById(userID);
