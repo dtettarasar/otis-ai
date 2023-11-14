@@ -1,5 +1,6 @@
 const env = require('dotenv').config();
 const mongoose = require('mongoose');
+const stripe = require('stripe')(process.env.STRIPE_KEY);
 const roleModel = require('../models/role.model');
 const UserModel = require('../models/user.model');
 
@@ -132,9 +133,53 @@ class DataBase {
 
     }
 
-    async createCustomerStripeObj(userID) {
+    async createStripeCustomerObj(userID) {
 
-        //TODO
+        let customer = {};
+
+        const stripeCustomerId = await this.getUserStripeId(userID);
+
+        if (stripeCustomerId) {
+
+            try {
+
+                customer = await stripe.customers.retrieve(stripeCustomerId);
+
+            } catch (err) {
+
+                console.log(err);
+                return false;
+
+            }
+
+        } else {
+
+            customer = await stripe.customers.create({
+
+                metadata:{
+                    otisUserId: userID
+                }
+
+            });
+    
+            let userToUpdate = await this.findUserById(userID);
+    
+            if (!userToUpdate) {
+
+                throw new NotFoundError();
+
+            } else {
+
+                userToUpdate.set({stripeCustomerId: customer.id});
+                await userToUpdate.save();
+
+            }
+
+            
+
+        }
+
+        return customer;
 
     }
 

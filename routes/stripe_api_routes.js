@@ -163,6 +163,11 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
 
     */
     
+    let customerTest = await dataBase.createStripeCustomerObj(req.user['_id']);
+    console.log("test request customer");
+    console.log(customerTest);
+
+    
     let customer = {};
 
     if (userInfo.stripeCustomerId) {
@@ -190,6 +195,7 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
         //console.log(userToUpdate);
 
     }
+    
     
 
     const crdQuantity = req.body.quantity;
