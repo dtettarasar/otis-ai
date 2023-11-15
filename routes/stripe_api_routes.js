@@ -95,16 +95,18 @@ router.post('/webhook', async (request, response) => {
 
             orderObj.stripeEventId = event.id;
             orderObj.stripeSessionId = event.data.object.id;
-            orderObj.stripeCustomerId = checkoutData.customer;
+            //orderObj.stripeCustomerId = checkoutData.customer;
 
             console.log('checkout data');
             console.log(checkoutData);
             console.log('----');
 
+            /*
             // get Otis User ID from Stripe customer data
             await stripe.customers.retrieve(checkoutData.customer).then((customer) => {
                 orderObj.otisUserId = customer.metadata.otisUserId;
             }).catch((err) => {console.log(err.message)});
+            */
 
             // get credit bought datas
             const lineItems = await stripe.checkout.sessions.listLineItems(orderObj.stripeSessionId);
@@ -167,7 +169,7 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
     console.log("test request customer");
     console.log(customerTest);
 
-    
+    /*
     let customer = {};
 
     if (userInfo.stripeCustomerId) {
@@ -178,6 +180,7 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
     } else {
 
         customer = await stripe.customers.create({
+            description: 'Otis Customer',
             metadata:{
                 otisUserId: userInfo.userId
             }
@@ -195,8 +198,7 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
         //console.log(userToUpdate);
 
     }
-    
-    
+    */
 
     const crdQuantity = req.body.quantity;
 
@@ -215,7 +217,7 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
             }
         ],
         mode: 'payment',
-        customer: customer.id,
+        //customer: customer.id,
         success_url: successUrl,
         cancel_url: cancelUrl
 

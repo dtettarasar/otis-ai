@@ -135,6 +135,82 @@ class DataBase {
 
     async createStripeCustomerObj(userID) {
 
+        console.log("init createStripeCustomerObj method----------------");
+
+        let customer = {};
+
+        const stripeCustomerId = await this.getUserStripeId(userID);
+
+        console.log("stripeCustomerId: " + stripeCustomerId);
+
+        if (stripeCustomerId) {
+
+            try {
+
+                customer = await stripe.customers.retrieve(stripeCustomerId);
+                console.log(customer);
+
+            } catch (error) {
+
+                console.log("error in createStripeCustomerObj method:");
+                console.log(error);
+
+            }
+
+        }
+
+        if (customer.deleted === true || !stripeCustomerId) {
+
+            console.log("Stripe customer has been deleted or not created yet");
+
+        }
+
+        /*
+
+        try {
+
+            if (stripeCustomerId) {
+                customer = await stripe.customers.retrieve(stripeCustomerId);
+            }
+
+            // TODO : Autres vérifications ou manipulations nécessaires avec l'objet customer
+
+        } catch (error) {
+
+            // Une erreur s'est produite lors de la récupération de l'objet customer
+
+            if (error.code === 'resource_missing') {
+                // L'objet customer n'existe pas dans Stripe, recréer un nouvel objet
+                console.log("No Stripe customer associated to Otis User");
+
+                customer = await stripe.customers.create({
+                    metadata: {
+                        otisUserId: userID
+                    }
+                });
+
+                // Mettre à jour l'identifiant dans l'objet user
+                let userToUpdate = await this.findUserById(userID);
+
+                if (!userToUpdate) {
+                    throw new NotFoundError();
+                } else {
+                    userToUpdate.set({ stripeCustomerId: customer.id });
+                    await userToUpdate.save();
+                }
+
+            } else {
+                // Gérer d'autres types d'erreurs Stripe ou effectuer d'autres actions nécessaires
+                console.error('Erreur lors de la récupération de l\'objet customer :', error);
+                // TODO : Gestion d'erreur supplémentaire
+                throw error;
+            }
+        }
+
+        */
+
+
+        /*
         let customer = {};
 
         const stripeCustomerId = await this.getUserStripeId(userID);
@@ -144,15 +220,15 @@ class DataBase {
             try {
 
                 customer = await stripe.customers.retrieve(stripeCustomerId);
+                return customer;
 
             } catch (err) {
 
                 console.log(err);
-                return false;
 
             }
 
-        } else {
+        }
 
             customer = await stripe.customers.create({
 
@@ -175,11 +251,13 @@ class DataBase {
 
             }
 
-            
+        */
 
-        }
+        
+        console.log("end of createStripeCustomerObj method----------------");
 
         return customer;
+
 
     }
 
