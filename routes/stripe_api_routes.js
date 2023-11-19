@@ -155,50 +155,11 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
     };
 
     //console.log(userInfo);
-
-    /*
-
-        Pour éviter de créer plusieurs objets customer dans la base de Stripe à chaque fois qu'un utilisateur achète des crédits: 
-        - ajouter un attribut stripe customer id, sur l'objet user, initié à null
-        - lors d'un achat de crédit : vérifier si l'utilisateur à un id customer stripe. Si oui, on passe cet id existant dans la cheskout session creation.
-        - Sinon on crée un customer Stripe pour l'utilisateur, puis sauvegarder l'id customer dans l'objet user
-
-    */
     
-    let customerTest = await dataBase.createStripeCustomerObj(req.user['_id']);
-    console.log("test request customer");
-    console.log(customerTest);
+    let customer = await dataBase.createStripeCustomerObj(req.user['_id']);
 
-    /*
-    let customer = {};
-
-    if (userInfo.stripeCustomerId) {
-
-        customer = await stripe.customers.retrieve(userInfo.stripeCustomerId);
-        //TODO : process de gestion d'erreur : si l'object customer n'existe pas : créer l'objet customer Stripe
-
-    } else {
-
-        customer = await stripe.customers.create({
-            description: 'Otis Customer',
-            metadata:{
-                otisUserId: userInfo.userId
-            }
-        });
-
-        let userToUpdate = await dataBase.findUserById(userInfo.userId);
-
-        if (!userToUpdate) {
-            throw new NotFoundError();
-        } else {
-            userToUpdate.set({stripeCustomerId: customer.id});
-            await userToUpdate.save();
-        }
-
-        //console.log(userToUpdate);
-
-    }
-    */
+    //console.log("test request customer");
+    //console.log(customerTest);
 
     const crdQuantity = req.body.quantity;
 
@@ -217,7 +178,7 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
             }
         ],
         mode: 'payment',
-        //customer: customer.id,
+        customer: customer.id,
         success_url: successUrl,
         cancel_url: cancelUrl
 

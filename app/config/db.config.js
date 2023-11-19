@@ -135,6 +135,15 @@ class DataBase {
 
     async createStripeCustomerObj(userID) {
 
+        /*
+
+            Pour éviter de créer plusieurs objets customer dans la base de Stripe à chaque fois qu'un utilisateur achète des crédits: 
+            - ajouter un attribut stripe customer id, sur l'objet user, initié à null
+            - lors d'un achat de crédit : vérifier si l'utilisateur à un id customer stripe. Si oui, on passe cet id existant dans la cheskout session creation.
+            - Sinon on crée un customer Stripe pour l'utilisateur, puis sauvegarder l'id customer dans l'objet user
+
+        */
+
         console.log("init createStripeCustomerObj method----------------");
 
         let customer = {};
@@ -187,95 +196,6 @@ class DataBase {
             }
 
         }
-
-        /*
-
-        try {
-
-            if (stripeCustomerId) {
-                customer = await stripe.customers.retrieve(stripeCustomerId);
-            }
-
-            // TODO : Autres vérifications ou manipulations nécessaires avec l'objet customer
-
-        } catch (error) {
-
-            // Une erreur s'est produite lors de la récupération de l'objet customer
-
-            if (error.code === 'resource_missing') {
-                // L'objet customer n'existe pas dans Stripe, recréer un nouvel objet
-                console.log("No Stripe customer associated to Otis User");
-
-                customer = await stripe.customers.create({
-                    metadata: {
-                        otisUserId: userID
-                    }
-                });
-
-                // Mettre à jour l'identifiant dans l'objet user
-                let userToUpdate = await this.findUserById(userID);
-
-                if (!userToUpdate) {
-                    throw new NotFoundError();
-                } else {
-                    userToUpdate.set({ stripeCustomerId: customer.id });
-                    await userToUpdate.save();
-                }
-
-            } else {
-                // Gérer d'autres types d'erreurs Stripe ou effectuer d'autres actions nécessaires
-                console.error('Erreur lors de la récupération de l\'objet customer :', error);
-                // TODO : Gestion d'erreur supplémentaire
-                throw error;
-            }
-        }
-
-        */
-
-
-        /*
-        let customer = {};
-
-        const stripeCustomerId = await this.getUserStripeId(userID);
-
-        if (stripeCustomerId) {
-
-            try {
-
-                customer = await stripe.customers.retrieve(stripeCustomerId);
-                return customer;
-
-            } catch (err) {
-
-                console.log(err);
-
-            }
-
-        }
-
-            customer = await stripe.customers.create({
-
-                metadata:{
-                    otisUserId: userID
-                }
-
-            });
-    
-            let userToUpdate = await this.findUserById(userID);
-    
-            if (!userToUpdate) {
-
-                throw new NotFoundError();
-
-            } else {
-
-                userToUpdate.set({stripeCustomerId: customer.id});
-                await userToUpdate.save();
-
-            }
-
-        */
-
         
         console.log("end of createStripeCustomerObj method----------------");
 
