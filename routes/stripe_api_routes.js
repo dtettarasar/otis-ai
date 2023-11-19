@@ -95,18 +95,17 @@ router.post('/webhook', async (request, response) => {
 
             orderObj.stripeEventId = event.id;
             orderObj.stripeSessionId = event.data.object.id;
-            //orderObj.stripeCustomerId = checkoutData.customer;
+            orderObj.stripeCustomerId = checkoutData.customer;
 
             console.log('checkout data');
             console.log(checkoutData);
             console.log('----');
 
-            /*
+            
             // get Otis User ID from Stripe customer data
             await stripe.customers.retrieve(checkoutData.customer).then((customer) => {
                 orderObj.otisUserId = customer.metadata.otisUserId;
             }).catch((err) => {console.log(err.message)});
-            */
 
             // get credit bought datas
             const lineItems = await stripe.checkout.sessions.listLineItems(orderObj.stripeSessionId);
