@@ -163,6 +163,29 @@ class DataBase {
 
             console.log("Stripe customer has been deleted or not created yet");
 
+            // Identifier le user pour lequel créer ou mettre à jour le stripe customer id
+            let userToUpdate = await this.findUserById(userID);
+            console.log("user found");
+            console.log(userToUpdate); 
+
+            // Créer un nouveau stripe customer 
+            customer = await stripe.customers.create({
+                email: userToUpdate.email,
+                metadata: {
+                    description: 'Otis Customer',
+                    otisUserId: userID,
+                    username: userToUpdate.username
+                },
+                name: `otis_ai_${userToUpdate.username}_${userID}` 
+            });
+
+            if (!userToUpdate) {
+                throw new NotFoundError();
+            } else {
+                userToUpdate.set({ stripeCustomerId: customer.id });
+                await userToUpdate.save();
+            }
+
         }
 
         /*
