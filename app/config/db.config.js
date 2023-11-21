@@ -215,6 +215,24 @@ class DataBase {
 
     }
 
+    async createOrder(webhookOrderObj) {
+
+        //get the order object generated from the webhook post route and save it in MongoDB
+        const orderObjToSave = new OrderModel(webhookOrderObj);
+
+        try {
+
+            const orderSaved = await orderObjToSave.save();
+            console.log(orderSaved);
+
+        } catch (err) {
+
+            console.log(err);
+            res.json({Error: err});
+        }
+
+    }
+
 }
 
 module.exports = DataBase;

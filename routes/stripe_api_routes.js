@@ -85,6 +85,7 @@ router.post('/webhook', async (request, response) => {
         
         case 'checkout.session.completed':
 
+            // Build the order object that we'll save in MongoDB
             const orderObj = {};
 
             const checkoutData = event.data.object;
@@ -116,7 +117,9 @@ router.post('/webhook', async (request, response) => {
 
             console.log('----');
             console.log('orderObj');
-            console.log(orderObj);
+            //console.log(orderObj);
+
+            const orderSaved = await dataBase.createOrder(orderObj);
 
             break;
 
@@ -191,24 +194,6 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
 
     res.redirect(303, session.url);
 })
-
-/*
-function addRawBody(req, res, next) {
-    req.setEncoding('utf8');
-  
-    var data = '';
-  
-    req.on('data', function(chunk) {
-      data += chunk;
-    });
-  
-    req.on('end', function() {
-      req.rawBody = data;
-  
-      next();
-    });
-}
-*/
 
 router.get('/webhook', (req, res) => {
     console.log(stripeEndpointSecret);
