@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const roleModel = require('../models/role.model');
 const UserModel = require('../models/user.model');
+const OrderModel = require('../models/order.model');
 
 class DataBase {
 
@@ -150,14 +151,14 @@ class DataBase {
 
         const stripeCustomerId = await this.getUserStripeId(userID);
 
-        console.log("stripeCustomerId: " + stripeCustomerId);
+        //console.log("stripeCustomerId: " + stripeCustomerId);
 
         if (stripeCustomerId) {
 
             try {
 
                 customer = await stripe.customers.retrieve(stripeCustomerId);
-                console.log(customer);
+                //console.log(customer);
 
             } catch (error) {
 

@@ -97,9 +97,11 @@ router.post('/webhook', async (request, response) => {
             orderObj.stripeSessionId = event.data.object.id;
             orderObj.stripeCustomerId = checkoutData.customer;
 
+            /*
             console.log('checkout data');
             console.log(checkoutData);
             console.log('----');
+            */
 
             
             // get Otis User ID from Stripe customer data
@@ -157,9 +159,6 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
     
     let customer = await dataBase.createStripeCustomerObj(req.user['_id']);
 
-    //console.log("test request customer");
-    //console.log(customerTest);
-
     const crdQuantity = req.body.quantity;
 
     const session = await stripe.checkout.sessions.create({
@@ -183,14 +182,17 @@ router.post('/create-checkout-session', userToken.authToken, async(req, res) => 
 
     });
 
+    /*
     console.log('session data');
     console.log(session);
+    */
 
     console.log('end checkout session route -------------------------------');
 
     res.redirect(303, session.url);
 })
 
+/*
 function addRawBody(req, res, next) {
     req.setEncoding('utf8');
   
@@ -206,6 +208,7 @@ function addRawBody(req, res, next) {
       next();
     });
 }
+*/
 
 router.get('/webhook', (req, res) => {
     console.log(stripeEndpointSecret);
