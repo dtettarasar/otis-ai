@@ -175,8 +175,8 @@ class DataBase {
 
             // Identifier le user pour lequel créer ou mettre à jour le stripe customer id
             let userToUpdate = await this.findUserById(userID);
-            console.log("user found");
-            console.log(userToUpdate); 
+            // console.log("user found");
+            // console.log(userToUpdate); 
 
             // Créer un nouveau stripe customer 
             customer = await stripe.customers.create({
@@ -220,15 +220,37 @@ class DataBase {
         //get the order object generated from the webhook post route and save it in MongoDB
         const orderObjToSave = new OrderModel(webhookOrderObj);
 
+        let orderSaved = null;
+
         try {
 
-            const orderSaved = await orderObjToSave.save();
-            console.log(orderSaved);
+            orderSaved = await orderObjToSave.save();
+            //console.log(orderSaved);
 
         } catch (err) {
 
             console.log(err);
             res.json({Error: err});
+        }
+
+        return orderSaved;
+
+    }
+
+    async addCreditToUser(userID, creditToAdd) {
+
+        console.log('init addCreditToUser func');
+
+        let userToUpdate = await this.findUserById(userID);
+        console.log("user found");
+        console.log(userToUpdate);
+        const newBalance = userToUpdate.credit + creditToAdd;
+
+        if (!userToUpdate) {
+            throw new NotFoundError();
+        } else {
+            userToUpdate.set({ credit: newBalance });
+            await userToUpdate.save();
         }
 
     }

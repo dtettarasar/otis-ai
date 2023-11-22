@@ -120,6 +120,15 @@ router.post('/webhook', async (request, response) => {
             //console.log(orderObj);
 
             const orderSaved = await dataBase.createOrder(orderObj);
+            console.log('order saved:')
+            console.log(orderSaved);
+
+            // update user credit balance
+            if (orderSaved) {
+
+                await dataBase.addCreditToUser(orderSaved.otisUserId, orderSaved.crdQuantity);
+
+            }
 
             break;
 
