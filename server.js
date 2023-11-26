@@ -3,6 +3,7 @@ const cors = require('cors');
 
 const userRouter = require('./routes/user_routes');
 const stripePaymentRouter = require('./routes/stripe_api_routes');
+const articleRouter = require('./routes/article_routes');
 
 const app = express();
 require('dotenv').config();
@@ -34,6 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 // routes
 app.use('/user', userRouter);
 app.use('/payment-api', stripePaymentRouter);
+app.use('/article', articleRouter);
 
 app.get('/', (req, res) => {
     //res.sendFile(__dirname + '/views/index.html');
