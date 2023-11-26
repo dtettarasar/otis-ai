@@ -151,14 +151,14 @@ class DataBase {
 
         const stripeCustomerId = await this.getUserStripeId(userID);
 
-        //console.log("stripeCustomerId: " + stripeCustomerId);
+        console.log("stripeCustomerId: " + stripeCustomerId);
 
         if (stripeCustomerId) {
 
             try {
 
                 customer = await stripe.customers.retrieve(stripeCustomerId);
-                //console.log(customer);
+                console.log(customer);
 
             } catch (error) {
 
@@ -217,6 +217,8 @@ class DataBase {
 
     async createOrder(webhookOrderObj) {
 
+        console.log('init createOrder func');
+
         //get the order object generated from the webhook post route and save it in MongoDB
         const orderObjToSave = new OrderModel(webhookOrderObj);
 
@@ -225,13 +227,16 @@ class DataBase {
         try {
 
             orderSaved = await orderObjToSave.save();
-            //console.log(orderSaved);
+            console.log("orderSaved:")
+            console.log(orderSaved);
 
         } catch (err) {
 
             console.log(err);
             res.json({Error: err});
         }
+
+        console.log('--------------------');
 
         return orderSaved;
 
@@ -252,6 +257,8 @@ class DataBase {
             userToUpdate.set({ credit: newBalance });
             await userToUpdate.save();
         }
+
+        console.log('--------------------');
 
     }
 

@@ -98,11 +98,11 @@ router.post('/webhook', async (request, response) => {
             orderObj.stripeSessionId = event.data.object.id;
             orderObj.stripeCustomerId = checkoutData.customer;
 
-            /*
+            
             console.log('checkout data');
             console.log(checkoutData);
             console.log('----');
-            */
+            
 
             
             // get Otis User ID from Stripe customer data
@@ -117,7 +117,7 @@ router.post('/webhook', async (request, response) => {
 
             console.log('----');
             console.log('orderObj');
-            //console.log(orderObj);
+            console.log(orderObj);
 
             const orderSaved = await dataBase.createOrder(orderObj);
             console.log('order saved:')
