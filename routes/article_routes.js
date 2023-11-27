@@ -15,18 +15,32 @@ router.get("/", userToken.authToken, async (req, res) => {
         accessToken: req.signedCookies.token,
         refreshToken: req.signedCookies.refreshToken,
         user: req.user
-    }
+    };
+
+    const articles = [
+        {
+            title: "article 1 title",
+            createdAt: new Date().toLocaleDateString(),
+            description: "article description"
+        },
+        {
+            title: "article 2 title",
+            createdAt: new Date().toLocaleDateString(),
+            description: "article description"
+        }
+    ]
 
     const userInfo = {
         userId: req.user['_id'],
         username: await dataBase.getUserName(req.user['_id']),
-        credit: await dataBase.getUserCrd(req.user['_id'])
+        credit: await dataBase.getUserCrd(req.user['_id']),
+        userArticles: articles
     };
 
     console.log("access to article route");
     console.log(userInfo);
 
-    res.render('article/my-article');
+    res.render('article/my-article', userInfo);
 
 });
 
