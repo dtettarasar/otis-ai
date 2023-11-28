@@ -44,4 +44,19 @@ router.get("/", userToken.authToken, async (req, res) => {
 
 });
 
+router.get('/new', userToken.authToken, async (req, res) => {
+
+    const userInfo = {
+        userId: req.user['_id'],
+        username: await dataBase.getUserName(req.user['_id']),
+        credit: await dataBase.getUserCrd(req.user['_id'])
+    };
+
+    console.log("access to new article route");
+    console.log(userInfo);
+
+    res.render('article/new-article');
+
+})
+
 module.exports = router;
