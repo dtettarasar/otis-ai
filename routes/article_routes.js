@@ -59,4 +59,8 @@ router.get('/new', userToken.authToken, async (req, res) => {
 
 })
 
+router.post('/create', userToken.authToken, async (req, res) => {
+    
+})
+
 module.exports = router;
