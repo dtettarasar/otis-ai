@@ -4,6 +4,7 @@ const stripe = require('stripe')(process.env.STRIPE_KEY);
 const roleModel = require('../models/role.model');
 const UserModel = require('../models/user.model');
 const OrderModel = require('../models/order.model');
+const ArticleModel = require('../models/article.model');
 
 class DataBase {
 
