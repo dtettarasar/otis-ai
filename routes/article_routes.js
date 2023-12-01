@@ -59,8 +59,10 @@ router.get('/new', userToken.authToken, async (req, res) => {
 
 })
 
-router.post('/create', userToken.authToken, async (req, res) => {
-    
+router.post('/create', userToken.authToken, dataBase.createArticle, async (req, res) => {
+    res.json({
+        message: "create article route"
+    })
 })
 
 module.exports = router;

@@ -5,6 +5,7 @@ const ArticleSch = new mongoose.Schema({
     description: {type: String},
     markdown: {type: String, required: true},
     createdAt: {type: Date, default: Date.now},
+    lastModifiedAt: {type: Date, default: Date.now},
     otisUserId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 

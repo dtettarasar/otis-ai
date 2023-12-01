@@ -76,62 +76,61 @@ class DataBase {
 
     }
 
-    async findUserByName(userName) {
+    async createOrder(webhookOrderObj) {
 
-        const query = UserModel.find({username: userName});
-        query.select('username');
-        const userFound = await query.exec();
+        console.log('init createOrder func');
 
-        return userFound;
+        //get the order object generated from the webhook post route and save it in MongoDB
+        const orderObjToSave = new OrderModel(webhookOrderObj);
 
-    }
+        let orderSaved = null;
 
-    async findUserByEmail(userEmail) {
+        try {
 
-        const query = UserModel.find({email: userEmail});
-        query.select('email');
-        const userFound = await query.exec();
+            orderSaved = await orderObjToSave.save();
+            console.log("orderSaved:")
+            console.log(orderSaved);
 
-        return userFound;
+        } catch (err) {
 
-    }
+            console.log(err);
+            res.json({Error: err});
+        }
 
-    async findUserById(userID) {
+        console.log('--------------------');
 
-        const query = UserModel.findById(userID);
-        const userFound = await query.exec();
-
-        return userFound;
+        return orderSaved;
 
     }
 
-    async getUserPsw(userID) {
+    async createArticle(req, res, next) {
+        
+        console.log("init create article method");
 
-        const query = UserModel.findById(userID);
-        query.select('_id password');
-        const userPsw = await query.exec();
+        const articleObj = new ArticleModel({
+            title: req.body.title,
+            description: req.body.description,
+            markdown: req.body.markdown,
+            otisUserId: req.user['_id']
+        });
 
-        return userPsw;
+        /*console.log('article Obj');
+        console.log(articleObj);*/
 
-    }
+        try {
 
-    async getUserCrd(userID) {
+            const articleSaved = await articleObj.save();
+            console.log("article saved: ");
+            console.log(articleSaved);
 
-        const query = UserModel.findById(userID);
-        query.select('_id credit');
-        const result = await query.exec();
+        } catch(err) {
 
-        return result.credit;
+            console.log(err);
+            res.json({Error: err});
 
-    }
+        }
 
-    async getUserStripeId(userID) {
-
-        const query = UserModel.findById(userID);
-        query.select('_id stripeCustomerId');
-        const result = await query.exec();
-
-        return result.stripeCustomerId;
+        next();
 
     }
 
@@ -206,6 +205,65 @@ class DataBase {
 
     }
 
+    async findUserByName(userName) {
+
+        const query = UserModel.find({username: userName});
+        query.select('username');
+        const userFound = await query.exec();
+
+        return userFound;
+
+    }
+
+    async findUserByEmail(userEmail) {
+
+        const query = UserModel.find({email: userEmail});
+        query.select('email');
+        const userFound = await query.exec();
+
+        return userFound;
+
+    }
+
+    async findUserById(userID) {
+
+        const query = UserModel.findById(userID);
+        const userFound = await query.exec();
+
+        return userFound;
+
+    }
+
+    async getUserPsw(userID) {
+
+        const query = UserModel.findById(userID);
+        query.select('_id password');
+        const userPsw = await query.exec();
+
+        return userPsw;
+
+    }
+
+    async getUserCrd(userID) {
+
+        const query = UserModel.findById(userID);
+        query.select('_id credit');
+        const result = await query.exec();
+
+        return result.credit;
+
+    }
+
+    async getUserStripeId(userID) {
+
+        const query = UserModel.findById(userID);
+        query.select('_id stripeCustomerId');
+        const result = await query.exec();
+
+        return result.stripeCustomerId;
+
+    }
+
     async getUserName(userID) {
 
         const query = UserModel.findById(userID);
@@ -213,33 +271,6 @@ class DataBase {
         const result = await query.exec();
 
         return result.username;
-
-    }
-
-    async createOrder(webhookOrderObj) {
-
-        console.log('init createOrder func');
-
-        //get the order object generated from the webhook post route and save it in MongoDB
-        const orderObjToSave = new OrderModel(webhookOrderObj);
-
-        let orderSaved = null;
-
-        try {
-
-            orderSaved = await orderObjToSave.save();
-            console.log("orderSaved:")
-            console.log(orderSaved);
-
-        } catch (err) {
-
-            console.log(err);
-            res.json({Error: err});
-        }
-
-        console.log('--------------------');
-
-        return orderSaved;
 
     }
 
