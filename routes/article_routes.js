@@ -57,7 +57,13 @@ router.get('/new', userToken.authToken, async (req, res) => {
 
     res.render('article/new-article');
 
-})
+});
+
+router.get('/:id', userToken.authToken, async (req, res) => {
+
+    res.send(req.params.id);
+
+});
 
 router.post('/create', userToken.authToken, async (req, res) => {
 
