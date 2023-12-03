@@ -120,8 +120,10 @@ class DataBase {
         try {
 
             const articleSaved = await articleObj.save();
+            /*
             console.log("article saved: ");
             console.log(articleSaved);
+            */
 
             return articleSaved;
 
@@ -231,6 +233,30 @@ class DataBase {
         const userFound = await query.exec();
 
         return userFound;
+
+    }
+
+    async findArticleById(articleID) {
+        
+        //const query = ArticleModel.findById(articleID);
+        //const articleFound = await query.exec();
+
+
+        console.log("findArticleById");
+        //console.log(findArticleById);
+        console.log(articleID);
+
+        try {
+
+            const query = ArticleModel.findById(articleID);
+            const articleFound = await query.exec();
+            //console.log(articleFound);
+            return articleFound;
+
+
+        } catch(err) {
+            console.log(err);
+        }
 
     }
 

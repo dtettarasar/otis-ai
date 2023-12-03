@@ -61,7 +61,17 @@ router.get('/new', userToken.authToken, async (req, res) => {
 
 router.get('/:id', userToken.authToken, async (req, res) => {
 
-    res.send(req.params.id);
+    const userInfo = {
+        userId: req.user['_id'],
+        username: await dataBase.getUserName(req.user['_id']),
+        articleData: await dataBase.findArticleById(req.params.id)
+    };
+
+    if (userInfo.articleData === null) {
+        res.redirect('/');
+    }
+
+    res.json(userInfo);
 
 });
 
