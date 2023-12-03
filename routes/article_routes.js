@@ -59,10 +59,24 @@ router.get('/new', userToken.authToken, async (req, res) => {
 
 })
 
-router.post('/create', userToken.authToken, dataBase.createArticle, async (req, res) => {
-    res.json({
-        message: "create article route"
-    })
+router.post('/create', userToken.authToken, async (req, res) => {
+
+    const article = await dataBase.createArticle(req);
+
+    if (article) {
+
+        console.log('article data in route');
+        console.log(article);
+
+        res.redirect(`${article.id}`);
+
+    } else {
+
+        res.json({
+            Error: "can't create article"
+        });
+
+    }
 })
 
 module.exports = router;

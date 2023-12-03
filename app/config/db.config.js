@@ -103,7 +103,7 @@ class DataBase {
 
     }
 
-    async createArticle(req, res, next) {
+    async createArticle(req) {
         
         console.log("init create article method");
 
@@ -123,14 +123,14 @@ class DataBase {
             console.log("article saved: ");
             console.log(articleSaved);
 
+            return articleSaved;
+
         } catch(err) {
 
             console.log(err);
-            res.json({Error: err});
+            return false;
 
         }
-
-        next();
 
     }
 
