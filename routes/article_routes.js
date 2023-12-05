@@ -78,6 +78,7 @@ router.get('/:id', userToken.authToken, async (req, res) => {
         if (articleisOwnbyUser) {
             res.json(userInfo);
         } else {
+            console.log("user tried to access someone else's article");
             res.redirect('/article');
         }
 
@@ -91,22 +92,7 @@ router.get('/:id', userToken.authToken, async (req, res) => {
 
 router.post('/create', userToken.authToken, async (req, res) => {
 
-    const article = await dataBase.createArticle(req);
-
-    if (article) {
-
-        console.log('article data in route');
-        console.log(article);
-
-        res.redirect(`${article.id}`);
-
-    } else {
-
-        res.json({
-            Error: "can't create article"
-        });
-
-    }
+    const article = await dataBase.createArticle(req, res);
 })
 
 module.exports = router;

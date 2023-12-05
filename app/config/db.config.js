@@ -5,6 +5,7 @@ const roleModel = require('../models/role.model');
 const UserModel = require('../models/user.model');
 const OrderModel = require('../models/order.model');
 const ArticleModel = require('../models/article.model');
+const Article = require('../models/article.model');
 
 class DataBase {
 
@@ -103,11 +104,11 @@ class DataBase {
 
     }
 
-    async createArticle(req) {
+    async createArticle(req, res) {
         
         console.log("init create article method");
 
-        const articleObj = new ArticleModel({
+        let articleObj = new ArticleModel({
             title: req.body.title,
             description: req.body.description,
             markdown: req.body.markdown,
@@ -119,18 +120,16 @@ class DataBase {
 
         try {
 
-            const articleSaved = await articleObj.save();
-            /*
-            console.log("article saved: ");
-            console.log(articleSaved);
-            */
+            articleObj = await articleObj.save();
 
-            return articleSaved;
+            res.redirect(`${articleObj.id}`);
 
         } catch(err) {
 
             console.log(err);
-            return false;
+            console.log("article value here");
+            console.log(articleObj);
+            res.render('article/new-article');
 
         }
 
