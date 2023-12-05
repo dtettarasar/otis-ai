@@ -63,15 +63,29 @@ router.get('/:id', userToken.authToken, async (req, res) => {
 
     const userInfo = {
         userId: req.user['_id'],
-        username: await dataBase.getUserName(req.user['_id']),
-        articleData: await dataBase.findArticleById(req.params.id)
+        username: await dataBase.getUserName(req.user['_id'])
     };
 
-    if (userInfo.articleData === null) {
-        res.redirect('/');
-    }
+    let articleisOwnbyUser = null;
+    console.log(userInfo);
 
-    res.json(userInfo);
+    try {
+        userInfo.articleData = await dataBase.findArticleById(req.params.id);
+
+        // make sure the user doesn't access to someone else's article
+        articleisOwnbyUser = userInfo.userId.toString() === userInfo.articleData.otisUserId.toString();
+
+        if (articleisOwnbyUser) {
+            res.json(userInfo);
+        } else {
+            res.redirect('/article');
+        }
+
+        
+    } catch (err) {
+        console.log(err);
+        res.redirect('/article');
+    }
 
 });
 
