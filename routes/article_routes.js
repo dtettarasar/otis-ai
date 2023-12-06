@@ -76,10 +76,16 @@ router.get('/:id', userToken.authToken, async (req, res) => {
         articleisOwnbyUser = userInfo.userId.toString() === userInfo.articleData.otisUserId.toString();
 
         if (articleisOwnbyUser) {
-            res.json(userInfo);
+
+            //res.json(userInfo);
+            res.render('article/show', userInfo);
+
+
         } else {
+
             console.log("user tried to access someone else's article");
             res.redirect('/article');
+
         }
 
         
