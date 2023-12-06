@@ -255,6 +255,7 @@ class DataBase {
 
         } catch(err) {
             console.log(err);
+            return false;
         }
 
     }
