@@ -78,6 +78,8 @@ router.get('/:id', userToken.authToken, async (req, res) => {
         if (articleisOwnbyUser) {
 
             //res.json(userInfo);
+            console.log("access to view article route");
+            console.log(userInfo);
             res.render('article/show', userInfo);
 
 
