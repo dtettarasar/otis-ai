@@ -237,13 +237,8 @@ class DataBase {
 
     async findArticleById(articleID) {
         
-        //const query = ArticleModel.findById(articleID);
-        //const articleFound = await query.exec();
-
-
-        console.log("findArticleById");
-        //console.log(findArticleById);
-        console.log(articleID);
+        //console.log("findArticleById");
+        //console.log(articleID);
 
         try {
 
