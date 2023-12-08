@@ -37,6 +37,8 @@ router.get("/", userToken.authToken, async (req, res) => {
         userArticles: articles
     };
 
+    const userArticles = await dataBase.getUserArticles(userInfo.userId);
+
     console.log("access to article route");
     console.log(userInfo);
 

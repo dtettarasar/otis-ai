@@ -295,6 +295,26 @@ class DataBase {
 
     }
 
+    async getUserArticles(userID) {
+
+        const userFound = await this.findUserById(userID);
+
+        if (userFound) {
+
+            let filter = {
+                otisUserId: userID
+            }
+
+            const query = ArticleModel.find(filter);
+
+            const result = await query.exec();
+
+            console.log(result);
+
+        }
+
+    }
+
     async addCreditToUser(userID, creditToAdd) {
 
         console.log('init addCreditToUser func');
