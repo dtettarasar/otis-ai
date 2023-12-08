@@ -309,9 +309,13 @@ class DataBase {
 
             const result = await query.exec();
 
-            console.log(result);
+            if (result) {
+                return result;
+            }
 
         }
+
+        return false;
 
     }
 
