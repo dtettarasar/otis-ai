@@ -1,11 +1,15 @@
+//Packages
 const env = require('dotenv').config();
 const mongoose = require('mongoose');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
+const slugify = require('slugify');
+
+//Models
 const roleModel = require('../models/role.model');
 const UserModel = require('../models/user.model');
 const OrderModel = require('../models/order.model');
 const ArticleModel = require('../models/article.model');
-const Article = require('../models/article.model');
+//const Article = require('../models/article.model');
 
 class DataBase {
 
@@ -115,6 +119,20 @@ class DataBase {
             otisUserId: req.user['_id']
         });
 
+        if (articleObj.title) {
+
+            const username = await this.getUserName(articleObj.otisUserId);
+            console.log("slug value:");
+            console.log(`${username}_${articleObj.title}`);
+            const slugValue = `${username}-${articleObj.title}`;
+
+            articleObj.slug = slugify(slugValue, {lower: true, strict: true});
+
+
+            //articleObj.slug = 
+
+        }
+
         /*console.log('article Obj');
         console.log(articleObj);*/
 
@@ -122,7 +140,7 @@ class DataBase {
 
             articleObj = await articleObj.save();
 
-            res.redirect(`${articleObj.id}`);
+            res.redirect(`${articleObj.slug}`);
 
         } catch(err) {
 
@@ -243,6 +261,23 @@ class DataBase {
         try {
 
             const query = ArticleModel.findById(articleID);
+            const articleFound = await query.exec();
+            //console.log(articleFound);
+            return articleFound;
+
+
+        } catch(err) {
+            console.log(err);
+            return false;
+        }
+
+    }
+
+    async findArticleBySlug(slugValue) {
+
+        try {
+
+            const query = ArticleModel.findOne({slug: slugValue});
             const articleFound = await query.exec();
             //console.log(articleFound);
             return articleFound;

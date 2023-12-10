@@ -30,8 +30,10 @@ router.get("/", userToken.authToken, async (req, res) => {
         userInfo.userArticles = userArticles;
     }
 
+    /*
     console.log("access to article route");
     console.log(userInfo);
+    */
 
     res.render('article/my-article', userInfo);
 
@@ -52,7 +54,7 @@ router.get('/new', userToken.authToken, async (req, res) => {
 
 });
 
-router.get('/:id', userToken.authToken, async (req, res) => {
+router.get('/:slug', userToken.authToken, async (req, res) => {
 
     const userInfo = {
         userId: req.user['_id'],
@@ -63,7 +65,7 @@ router.get('/:id', userToken.authToken, async (req, res) => {
     console.log(userInfo);
 
     try {
-        userInfo.articleData = await dataBase.findArticleById(req.params.id);
+        userInfo.articleData = await dataBase.findArticleBySlug(req.params.slug);
 
         // make sure the user doesn't access to someone else's article
         articleisOwnbyUser = userInfo.userId.toString() === userInfo.articleData.otisUserId.toString();
