@@ -305,7 +305,7 @@ class DataBase {
                 otisUserId: userID
             }
 
-            const query = ArticleModel.find(filter);
+            const query = ArticleModel.find(filter).sort({createdAt: 'desc'});
 
             const result = await query.exec();
 
