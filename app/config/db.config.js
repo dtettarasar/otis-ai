@@ -121,6 +121,8 @@ class DataBase {
 
         if (articleObj.title) {
 
+            // Build the slug. Issue to resolve: make sure the slug can be unique for each article. (If the user has an article with the same title, slug will be the same, and thus only one article will be accessible).
+
             const username = await this.getUserName(articleObj.otisUserId);
             console.log("slug value:");
             console.log(`${username}_${articleObj.title}`);
