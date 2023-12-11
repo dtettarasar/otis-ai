@@ -98,4 +98,18 @@ router.post('/create', userToken.authToken, async (req, res) => {
     const article = await dataBase.createArticle(req, res);
 })
 
+router.delete('/:id', async (req, res) => {
+    console.log(req.params.id);
+
+    const deleteArticle = dataBase.deleteArticle(req.params.id);
+
+    if (deleteArticle) {
+        console.log(`Article (ID: ${req.params.id}) has been deleted`);
+    } else {
+        console.log(`Error: Article (ID: ${req.params.id}) can't be deleted`);
+    }
+
+    res.send('test');
+})
+
 module.exports = router;

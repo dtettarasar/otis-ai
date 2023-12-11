@@ -226,6 +226,22 @@ class DataBase {
 
     }
 
+    async deleteArticle(articleID) {
+        
+        try {
+
+            await ArticleModel.findByIdAndDelete(articleID);
+            return true;
+
+        } catch(err) {
+
+            console.log(err);
+            return false;
+
+        }
+
+    }
+
     async findUserByName(userName) {
 
         const query = UserModel.find({username: userName});
