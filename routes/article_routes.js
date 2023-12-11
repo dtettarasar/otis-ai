@@ -109,7 +109,7 @@ router.delete('/:id', async (req, res) => {
         console.log(`Error: Article (ID: ${req.params.id}) can't be deleted`);
     }
 
-    res.send('test');
+    res.redirect('/article');
 })
 
 module.exports = router;
