@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>New article</title>
+    <title>Edit article</title>
     <!--<link rel="stylesheet" href="style.css">-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,9 +10,9 @@
 <body>
 
     <div class="container">
-        <h1 class="mb-4">New article</h1>
+        <h1 class="mb-4">Edit article</h1>
 
-        <form action="/article/create" method="post">
+        <form action="/article/update/<%= article.id %>?_method=PUT" method="post">
 
             <%- include('_form_fields') %>
     

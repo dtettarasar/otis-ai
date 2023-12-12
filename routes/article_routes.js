@@ -59,13 +59,14 @@ router.get('/edit/:id', userToken.authToken, async (req, res) => {
     const userInfo = {
         userId: req.user['_id'],
         username: await dataBase.getUserName(req.user['_id']),
-        credit: await dataBase.getUserCrd(req.user['_id'])
+        credit: await dataBase.getUserCrd(req.user['_id']),
+        article: await dataBase.findArticleById(req.params.id)
     };
 
     console.log("access to edit article route");
     console.log(userInfo);
 
-    res.render('article/new-article');
+    res.render('article/edit-article',  userInfo);
 
 });
 
@@ -111,6 +112,13 @@ router.get('/:id', userToken.authToken, async (req, res) => {
 router.post('/create', userToken.authToken, async (req, res) => {
 
     const article = await dataBase.createArticle(req, res);
+})
+
+router.post('/update', userToken.authToken, async (req, res) => {
+
+    //const article = await dataBase.createArticle(req, res);
+
+    res.json({test: "test"});
 })
 
 router.delete('/:id', async (req, res) => {
