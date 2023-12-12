@@ -54,7 +54,22 @@ router.get('/new', userToken.authToken, async (req, res) => {
 
 });
 
-router.get('/:slug', userToken.authToken, async (req, res) => {
+router.get('/edit/:id', userToken.authToken, async (req, res) => {
+
+    const userInfo = {
+        userId: req.user['_id'],
+        username: await dataBase.getUserName(req.user['_id']),
+        credit: await dataBase.getUserCrd(req.user['_id'])
+    };
+
+    console.log("access to edit article route");
+    console.log(userInfo);
+
+    res.render('article/new-article');
+
+});
+
+router.get('/:id', userToken.authToken, async (req, res) => {
 
     const userInfo = {
         userId: req.user['_id'],
@@ -65,7 +80,7 @@ router.get('/:slug', userToken.authToken, async (req, res) => {
     console.log(userInfo);
 
     try {
-        userInfo.articleData = await dataBase.findArticleBySlug(req.params.slug);
+        userInfo.articleData = await dataBase.findArticleById(req.params.id);
 
         // make sure the user doesn't access to someone else's article
         articleisOwnbyUser = userInfo.userId.toString() === userInfo.articleData.otisUserId.toString();

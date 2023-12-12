@@ -126,6 +126,7 @@ class DataBase {
             replace the slug building in the article model a middleware function. for the show article route, change the process to have a route made of username + / + slug string
             process to test: create an article as user 1. then log as user 2 and create another article with same title and slug and see if article creation can be done and if article can be created. 
             if not, find a way to make sure, multiple users can have article with same title but at the same time with unique slug. 
+            See if slug feature is really necessary for the web app.
             */
 
             const username = await this.getUserName(articleObj.otisUserId);
