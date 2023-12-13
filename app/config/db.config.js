@@ -138,6 +138,35 @@ class DataBase {
 
     }
 
+    async updateArticle(req, res) {
+        
+        console.log("init update article method");
+
+        let articleObj = {
+            title: req.body.title,
+            description: req.body.description,
+            markdown: req.body.markdown,
+            articleId: req.params.id
+        }
+
+        let articleFilter = {
+            _id: req.params.id
+        }
+
+        try {
+
+            let articleToUpdate = await ArticleModel.findOneAndUpdate(articleFilter, articleObj);
+            return true;
+
+        } catch(err) {
+
+            console.log(err);
+            return false;
+
+        }
+
+    }
+
     async createStripeCustomerObj(userID) {
 
         /*

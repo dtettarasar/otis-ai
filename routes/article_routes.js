@@ -119,11 +119,32 @@ router.post('/create', userToken.authToken, async (req, res) => {
     const article = await dataBase.createArticle(req, res);
 })
 
-router.post('/update', userToken.authToken, async (req, res) => {
+router.put('/update/:id', userToken.authToken, async (req, res) => {
 
     //const article = await dataBase.createArticle(req, res);
+    const userInfo = {
+        userId: req.user['_id'],
+        username: await dataBase.getUserName(req.user['_id']),
+        article: await dataBase.findArticleById(req.params.id) 
+    };
 
-    res.json({test: "test"});
+    const test = await dataBase.updateArticle(req, res);
+
+    if (test) {
+
+        userInfo.article = await dataBase.findArticleById(req.params.id);
+        res.json(userInfo);
+
+    } else {
+
+        res.json({
+            err: "can't update article"
+        });
+
+    }
+
+
+    //res.json(userInfo);
 })
 
 router.delete('/:id', async (req, res) => {
