@@ -129,12 +129,14 @@ class DataBase {
             See if slug feature is really necessary for the web app.
             */
 
+            /*
             const username = await this.getUserName(articleObj.otisUserId);
             console.log("slug value:");
             console.log(`${username}_${articleObj.title}`);
             const slugValue = `${username}-${articleObj.title}`;
 
             articleObj.slug = slugify(slugValue, {lower: true, strict: true});
+            */
 
 
             //articleObj.slug = 
@@ -148,7 +150,7 @@ class DataBase {
 
             articleObj = await articleObj.save();
 
-            res.redirect(`${articleObj.slug}`);
+            res.redirect(`${articleObj.id}`);
 
         } catch(err) {
 
