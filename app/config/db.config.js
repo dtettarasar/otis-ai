@@ -146,7 +146,7 @@ class DataBase {
             title: req.body.title,
             description: req.body.description,
             markdown: req.body.markdown,
-            articleId: req.params.id
+            lastModifiedAt: Date.now()
         }
 
         let articleFilter = {
