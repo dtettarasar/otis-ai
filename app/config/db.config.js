@@ -2,6 +2,10 @@
 const env = require('dotenv').config();
 const mongoose = require('mongoose');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
+const {marked} = require("marked");
+const createDomPurify = require('dompurify');
+const {JSDOM} = require('jsdom');
+const dompurify = createDomPurify(new JSDOM().window);
 
 //Models
 const roleModel = require('../models/role.model');
@@ -151,6 +155,14 @@ class DataBase {
 
         let articleFilter = {
             _id: req.params.id
+        }
+
+        if (articleObj.markdown) {
+
+            const markdownToHtml = marked(articleObj.markdown);
+    
+            articleObj.sanitizedHtml = dompurify.sanitize(markdownToHtml);
+    
         }
 
         try {
