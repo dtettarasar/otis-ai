@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const {marked} = require("marked");
-const slugify = require("slugify");
 
 //See https://www.npmjs.com/package/dompurify for more details
 // Tools used to remove potential malicious code passed in the markdown field
@@ -14,7 +13,6 @@ const ArticleSch = new mongoose.Schema({
     markdown: {type: String, required: true},
     createdAt: {type: Date, default: Date.now},
     lastModifiedAt: {type: Date, default: Date.now},
-    /*slug: {type: String, required: true, unique: true},*/
     otisUserId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     sanitizedHtml : {type: String, required: true}
 });
