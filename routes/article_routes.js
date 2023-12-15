@@ -133,7 +133,8 @@ router.put('/update/:id', userToken.authToken, async (req, res) => {
     if (test) {
 
         userInfo.article = await dataBase.findArticleById(req.params.id);
-        res.json(userInfo);
+        res.redirect(`/article/${req.params.id}`);
+        //res.json(userInfo);
 
     } else {
 
