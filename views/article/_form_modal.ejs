@@ -10,17 +10,21 @@
           <strong>What your article should be about?</strong>
           Use the fields below to tell us about your article. 
 
-          <div class="form-group">
-              <label for="title">Title</label>
-              <input value="<%= article.title %>" required type="text" name="title" id="title" class="form-control">
-          </div>
-          
-          <div class="form-group">
-              <label for="description">Description</label>
-              <textarea name="description" id="description" class="form-control"><%= article.description %></textarea>
-          </div>
+          <form action="/article/create-ai" method="post">
 
-          <button type="submit" class="btn btn-primary mt-2">Create</button>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input value="<%= article.title %>" required type="text" name="title" id="title" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" class="form-control"><%= article.description %></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-2">Create</button>
+
+          </form>
 
         </div>
         <div class="modal-footer">
