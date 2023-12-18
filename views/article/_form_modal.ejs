@@ -43,35 +43,20 @@
 
             <div class="d-flex align-items-center justify-content-evenly flex-wrap" id="keywords-container">
 
-              <div class="badge bg-primary keyword-bdge d-flex flex-row">
-                  <p>Test short</p>
-                  <button type="button" class="btn-close" aria-label="Close"></button>
-              </div>
-
-              <div class="badge bg-primary keyword-bdge d-flex flex-row">
+              <div id="keyword-tag-1" class="badge bg-primary keyword-bdge d-flex flex-row">
                 <p>Test Keywords</p>
-                <button type="button" class="btn-close" aria-label="Close"></button>
+                <button onclick="removeKeyword('#keyword-tag-1')" type="button" class="btn-close" aria-label="Close"></button>
               </div>
 
-              <div class="badge bg-primary keyword-bdge d-flex flex-row">
+              <div id="keyword-tag-2" class="badge bg-primary keyword-bdge d-flex flex-row">
                 <p>Test short</p>
-                <button type="button" class="btn-close" aria-label="Close"></button>
-            </div>
+                <button onclick="removeKeyword('#keyword-tag-2')" type="button" class="btn-close" aria-label="Close"></button>
+              </div>
 
-            <div class="badge bg-primary keyword-bdge d-flex flex-row">
-              <p>Test short</p>
-              <button type="button" class="btn-close" aria-label="Close"></button>
-            </div>
-
-            <div class="badge bg-primary keyword-bdge d-flex flex-row">
-              <p>Test short</p>
-              <button type="button" class="btn-close" aria-label="Close"></button>
-          </div>
-
-          <div class="badge bg-primary keyword-bdge d-flex flex-row">
-            <p>Test Keywords this one is longer</p>
-            <button type="button" class="btn-close" aria-label="Close"></button>
-          </div>
+              <div id="keyword-tag-3" class="badge bg-primary keyword-bdge d-flex flex-row">
+                <p>Test Keywords this one is longer</p>
+                <button onclick="removeKeyword('#keyword-tag-3')" type="button" class="btn-close" aria-label="Close"></button>
+              </div>
 
             </div>
 
@@ -126,6 +111,15 @@
 
       console.log(keywordArr);
     }
+
+    const removeKeyword = (keyWordId) => {
+
+      const keywordElem = document.querySelector(keyWordId);
+      keywordElem.remove();
+
+    }
+
+    //removeKeyword("#keyword-tag-3");
 
     addKeyWrdBtn.addEventListener("click", getKeyWords);
 
