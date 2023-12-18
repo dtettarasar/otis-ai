@@ -77,34 +77,34 @@
 
 <script>
 
-    console.log('test');
     const addKeyWrdBtn = document.querySelector("#add-kywrd-btn");
     const addKeyWrdField = document.querySelector("#keywords");
     const keywordsContainer = document.querySelector("#keywords-container");
     const keywordsLimit = 3;
     let keyWordIdCount = 4;
 
-    const keywordArr = [];
+    const keywordArr = {};
 
     const addKeyWords = () => {
+
       console.log("init get keywords button");
 
-      if (keywordArr.length < keywordsLimit) {
+      if (true) {
 
-        keywordArr.push(addKeyWrdField.value);
-
+        const keywordIdVal = `keyword-tag-${keyWordIdCount}`;
         const tagDivElem = document.createElement("div");
         const tagPElem = document.createElement("p");
         const tagBtnElem = document.createElement("button");
         const tagTxtElem = document.createTextNode(addKeyWrdField.value);
-        const keywordIdVal = `keyword-tag-${keyWordIdCount}`;
+
+        keywordArr[keywordIdVal] = addKeyWrdField.value;
 
         tagDivElem.classList.add('badge', 'bg-primary', 'keyword-bdge', 'd-flex', 'flex-row');
         tagBtnElem.classList.add('btn-close');
         tagBtnElem.setAttribute('type', 'button');
         tagBtnElem.setAttribute('aria-label', 'Close');
 
-        tagBtnElem.setAttribute('onclick', `removeKeyword('#${keywordIdVal}')`);
+        tagBtnElem.setAttribute('onclick', `removeKeyword('${keywordIdVal}')`);
         tagDivElem.setAttribute('id', keywordIdVal);
 
         tagPElem.appendChild(tagTxtElem);
@@ -123,12 +123,15 @@
       }
 
       console.log(keywordArr);
+
     }
 
-    const removeKeyword = (keyWordId) => {
+    const removeKeyword = (keywordIdVal) => {
 
-      const keywordElem = document.querySelector(keyWordId);
+      const keywordElem = document.querySelector(`#${keywordIdVal}`);
       keywordElem.remove();
+      delete keywordArr[keywordIdVal];
+      console.log(keywordArr);
 
     }
 
