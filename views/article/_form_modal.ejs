@@ -41,22 +41,7 @@
               <input value="" required type="text" name="title" id="keywords" class="form-control">
             </div>
 
-            <div class="d-flex align-items-center justify-content-evenly flex-wrap" id="keywords-container">
-
-              <div id="keyword-tag-1" class="badge bg-primary keyword-bdge d-flex flex-row">
-                <p>Test Keywords</p>
-                <button onclick="removeKeyword('#keyword-tag-1')" type="button" class="btn-close" aria-label="Close"></button>
-              </div>
-
-              <div id="keyword-tag-2" class="badge bg-primary keyword-bdge d-flex flex-row">
-                <p>Test short</p>
-                <button onclick="removeKeyword('#keyword-tag-2')" type="button" class="btn-close" aria-label="Close"></button>
-              </div>
-
-              <div id="keyword-tag-3" class="badge bg-primary keyword-bdge d-flex flex-row">
-                <p>Test Keywords this one is longer</p>
-                <button onclick="removeKeyword('#keyword-tag-3')" type="button" class="btn-close" aria-label="Close"></button>
-              </div>
+            <div class="d-flex align-items-center justify-content-start flex-wrap" id="keywords-container">
 
             </div>
 
@@ -80,8 +65,10 @@
     const addKeyWrdBtn = document.querySelector("#add-kywrd-btn");
     const addKeyWrdField = document.querySelector("#keywords");
     const keywordsContainer = document.querySelector("#keywords-container");
-    const keywordsLimit = 3;
-    let keyWordIdCount = 4;
+    const keywordsLimit = 5;
+    let keyWordIdCount = 0;
+
+    // Todo build a regex to exlude keywords only made with special characters
 
     const keywordArr = {};
 
@@ -89,15 +76,27 @@
 
       console.log("init get keywords button");
 
-      if (true) {
+      console.log(Object.keys(keywordArr).length);
+
+      const simplifiedKeyWord = addKeyWrdField.value.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
+
+      if (Object.keys(keywordArr).length == keywordsLimit) {
+
+        (console.log(`you can add a maximum of ${keywordsLimit} keywords`));
+
+      } else if (!simplifiedKeyWord) {
+
+        console.log('field should not be empty')
+
+      } else {
 
         const keywordIdVal = `keyword-tag-${keyWordIdCount}`;
         const tagDivElem = document.createElement("div");
         const tagPElem = document.createElement("p");
         const tagBtnElem = document.createElement("button");
-        const tagTxtElem = document.createTextNode(addKeyWrdField.value);
+        const tagTxtElem = document.createTextNode(simplifiedKeyWord);
 
-        keywordArr[keywordIdVal] = addKeyWrdField.value;
+        keywordArr[keywordIdVal] = simplifiedKeyWord;
 
         tagDivElem.classList.add('badge', 'bg-primary', 'keyword-bdge', 'd-flex', 'flex-row');
         tagBtnElem.classList.add('btn-close');
@@ -116,12 +115,8 @@
         addKeyWrdField.value = "";
         keyWordIdCount++;
 
-      } else {
-
-        (console.log(`you can add a maximum of ${keywordsLimit}`));
-
-      }
-
+      } 
+      
       console.log(keywordArr);
 
     }
@@ -134,8 +129,6 @@
       console.log(keywordArr);
 
     }
-
-    //removeKeyword("#keyword-tag-3");
 
     addKeyWrdBtn.addEventListener("click", addKeyWords);
 
