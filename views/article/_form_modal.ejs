@@ -10,6 +10,10 @@
       margin:4px;
     }
 
+    #keywords-params {
+      display:none;
+    }
+
   </style>
   
   <!-- Modal -->
@@ -26,10 +30,12 @@
 
           <form action="/article/create-ai" method="post">
 
+            <!--
             <div class="form-group mt-2">
                 <label for="title">Title</label>
                 <input value="" required type="text" name="title" id="title" class="form-control">
             </div>
+            -->
             
             <div class="form-group mt-2">
                 <label for="description">Description</label>
@@ -38,12 +44,15 @@
 
             <div class="form-group mt-2 mb-2">
               <label for="keywords">Keywords</label>
-              <input value="" required type="text" name="title" id="keywords" class="form-control">
+              <input value="" type="text" name="title" id="keywords" class="form-control">
             </div>
 
             <div class="d-flex align-items-center justify-content-start flex-wrap" id="keywords-container">
 
             </div>
+
+            <!-- this field is used to store the keywords value and pass to back end -->
+            <textarea name="keywords-params" id="keywords-params" class="form-control"></textarea>
 
             <button id="add-kywrd-btn" type="button" class="btn btn-secondary mt-2">Add keywords</button>
 
@@ -65,22 +74,23 @@
     const addKeyWrdBtn = document.querySelector("#add-kywrd-btn");
     const addKeyWrdField = document.querySelector("#keywords");
     const keywordsContainer = document.querySelector("#keywords-container");
+    const keywordsParamsField = document.querySelector("#keywords-params");
     const keywordsLimit = 5;
     let keyWordIdCount = 0;
 
     // Todo build a regex to exlude keywords only made with special characters
 
-    const keywordArr = {};
+    const keywordObj = {};
 
     const addKeyWords = () => {
 
       console.log("init get keywords button");
 
-      console.log(Object.keys(keywordArr).length);
+      console.log(Object.keys(keywordObj).length);
 
       const simplifiedKeyWord = addKeyWrdField.value.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
 
-      if (Object.keys(keywordArr).length == keywordsLimit) {
+      if (Object.keys(keywordObj).length == keywordsLimit) {
 
         (console.log(`you can add a maximum of ${keywordsLimit} keywords`));
 
@@ -96,7 +106,7 @@
         const tagBtnElem = document.createElement("button");
         const tagTxtElem = document.createTextNode(simplifiedKeyWord);
 
-        keywordArr[keywordIdVal] = simplifiedKeyWord;
+        keywordObj[keywordIdVal] = simplifiedKeyWord;
 
         tagDivElem.classList.add('badge', 'bg-primary', 'keyword-bdge', 'd-flex', 'flex-row');
         tagBtnElem.classList.add('btn-close');
@@ -113,11 +123,13 @@
 
 
         addKeyWrdField.value = "";
+        keywordsParamsField.value = JSON.stringify(keywordObj);
+
         keyWordIdCount++;
 
       } 
       
-      console.log(keywordArr);
+      console.log(keywordsParamsField.value);
 
     }
 
@@ -125,8 +137,9 @@
 
       const keywordElem = document.querySelector(`#${keywordIdVal}`);
       keywordElem.remove();
-      delete keywordArr[keywordIdVal];
-      console.log(keywordArr);
+      delete keywordObj[keywordIdVal];
+      keywordsParamsField.value = JSON.stringify(keywordObj);
+      console.log(keywordsParamsField.value);
 
     }
 

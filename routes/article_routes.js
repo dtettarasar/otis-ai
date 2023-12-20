@@ -119,6 +119,20 @@ router.post('/create', userToken.authToken, async (req, res) => {
     const article = await dataBase.createArticle(req, res);
 })
 
+router.post('/create-ai', userToken.authToken, async (req, res) => {
+
+    //const article = await dataBase.createArticle(req, res);
+
+    const articleParams = {
+        description: req.body.description
+        //keywords: req.params.keywords-params
+    }
+
+    console.log(articleParams);
+
+    res.redirect('/article');
+})
+
 router.put('/update/:id', userToken.authToken, async (req, res) => {
 
     //const article = await dataBase.createArticle(req, res);
