@@ -123,12 +123,36 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
 
     //const article = await dataBase.createArticle(req, res);
 
-    const articleParams = {
-        description: req.body.description
-        //keywords: req.params.keywords-params
+    // todo créer ici fonction pour checker la valeur de req.body.keywords_params
+    // S'assurer que c'est convertible en json et que le format respecte bien ce dont on a besoin pour la suite du process
+    // un objet avec des des attributs "keyword-tag-int" et en valeur des chaines de caractères, sans caractères spéciaux
+
+    const userInfo = {
+        userId: req.user['_id'],
+        username: await dataBase.getUserName(req.user['_id'])
+    };
+
+    let keywordsParams = {};
+
+    try {
+
+        keywordsParams = JSON.parse(req.body.keywords_params);
+
+    } catch (err) {
+
+        console.log("error when converting keywordsParams from str to json");
+        console.log(err);
+
     }
 
-    console.log(articleParams);
+    const articleParams = {
+        description: req.body.description,
+        keywords: keywordsParams
+    }
+
+    userInfo.articleParams = articleParams;
+
+    console.log(userInfo);
 
     res.redirect('/article');
 })
