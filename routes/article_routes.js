@@ -131,7 +131,11 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
 
     const userInfo = {
         userId: req.user['_id'],
-        username: await dataBase.getUserName(req.user['_id'])
+        username: await dataBase.getUserName(req.user['_id']),
+        articleParams: {
+            description: req.body.description,
+            keywords: []
+        }
     };
 
     let keywordsParams = {};
@@ -149,20 +153,28 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
 
     const articleParams = {
         description: req.body.description,
-        keywords: keywordsParams
+        keywords: []
     }
 
-    userInfo.articleParams = articleParams;
+    for (const keyword in keywordsParams) {
+
+        userInfo.articleParams.keywords.push(keywordsParams[keyword]);
+
+    }
+
+    //userInfo.articleParams = articleParams;
 
     console.log(userInfo);
     console.log("aiArticleCReator");
     console.log(aiArticleCreator);
 
-    const prompt = aiArticleCreator.generatePrompt(["hokuto no ken", "post-apocalyptic fiction", "mad max"], 'en');
+    const prompt = aiArticleCreator.generatePrompt(userInfo.articleParams.keywords, userInfo.articleParams.description, 'en');
     console.log(prompt);
 
+    /*
     const article = await aiArticleCreator.generateArticle(prompt);
     console.log(article);
+    */
 
     res.redirect('/article');
 })
