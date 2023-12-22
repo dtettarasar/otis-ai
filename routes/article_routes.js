@@ -8,6 +8,8 @@ const dataBaseClass = require('../app/config/db.config');
 const dataBase = new dataBaseClass();
 dataBase.initDB();
 
+const aiArticleCreator = require('../app/custom_modules/ai_article_creator');
+
 router.get("/", userToken.authToken, async (req, res) => {
 
     const tokenData = {
@@ -153,6 +155,17 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
     userInfo.articleParams = articleParams;
 
     console.log(userInfo);
+    console.log("aiArticleCReator");
+    console.log(aiArticleCreator);
+
+    const prompt = aiArticleCreator.generatePrompt(["hokuto no ken", "post-apocalyptic fiction", "mad max"], 'en');
+    console.log(prompt);
+
+    const openai = await aiArticleCreator.initApiConfig();
+    console.log(openai);
+
+    const article = await aiArticleCreator.generateArticle(prompt);
+    console.log(article);
 
     res.redirect('/article');
 })
