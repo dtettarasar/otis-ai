@@ -18,7 +18,15 @@ const aiArticleCreator = {
             es: 'spanish'
         };
 
-        const textRequest = `write an article optimized for search engine. to define the topics of the article and the lexical field, use the following keywords: ${keywordsArr}. 
+        const paramsHasKeywords = keywordsArr.length !== 0;
+        const paramsHasDescription = descriptionStr !== '';
+
+        const keywordsTxt = `use the following keywords: ${keywordsArr}`;
+        const descriptionTxt = `use the following description: ${descriptionStr}`;
+
+        const addParamInReq = `${paramsHasKeywords ? keywordsTxt : ''}${paramsHasKeywords && paramsHasDescription ? ' & ' : ''}${paramsHasDescription ? descriptionTxt : ''}`;
+
+        const textRequest = `write an article optimized for search engine. to define the topics of the article and the lexical field, ${addParamInReq}. 
         it should be written in markdown format. the language of the article should be ${language[chosenLanguage]}.
         the article should contain subtitles for each section. at the end of the article, add a section in which you mention the sources used to create the article.
         Make sure the sources you're using are pages that are available on the web, and not fake or dead links`;
