@@ -161,9 +161,6 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
     const prompt = aiArticleCreator.generatePrompt(["hokuto no ken", "post-apocalyptic fiction", "mad max"], 'en');
     console.log(prompt);
 
-    const openai = await aiArticleCreator.initApiConfig();
-    console.log(openai);
-
     const article = await aiArticleCreator.generateArticle(prompt);
     console.log(article);
 
