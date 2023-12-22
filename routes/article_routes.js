@@ -140,25 +140,25 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
 
     let keywordsParams = {};
 
-    try {
-
-        keywordsParams = JSON.parse(req.body.keywords_params);
-
-    } catch (err) {
-
-        console.log("error when converting keywordsParams from str to json");
-        console.log(err);
-
-    }
-
     const articleParams = {
         description: req.body.description,
         keywords: []
     }
 
-    for (const keyword in keywordsParams) {
+    try {
 
-        userInfo.articleParams.keywords.push(keywordsParams[keyword]);
+        keywordsParams = JSON.parse(req.body.keywords_params);
+
+        for (const keyword in keywordsParams) {
+
+            userInfo.articleParams.keywords.push(keywordsParams[keyword]);
+    
+        }
+
+    } catch (err) {
+
+        console.log("error when converting keywordsParams from str to json");
+        console.log(err);
 
     }
 
