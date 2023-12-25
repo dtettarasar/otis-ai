@@ -137,7 +137,8 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
         articleParams: {
             description: req.body.description,
             keywords: []
-        }
+        },
+        articleToCreate: {}
     };
 
     let keywordsParams = {};
@@ -146,6 +147,8 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
         description: req.body.description,
         keywords: []
     }
+
+    // Créer un block if pour checker si req.body.keywords_params existe. Si on évalue à true, éxécuter le block try catch
 
     try {
 
@@ -166,20 +169,37 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
 
     //userInfo.articleParams = articleParams;
 
-    console.log(userInfo);
     /*
+    console.log(userInfo);
     console.log("aiArticleCReator");
     console.log(aiArticleCreator);
     */
 
     const prompt = aiArticleCreator.generatePrompt(userInfo.articleParams.keywords, userInfo.articleParams.description, 'en');
-    console.log(prompt);
+    //console.log(prompt);
 
     
-    const article = await aiArticleCreator.generateArticle(prompt);
-    console.log(article[0].message.content);
+    const aiArticleResponse = await aiArticleCreator.generateArticle(prompt);
+    //console.log(aiArticleResponse[0].message.content);
 
-    res.redirect('/article');
+    userInfo.articleToCreate.title = "test title";
+    userInfo.articleToCreate.description = 'test description';
+    userInfo.articleToCreate.markdown = aiArticleResponse[0].message.content;
+
+    const createdArticle = await dataBaseObj.createArticle(userInfo.articleToCreate.title, userInfo.articleToCreate.description, userInfo.articleToCreate.markdown, userInfo.userId);
+
+    console.log(createdArticle);
+
+    if (createdArticle) {
+
+        res.redirect(`/article/${createdArticle['_id']}`);
+
+    } else {
+
+        res.redirect(`/article`);
+
+    }
+
 })
 
 router.put('/update/:id', userToken.authToken, async (req, res) => {

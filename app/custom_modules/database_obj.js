@@ -28,6 +28,35 @@ const dataBaseObj = {
         }
         
 
+    },
+
+    async createArticle(titleStr, descriptionStr, markdownStr, otisUserIdStr) {
+
+        console.log("Database Obj: init create article method");
+
+        let articleObj = new ArticleModel({
+            title: titleStr,
+            description: descriptionStr,
+            markdown: markdownStr,
+            otisUserId: otisUserIdStr
+        });
+
+        try {
+
+            articleObj = await articleObj.save();
+
+            return articleObj
+
+        } catch(err) {
+
+            console.log(err);
+            console.log("article value here");
+            console.log(articleObj);
+            
+            return false;
+
+        }
+
     }
 
 }
