@@ -165,15 +165,17 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
     //userInfo.articleParams = articleParams;
 
     console.log(userInfo);
+    /*
     console.log("aiArticleCReator");
     console.log(aiArticleCreator);
+    */
 
     const prompt = aiArticleCreator.generatePrompt(userInfo.articleParams.keywords, userInfo.articleParams.description, 'en');
     console.log(prompt);
 
     
     const article = await aiArticleCreator.generateArticle(prompt);
-    console.log(article);
+    console.log(article[0].message.content);
 
     res.redirect('/article');
 })
