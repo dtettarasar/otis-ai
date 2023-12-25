@@ -6,10 +6,11 @@ const userToken = new userTokenClass();
 
 const dataBaseClass = require('../app/config/db.config');
 const dataBase = new dataBaseClass();
-dataBase.initDB();
+//dataBase.initDB();
 
 const aiArticleCreator = require('../app/custom_modules/ai_article_creator');
 const dataBaseObj = require('../app/custom_modules/database_obj');
+dataBaseObj.initDB();
 
 router.get("/", userToken.authToken, async (req, res) => {
 
@@ -177,8 +178,6 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
     
     const article = await aiArticleCreator.generateArticle(prompt);
     console.log(article[0].message.content);
-
-    dataBaseObj.initDB();
 
     res.redirect('/article');
 })
