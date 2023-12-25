@@ -32,6 +32,11 @@ const dataBaseObj = {
 
     async createArticle(titleStr, descriptionStr, markdownStr, otisUserIdStr) {
 
+        /*
+            todo: 
+            add process to check and update user credit here
+        */
+
         console.log("Database Obj: init create article method");
 
         let articleObj = new ArticleModel({

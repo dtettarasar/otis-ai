@@ -45,6 +45,10 @@ router.get("/", userToken.authToken, async (req, res) => {
 
 router.get('/new', userToken.authToken, async (req, res) => {
 
+    /*
+        todo : get user credit balance here to check if user has credit, if he/she wants to use the ai feature 
+    */
+
     const userInfo = {
         userId: req.user['_id'],
         username: await dataBase.getUserName(req.user['_id']),
