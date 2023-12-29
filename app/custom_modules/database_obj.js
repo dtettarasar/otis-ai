@@ -30,6 +30,39 @@ const dataBaseObj = {
 
     },
 
+    async findUserById(userId) {
+
+        const query = UserModel.findById(userId);
+        const userFound = await query.exec();
+
+        return userFound;
+
+    },
+
+    async updateCreditBalance(userId, creditAmount) {
+
+        console.log("Database Obj: init removeCredit method");
+
+        const user = await this.findUserById(userId);
+
+        console.log(user);
+        console.log(creditAmount);
+
+        const newBalance = user.credit + creditAmount;
+
+        if (!user) {
+
+            throw new NotFoundError();
+
+        } else {
+
+            user.set({ credit: newBalance });
+            await user.save();
+
+        }
+
+    },
+
     async createArticle(titleStr, descriptionStr, markdownStr, otisUserIdStr) {
 
         /*

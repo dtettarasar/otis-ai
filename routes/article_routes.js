@@ -192,10 +192,11 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
 
     const createdArticle = await dataBaseObj.createArticle(userInfo.articleToCreate.title, userInfo.articleToCreate.description, userInfo.articleToCreate.markdown, userInfo.userId);
 
-    console.log(createdArticle);
+    //console.log(createdArticle);
 
     if (createdArticle) {
 
+        await dataBaseObj.updateCreditBalance(userInfo.userId, -1);
         res.redirect(`/article/${createdArticle['_id']}`);
 
     } else {
