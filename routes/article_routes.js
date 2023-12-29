@@ -103,7 +103,7 @@ router.get('/:id', userToken.authToken, async (req, res) => {
 
             //res.json(userInfo);
             console.log("access to view article route");
-            console.log(userInfo);
+            //console.log(userInfo);
             res.render('article/show', userInfo);
 
 
@@ -154,6 +154,28 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
 
     // Créer un block if pour checker si req.body.keywords_params existe. Si on évalue à true, éxécuter le block try catch
 
+    if (req.body.keywords_params) {
+
+        try {
+
+            keywordsParams = JSON.parse(req.body.keywords_params);
+    
+            for (const keyword in keywordsParams) {
+    
+                userInfo.articleParams.keywords.push(keywordsParams[keyword]);
+        
+            }
+    
+        } catch (err) {
+    
+            console.log("error when converting keywordsParams from str to json");
+            console.log(err);
+    
+        }
+
+    }
+
+    /*
     try {
 
         keywordsParams = JSON.parse(req.body.keywords_params);
@@ -170,6 +192,7 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
         console.log(err);
 
     }
+    */
 
     //userInfo.articleParams = articleParams;
 

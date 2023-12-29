@@ -41,12 +41,14 @@ const dataBaseObj = {
 
     async updateCreditBalance(userId, creditAmount) {
 
-        console.log("Database Obj: init removeCredit method");
+        console.log("Database Obj: init updateCreditBalance method");
 
         const user = await this.findUserById(userId);
 
+        /*
         console.log(user);
         console.log(creditAmount);
+        */
 
         const newBalance = user.credit + creditAmount;
 
