@@ -54,9 +54,24 @@
             <!-- this field is used to store the keywords value and pass to back end -->
             <textarea name="keywords_params" id="keywords_params" class="form-control"></textarea>
 
-            <button id="add-kywrd-btn" type="button" class="btn btn-secondary mt-2">Add keywords</button>
+            <p class="text-primary mt-2">Your have <strong><%= credit %></strong> credit(s).</p>
 
-            <button type="submit" class="btn btn-success mt-2">Generate Article</button>
+            <% if(credit <= 0){ %>
+
+              <p class="text-danger mt-2" ><strong>You need credits to generate articles with AI</strong></p>
+
+              <a class="btn btn-primary mt-2" href="/user/add-credits">Buy credits here</a>
+
+            <% } %>
+            
+
+            <% if(credit > 0){ %>
+              <button id="add-kywrd-btn" type="button" class="btn btn-secondary mt-2">Add keywords</button>
+              <button class="btn btn-success mt-2">Use 1 credit to generate an article</button>
+            <% } else{ %>  
+              <button disabled id="add-kywrd-btn" type="button" class="btn btn-secondary mt-2">Add keywords</button>
+              <button disabled class="btn btn-success mt-2">Use 1 credit to generate an article</button>
+            <% } %>
 
           </form>
 
