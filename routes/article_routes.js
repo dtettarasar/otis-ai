@@ -213,6 +213,8 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
     userInfo.articleToCreate.description = 'test description';
     userInfo.articleToCreate.markdown = aiArticleResponse[0].message.content;
 
+    //res.redirect(`/article`);
+
     const createdArticle = await dataBaseObj.createArticle(userInfo.articleToCreate.title, userInfo.articleToCreate.description, userInfo.articleToCreate.markdown, userInfo.userId);
 
     //console.log(createdArticle);
@@ -220,7 +222,10 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
     if (createdArticle) {
 
         await dataBaseObj.updateCreditBalance(userInfo.userId, -1);
+        
         res.redirect(`/article/${createdArticle['_id']}`);
+
+        //res.redirect(`/article}`);
 
     } else {
 

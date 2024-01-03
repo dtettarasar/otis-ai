@@ -14,69 +14,83 @@
       display:none;
     }
 
+    .post-submit-content {
+      display: none;
+    }
+
   </style>
   
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div data-bs-backdrop='static' class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Generate Text with AI</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close pre-submit-content" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <strong>What your article should be about?</strong>
+
+          <div class="pre-submit-content">
+
+            <strong>What your article should be about?</strong>
           Use the fields below to tell us about your article. 
 
-          <form action="/article/create-ai" method="post">
+            <form action="/article/create-ai" method="post">
 
-            <!--
-            <div class="form-group mt-2">
-                <label for="title">Title</label>
-                <input value="" required type="text" name="title" id="title" class="form-control">
-            </div>
-            -->
-            
-            <div class="form-group mt-2">
-                <label for="description">Description</label>
-                <textarea name="description" id="description" class="form-control"></textarea>
-            </div>
+              <!--
+              <div class="form-group mt-2">
+                  <label for="title">Title</label>
+                  <input value="" required type="text" name="title" id="title" class="form-control">
+              </div>
+              -->
+              
+              <div class="form-group mt-2">
+                  <label for="description">Description</label>
+                  <textarea name="description" id="description" class="form-control"></textarea>
+              </div>
 
-            <div class="form-group mt-2 mb-2">
-              <label for="keywords">Keywords</label>
-              <input value="" type="text" name="title" id="keywords" class="form-control">
-            </div>
+              <div class="form-group mt-2 mb-2">
+                <label for="keywords">Keywords</label>
+                <input value="" type="text" name="title" id="keywords" class="form-control">
+              </div>
 
-            <div class="d-flex align-items-center justify-content-start flex-wrap" id="keywords-container">
+              <div class="d-flex align-items-center justify-content-start flex-wrap" id="keywords-container">
 
-            </div>
+              </div>
 
-            <!-- this field is used to store the keywords value and pass to back end -->
-            <textarea name="keywords_params" id="keywords_params" class="form-control"></textarea>
+              <!-- this field is used to store the keywords value and pass to back end -->
+              <textarea name="keywords_params" id="keywords_params" class="form-control"></textarea>
 
-            <p class="text-primary mt-2">Your have <strong><%= credit %></strong> credit(s).</p>
+              <p class="text-primary mt-2">Your have <strong><%= credit %></strong> credit(s).</p>
 
-            <% if(credit <= 0){ %>
+              <% if(credit <= 0){ %>
 
-              <p class="text-danger mt-2" ><strong>You need credits to generate articles with AI</strong></p>
+                <p class="text-danger mt-2" ><strong>You need credits to generate articles with AI</strong></p>
 
-              <a class="btn btn-primary mt-2" href="/user/add-credits">Buy credits here</a>
+                <a class="btn btn-primary mt-2" href="/user/add-credits">Buy credits here</a>
 
-            <% } %>
-            
+              <% } %>
+              
 
-            <% if(credit > 0){ %>
-              <button id="add-kywrd-btn" type="button" class="btn btn-secondary mt-2">Add keywords</button>
-              <button class="btn btn-success mt-2">Use 1 credit to generate an article</button>
-            <% } else{ %>  
-              <button disabled id="add-kywrd-btn" type="button" class="btn btn-secondary mt-2">Add keywords</button>
-              <button disabled class="btn btn-success mt-2">Use 1 credit to generate an article</button>
-            <% } %>
+              <% if(credit > 0){ %>
+                <button id="add-kywrd-btn" type="button" class="btn btn-secondary mt-2">Add keywords</button>
+                <button id="trigger-creation-btn" class="btn btn-success mt-2">Use 1 credit to generate an article</button>
+              <% } else{ %>  
+                <button disabled id="add-kywrd-btn" type="button" class="btn btn-secondary mt-2">Add keywords</button>
+                <button disabled class="btn btn-success mt-2">Use 1 credit to generate an article</button>
+              <% } %>
 
-          </form>
+            </form>
+
+          </div>
+
+          <div class="post-submit-content">
+            <p>Article in creation, please wait :)</p>
+          </div>
+          
 
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer pre-submit-content">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
           <!-- <button id="modal-validate-btn" type="button" class="btn btn-primary">Save changes</button>-->
         </div>
@@ -86,10 +100,15 @@
 
 <script>
 
+    // html elements
     const addKeyWrdBtn = document.querySelector("#add-kywrd-btn");
     const addKeyWrdField = document.querySelector("#keywords");
     const keywordsContainer = document.querySelector("#keywords-container");
     const keywordsParamsField = document.querySelector("#keywords_params");
+    const submitBtn = document.querySelector('#trigger-creation-btn');
+    const preSubmitContent = document.querySelectorAll('.pre-submit-content');
+    const postSubmitContent = document.querySelectorAll('.post-submit-content');
+
     const keywordsLimit = 5;
     let keyWordIdCount = 0;
 
@@ -157,6 +176,20 @@
       console.log(keywordsParamsField.value);
 
     }
+
+    const changeModalContentOnSubmission = () => {
+
+      preSubmitContent.forEach(element => {
+        element.style.display = "none";
+      });
+
+      postSubmitContent.forEach(element => {
+        element.style.display = "block";
+      })
+
+    }
+
+    submitBtn.addEventListener("click", changeModalContentOnSubmission);
 
     addKeyWrdBtn.addEventListener("click", addKeyWords);
 
