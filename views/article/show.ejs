@@ -13,8 +13,8 @@
         <h1 class="mb-1"><%= articleData.title %></h1>
         <div class="text-muted mb-2"><%= articleData.createdAt.toLocaleDateString() %></div>
         <a href="/article/" class="btn btn-secondary">My articles</a>
-        <a href="/article/edit/<%= articleData._id %>" class="btn btn-info">Edit this article</a>
-        <div>
+        <a href="/article/edit/<%= articleData._id %>" class="btn btn-primary">Edit this article</a>
+        <div class="mt-4">
             <%- articleData.sanitizedHtml %>
         </div>
     </div>
