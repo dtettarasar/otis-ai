@@ -6,7 +6,6 @@ const userToken = new userTokenClass();
 
 const dataBaseClass = require('../app/config/db.config');
 const dataBase = new dataBaseClass();
-//dataBase.initDB();
 
 const aiArticleCreator = require('../app/custom_modules/ai_article_creator');
 const dataBaseObj = require('../app/custom_modules/database_obj');
@@ -175,50 +174,23 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
 
     }
 
-    /*
-    try {
-
-        keywordsParams = JSON.parse(req.body.keywords_params);
-
-        for (const keyword in keywordsParams) {
-
-            userInfo.articleParams.keywords.push(keywordsParams[keyword]);
-    
-        }
-
-    } catch (err) {
-
-        console.log("error when converting keywordsParams from str to json");
-        console.log(err);
-
+    const parseTextFromMarkDown = (mdString) => {
+        return mdString.replace(/[#*]{1,3}\s?|_{1,3}\s?|`{1,3}\s?|(\[(.*?)\]\(.*?\))/g, '');
     }
-    */
-
-    //userInfo.articleParams = articleParams;
-
-    /*
-    console.log(userInfo);
-    console.log("aiArticleCReator");
-    console.log(aiArticleCreator);
-    */
 
     const prompt = aiArticleCreator.generatePrompt(userInfo.articleParams.keywords, userInfo.articleParams.description, 'en');
-    //console.log(prompt);
-
     
     const aiArticleResponse = await aiArticleCreator.generateArticle(prompt);
+    /*
     console.log(aiArticleResponse[0].message);
     console.log(typeof aiArticleResponse[0].message.content);
+    */
 
     const articleTitle = aiArticleResponse[0].message.content.split('\n')[0];
 
-    //console.log(articleTitle);
-
-    userInfo.articleToCreate.title = articleTitle;
+    userInfo.articleToCreate.title = parseTextFromMarkDown(articleTitle);
     userInfo.articleToCreate.description = '';
     userInfo.articleToCreate.markdown = aiArticleResponse[0].message.content;
-
-    //res.redirect(`/article`);
 
     const createdArticle = await dataBaseObj.createArticle(userInfo.articleToCreate.title, userInfo.articleToCreate.description, userInfo.articleToCreate.markdown, userInfo.userId);
 
@@ -230,8 +202,6 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
         
         res.redirect(`/article/${createdArticle['_id']}`);
 
-        //res.redirect(`/article}`);
-
     } else {
 
         res.redirect(`/article`);
@@ -242,7 +212,6 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
 
 router.put('/update/:id', userToken.authToken, async (req, res) => {
 
-    //const article = await dataBase.createArticle(req, res);
     const userInfo = {
         userId: req.user['_id'],
         username: await dataBase.getUserName(req.user['_id']),
@@ -255,7 +224,6 @@ router.put('/update/:id', userToken.authToken, async (req, res) => {
 
         userInfo.article = await dataBase.findArticleById(req.params.id);
         res.redirect(`/article/${req.params.id}`);
-        //res.json(userInfo);
 
     } else {
 
@@ -266,7 +234,6 @@ router.put('/update/:id', userToken.authToken, async (req, res) => {
     }
 
 
-    //res.json(userInfo);
 })
 
 router.delete('/:id', async (req, res) => {
