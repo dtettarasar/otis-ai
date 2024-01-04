@@ -207,10 +207,15 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
 
     
     const aiArticleResponse = await aiArticleCreator.generateArticle(prompt);
-    //console.log(aiArticleResponse[0].message.content);
+    console.log(aiArticleResponse[0].message);
+    console.log(typeof aiArticleResponse[0].message.content);
 
-    userInfo.articleToCreate.title = "test title";
-    userInfo.articleToCreate.description = 'test description';
+    const articleTitle = aiArticleResponse[0].message.content.split('\n')[0];
+
+    //console.log(articleTitle);
+
+    userInfo.articleToCreate.title = articleTitle;
+    userInfo.articleToCreate.description = '';
     userInfo.articleToCreate.markdown = aiArticleResponse[0].message.content;
 
     //res.redirect(`/article`);
