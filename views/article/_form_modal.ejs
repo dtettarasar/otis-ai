@@ -103,6 +103,7 @@
     // html elements
     const addKeyWrdBtn = document.querySelector("#add-kywrd-btn");
     const addKeyWrdField = document.querySelector("#keywords");
+    const desccriptionField = document.querySelector("description");
     const keywordsContainer = document.querySelector("#keywords-container");
     const keywordsParamsField = document.querySelector("#keywords_params");
     const submitBtn = document.querySelector('#trigger-creation-btn');
@@ -119,9 +120,10 @@
 
     const addKeyWords = () => {
 
+      /*
       console.log("init get keywords button");
-
       console.log(Object.keys(keywordObj).length);
+      */
 
       const simplifiedKeyWord = addKeyWrdField.value.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
 
@@ -164,7 +166,7 @@
 
       } 
       
-      console.log(keywordsParamsField.value);
+      //console.log(keywordsParamsField.value);
 
     }
 
@@ -192,11 +194,31 @@
 
     submitBtn.addEventListener("click", () => {
 
-      formElement.submit();
+      console.log('init submission');
+
+      console.log("check keywords params length");
+
+      console.log(Object.keys(keywordObj).length);
+
+      const keywordsOk = Object.keys(keywordObj).length > 0 && Object.keys(keywordObj).length <= keywordsLimit;
+
+      if (keywordsOk) {
+
+        //changeModalContentOnSubmission();
+        //formElement.submit();
+
+      } else {
+
+        console.log(`give between 1 & ${keywordsLimit}`);
+
+      }
+
+
+      //formElement.submit();
 
     });
 
-    submitBtn.addEventListener("click", changeModalContentOnSubmission);
+    //submitBtn.addEventListener("click", changeModalContentOnSubmission);
 
     addKeyWrdBtn.addEventListener("click", addKeyWords);
 
