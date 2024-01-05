@@ -38,8 +38,9 @@
             <form id="trigger-creation-form" action="/article/create-ai" method="post">
              
               <div class="form-group mt-2">
-                  <label for="description">Description</label>
-                  <textarea name="description" id="description" class="form-control"></textarea>
+                  <label for="description_param">Description</label>
+                  <!--<textarea name="description" id="description" class="form-control"></textarea>-->
+                  <input value="" type="text" name="description_param" id="description_param" class="form-control">
               </div>
 
               <div class="form-group mt-2 mb-2">
@@ -96,7 +97,7 @@
     // html elements
     const addKeyWrdBtn = document.querySelector("#add-kywrd-btn");
     const addKeyWrdField = document.querySelector("#keywords");
-    const descriptionField = document.querySelector("#description");
+    const descriptionParamField = document.querySelector("#description_param");
     const keywordsContainer = document.querySelector("#keywords-container");
     const keywordsParamsField = document.querySelector("#keywords_params");
     const submitBtn = document.querySelector('#trigger-creation-btn');
@@ -187,31 +188,28 @@
 
     submitBtn.addEventListener("click", () => {
 
+
+      /*
       console.log('init submission');
-
       console.log("check keywords params length");
-
       console.log(Object.keys(keywordObj).length);
-
       console.log("description value:");
-    
-      console.log(descriptionField);
+      console.log(descriptionParamField.value);
+      */
 
       const keywordsOk = Object.keys(keywordObj).length > 0 && Object.keys(keywordObj).length <= keywordsLimit;
 
-      if (keywordsOk) {
+      if (keywordsOk || descriptionParamField.value !== '') {
 
-        //changeModalContentOnSubmission();
-        //formElement.submit();
+        changeModalContentOnSubmission();
+        formElement.submit();
+        //console.log("creation ok");
 
       } else {
 
-        console.log(`give between 1 & ${keywordsLimit}`);
+        console.log(`give a description or give between 1 & ${keywordsLimit} keyword(s)`);
 
       }
-
-
-      //formElement.submit();
 
     });
 

@@ -138,7 +138,7 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
         userId: req.user['_id'],
         username: await dataBase.getUserName(req.user['_id']),
         articleParams: {
-            description: req.body.description,
+            description: req.body.description_param,
             keywords: []
         },
         articleToCreate: {}
@@ -146,10 +146,12 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
 
     let keywordsParams = {};
 
+    /*
     const articleParams = {
         description: req.body.description,
         keywords: []
     }
+    */
 
     // Créer un block if pour checker si req.body.keywords_params existe. Si on évalue à true, éxécuter le block try catch
 
