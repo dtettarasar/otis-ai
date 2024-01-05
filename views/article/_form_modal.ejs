@@ -105,10 +105,17 @@
     const postSubmitContent = document.querySelectorAll('.post-submit-content');
     const formElement = document.querySelector("#trigger-creation-form");
 
-    const keywordsLimit = 5;
+    const keywordsLimit = 10;
     let keyWordIdCount = 0;
 
-    // Todo build a regex to exlude keywords only made with special characters
+    // Todo 
+    // add condition to check each keywords isn't longer than 30 char
+    //update the front to add counters : 
+    /*
+    description length counter
+    keywords counter
+    keywords char counter
+    */
 
     const keywordObj = {};
 
@@ -195,19 +202,22 @@
       console.log(Object.keys(keywordObj).length);
       console.log("description value:");
       console.log(descriptionParamField.value);
+      console.log("desc length");
+      console.log(descriptionParamField.value.length);
       */
 
       const keywordsOk = Object.keys(keywordObj).length > 0 && Object.keys(keywordObj).length <= keywordsLimit;
+      const descriptionOk = descriptionParamField.value !== '' && descriptionParamField.value.length <= 150;
 
-      if (keywordsOk || descriptionParamField.value !== '') {
+      if (keywordsOk || descriptionOk) {
 
         changeModalContentOnSubmission();
         formElement.submit();
-        //console.log("creation ok");
+        console.log("creation ok");
 
       } else {
 
-        console.log(`give a description or give between 1 & ${keywordsLimit} keyword(s)`);
+        console.log(`give a description between 1 and 150 chars or give between 1 & ${keywordsLimit} keyword(s)`);
 
       }
 
