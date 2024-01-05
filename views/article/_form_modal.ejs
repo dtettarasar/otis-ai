@@ -35,7 +35,7 @@
             <strong>What your article should be about?</strong>
           Use the fields below to tell us about your article. 
 
-            <form action="/article/create-ai" method="post">
+            <form id="trigger-creation-form" action="/article/create-ai" method="post">
 
               <!--
               <div class="form-group mt-2">
@@ -74,7 +74,7 @@
 
               <% if(credit > 0){ %>
                 <button id="add-kywrd-btn" type="button" class="btn btn-secondary mt-2">Add keywords</button>
-                <button id="trigger-creation-btn" class="btn btn-success mt-2">Use 1 credit to generate an article</button>
+                <a id="trigger-creation-btn" type="button" class="btn btn-success mt-2">Use 1 credit to generate an article</a>
               <% } else{ %>  
                 <button disabled id="add-kywrd-btn" type="button" class="btn btn-secondary mt-2">Add keywords</button>
                 <button disabled class="btn btn-success mt-2">Use 1 credit to generate an article</button>
@@ -108,6 +108,7 @@
     const submitBtn = document.querySelector('#trigger-creation-btn');
     const preSubmitContent = document.querySelectorAll('.pre-submit-content');
     const postSubmitContent = document.querySelectorAll('.post-submit-content');
+    const formElement = document.querySelector("#trigger-creation-form");
 
     const keywordsLimit = 5;
     let keyWordIdCount = 0;
@@ -188,6 +189,12 @@
       })
 
     }
+
+    submitBtn.addEventListener("click", () => {
+
+      formElement.submit();
+
+    });
 
     submitBtn.addEventListener("click", changeModalContentOnSubmission);
 
