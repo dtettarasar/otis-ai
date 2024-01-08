@@ -106,10 +106,12 @@
     const formElement = document.querySelector("#trigger-creation-form");
 
     const keywordsLimit = 10;
+    const keywordMaxLength = 30;
+    const descriptionMaxLength = 130;
     let keyWordIdCount = 0;
 
     // Todo 
-    // add condition to check each keywords isn't longer than 30 char
+    // add condition to check each keywords isn't longer than 30 char => Done
     //update the front to add counters : 
     /*
     description length counter
@@ -126,6 +128,9 @@
       console.log(Object.keys(keywordObj).length);
       */
 
+      console.log("keyword length:");
+      console.log(addKeyWrdField.value.length);
+
       const simplifiedKeyWord = addKeyWrdField.value.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
 
       if (Object.keys(keywordObj).length == keywordsLimit) {
@@ -135,6 +140,10 @@
       } else if (!simplifiedKeyWord) {
 
         console.log('field should not be empty')
+
+      } else if (addKeyWrdField.value.length > keywordMaxLength) {
+
+        console.log(`make sure your keywords doesn't exceed ${keywordMaxLength} characters`);
 
       } else {
 
@@ -177,7 +186,7 @@
       keywordElem.remove();
       delete keywordObj[keywordIdVal];
       keywordsParamsField.value = JSON.stringify(keywordObj);
-      console.log(keywordsParamsField.value);
+      //console.log(keywordsParamsField.value);
 
     }
 
