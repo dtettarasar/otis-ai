@@ -232,8 +232,19 @@
 
     });
 
-    //submitBtn.addEventListener("click", changeModalContentOnSubmission);
+    const fieldLengthCounter = (txtFieldElement, strLengthLimit) => {
 
+      return () => {
+
+        const strLength = txtFieldElement.value.length;
+        console.log(`strLength: ${strLength}/${strLengthLimit}`);
+
+      }
+
+    }
+
+    descriptionParamField.addEventListener("input", fieldLengthCounter(descriptionParamField, descriptionMaxLength));
+    addKeyWrdField.addEventListener("input", fieldLengthCounter(addKeyWrdField, keywordMaxLength));
     addKeyWrdBtn.addEventListener("click", addKeyWords);
 
 </script>
