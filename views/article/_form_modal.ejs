@@ -41,11 +41,13 @@
                   <label for="description_param">Description</label>
                   <!--<textarea name="description" id="description" class="form-control"></textarea>-->
                   <input value="" type="text" name="description_param" id="description_param" class="form-control">
+                  <p class="mt-2">Character counter: <strong><span id="description-counter"></span></strong></p>
               </div>
 
               <div class="form-group mt-2 mb-2">
                 <label for="keywords">Keywords</label>
                 <input value="" type="text" name="title" id="keywords" class="form-control">
+                <p class="mt-2">Character counter: <strong><span id="keyword-counter"></span></strong></p>
               </div>
 
               <div class="d-flex align-items-center justify-content-start flex-wrap" id="keywords-container">
@@ -104,6 +106,9 @@
     const preSubmitContent = document.querySelectorAll('.pre-submit-content');
     const postSubmitContent = document.querySelectorAll('.post-submit-content');
     const formElement = document.querySelector("#trigger-creation-form");
+
+    const descriptionCounterElem = document.querySelector('#description-counter');
+    const keywordCounterElem = document.querySelector('#keyword-counter');
 
     const keywordsLimit = 10;
     const keywordMaxLength = 30;
@@ -170,6 +175,7 @@
 
 
         addKeyWrdField.value = "";
+        trigrinitKeywordCounter();
         keywordsParamsField.value = JSON.stringify(keywordObj);
 
         keyWordIdCount++;
@@ -232,19 +238,34 @@
 
     });
 
-    const fieldLengthCounter = (txtFieldElement, strLengthLimit) => {
+    const fieldLengthCounter = (txtFieldElement, strLengthLimit, counterElement) => {
+
+      // return the function to create a closure: to store in memory the HTML elements passed as arguments
 
       return () => {
 
         const strLength = txtFieldElement.value.length;
+
+        /*
         console.log(`strLength: ${strLength}/${strLengthLimit}`);
+        console.log(counterElement);
+        */
+
+        counterElement.innerHTML = `${strLength}/${strLengthLimit}`
 
       }
 
     }
 
-    descriptionParamField.addEventListener("input", fieldLengthCounter(descriptionParamField, descriptionMaxLength));
-    addKeyWrdField.addEventListener("input", fieldLengthCounter(addKeyWrdField, keywordMaxLength));
+    descriptionParamField.addEventListener("input", fieldLengthCounter(descriptionParamField, descriptionMaxLength, descriptionCounterElem));
+    addKeyWrdField.addEventListener("input", fieldLengthCounter(addKeyWrdField, keywordMaxLength, keywordCounterElem));
     addKeyWrdBtn.addEventListener("click", addKeyWords);
+
+    // to init character counters on load
+    const trigrDescCounter =  fieldLengthCounter(descriptionParamField, descriptionMaxLength, descriptionCounterElem);
+    const trigrinitKeywordCounter = fieldLengthCounter(addKeyWrdField, keywordMaxLength, keywordCounterElem);
+
+    trigrDescCounter();
+    trigrinitKeywordCounter();
 
 </script>
