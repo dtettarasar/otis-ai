@@ -253,6 +253,20 @@
 
         counterElement.innerHTML = `${strLength}/${strLengthLimit}`
 
+        if (strLength == 0) {
+
+          counterElement.className = "text-secondary"; 
+
+        } else if (strLength <= strLengthLimit) {
+
+          counterElement.className = "text-success"; 
+
+        } else {
+
+          counterElement.className = "text-danger";
+
+        }
+
       }
 
     }
