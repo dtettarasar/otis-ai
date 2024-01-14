@@ -222,13 +222,22 @@
       */
 
       const keywordsOk = Object.keys(keywordObj).length > 0 && Object.keys(keywordObj).length <= keywordsLimit;
-      const descriptionOk = descriptionParamField.value !== '' && descriptionParamField.value.length <= 150;
+      const descriptionOk = descriptionParamField.value !== '';
 
       if (keywordsOk || descriptionOk) {
 
-        changeModalContentOnSubmission();
-        formElement.submit();
-        console.log("creation ok");
+        if (descriptionParamField.value.length > descriptionMaxLength) {
+
+          console.log(`Make sure your description doesn't exceed ${descriptionMaxLength} characters`);
+
+        } else {
+
+          changeModalContentOnSubmission();
+          formElement.submit();
+          console.log("creation ok");
+
+        }
+
 
       } else {
 
