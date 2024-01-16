@@ -59,6 +59,8 @@
 
               <p class="text-primary mt-2">You have <strong><%= credit %></strong> credit(s).</p>
 
+              <strong><p id="err-msg-container" class="text-danger mt-2"></p></strong>
+
               <% if(credit <= 0){ %>
 
                 <p class="text-danger mt-2" ><strong>You need credits to generate articles with AI</strong></p>
@@ -106,6 +108,7 @@
     const preSubmitContent = document.querySelectorAll('.pre-submit-content');
     const postSubmitContent = document.querySelectorAll('.post-submit-content');
     const formElement = document.querySelector("#trigger-creation-form");
+    const errMsgContainer = document.querySelector("#err-msg-container");
 
     const descriptionCounterElem = document.querySelector('#description-counter');
     const keywordCounterElem = document.querySelector('#keyword-counter');
@@ -140,15 +143,18 @@
 
       if (Object.keys(keywordObj).length == keywordsLimit) {
 
-        (console.log(`you can add a maximum of ${keywordsLimit} keywords`));
+        //console.log(`you can add a maximum of ${keywordsLimit} keywords`);
+        errMsgContainer.innerHTML = `You can add a maximum of ${keywordsLimit} keywords`;
 
       } else if (!simplifiedKeyWord) {
 
         console.log('field should not be empty')
+        errMsgContainer.innerHTML = `The keyword field should not be empty`;
 
       } else if (addKeyWrdField.value.length > keywordMaxLength) {
 
-        console.log(`make sure your keywords doesn't exceed ${keywordMaxLength} characters`);
+        //console.log(`make sure your keywords doesn't exceed ${keywordMaxLength} characters`);
+        errMsgContainer.innerHTML = `Make sure your keywords doesn't exceed ${keywordMaxLength} characters`;
 
       } else {
 
@@ -175,6 +181,8 @@
 
 
         addKeyWrdField.value = "";
+        errMsgContainer.innerHTML = "";
+
         trigrinitKeywordCounter();
         keywordsParamsField.value = JSON.stringify(keywordObj);
 
@@ -228,7 +236,8 @@
 
         if (descriptionParamField.value.length > descriptionMaxLength) {
 
-          console.log(`Make sure your description doesn't exceed ${descriptionMaxLength} characters`);
+          //console.log(`Make sure your description doesn't exceed ${descriptionMaxLength} characters`);
+          errMsgContainer.innerHTML = `Make sure your description doesn't exceed ${descriptionMaxLength} characters`;
 
         } else {
 
@@ -241,7 +250,8 @@
 
       } else {
 
-        console.log(`give a description between 1 and 150 chars or give between 1 & ${keywordsLimit} keyword(s)`);
+        //console.log(`give a description between 1 and 150 chars or give between 1 & ${keywordsLimit} keyword(s)`);
+        errMsgContainer.innerHTML = `Give a description between 1 and 150 characters or give between 1 & ${keywordsLimit} keyword(s)`;
 
       }
 
