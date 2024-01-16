@@ -1,9 +1,18 @@
+//Packages
 const env = require('dotenv').config();
 const mongoose = require('mongoose');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
+const {marked} = require("marked");
+const createDomPurify = require('dompurify');
+const {JSDOM} = require('jsdom');
+const dompurify = createDomPurify(new JSDOM().window);
+
+//Models
 const roleModel = require('../models/role.model');
 const UserModel = require('../models/user.model');
 const OrderModel = require('../models/order.model');
+const ArticleModel = require('../models/article.model');
+//const Article = require('../models/article.model');
 
 class DataBase {
 
@@ -75,62 +84,98 @@ class DataBase {
 
     }
 
-    async findUserByName(userName) {
+    async createOrder(webhookOrderObj) {
 
-        const query = UserModel.find({username: userName});
-        query.select('username');
-        const userFound = await query.exec();
+        console.log('init createOrder func');
 
-        return userFound;
+        //get the order object generated from the webhook post route and save it in MongoDB
+        const orderObjToSave = new OrderModel(webhookOrderObj);
 
-    }
+        let orderSaved = null;
 
-    async findUserByEmail(userEmail) {
+        try {
 
-        const query = UserModel.find({email: userEmail});
-        query.select('email');
-        const userFound = await query.exec();
+            orderSaved = await orderObjToSave.save();
+            console.log("orderSaved:")
+            console.log(orderSaved);
 
-        return userFound;
+        } catch (err) {
 
-    }
+            console.log(err);
+            res.json({Error: err});
+        }
 
-    async findUserById(userID) {
+        console.log('--------------------');
 
-        const query = UserModel.findById(userID);
-        const userFound = await query.exec();
-
-        return userFound;
+        return orderSaved;
 
     }
 
-    async getUserPsw(userID) {
+    async createArticle(req, res) {
+        
+        console.log("init create article method");
 
-        const query = UserModel.findById(userID);
-        query.select('_id password');
-        const userPsw = await query.exec();
+        let articleObj = new ArticleModel({
+            title: req.body.title,
+            description: req.body.description,
+            markdown: req.body.markdown,
+            otisUserId: req.user['_id']
+        });
 
-        return userPsw;
+        /*console.log('article Obj');
+        console.log(articleObj);*/
+
+        try {
+
+            articleObj = await articleObj.save();
+
+            res.redirect(`${articleObj.id}`);
+
+        } catch(err) {
+
+            console.log(err);
+            console.log("article value here");
+            console.log(articleObj);
+            res.render('article/new-article');
+
+        }
 
     }
 
-    async getUserCrd(userID) {
+    async updateArticle(req, res) {
+        
+        console.log("init update article method");
 
-        const query = UserModel.findById(userID);
-        query.select('_id credit');
-        const result = await query.exec();
+        let articleObj = {
+            title: req.body.title,
+            description: req.body.description,
+            markdown: req.body.markdown,
+            lastModifiedAt: Date.now()
+        }
 
-        return result.credit;
+        let articleFilter = {
+            _id: req.params.id
+        }
 
-    }
+        if (articleObj.markdown) {
 
-    async getUserStripeId(userID) {
+            const markdownToHtml = marked(articleObj.markdown);
+    
+            articleObj.sanitizedHtml = dompurify.sanitize(markdownToHtml);
+    
+        }
 
-        const query = UserModel.findById(userID);
-        query.select('_id stripeCustomerId');
-        const result = await query.exec();
+        try {
 
-        return result.stripeCustomerId;
+            let articleToUpdate = await ArticleModel.findOneAndUpdate(articleFilter, articleObj);
+            return true;
+
+        } catch(err) {
+
+            console.log(err);
+            return false;
+
+        }
 
     }
 
@@ -205,6 +250,118 @@ class DataBase {
 
     }
 
+    async deleteArticle(articleID) {
+        
+        try {
+
+            await ArticleModel.findByIdAndDelete(articleID);
+            return true;
+
+        } catch(err) {
+
+            console.log(err);
+            return false;
+
+        }
+
+    }
+
+    async findUserByName(userName) {
+
+        const query = UserModel.find({username: userName});
+        query.select('username');
+        const userFound = await query.exec();
+
+        return userFound;
+
+    }
+
+    async findUserByEmail(userEmail) {
+
+        const query = UserModel.find({email: userEmail});
+        query.select('email');
+        const userFound = await query.exec();
+
+        return userFound;
+
+    }
+
+    async findUserById(userID) {
+
+        const query = UserModel.findById(userID);
+        const userFound = await query.exec();
+
+        return userFound;
+
+    }
+
+    async findArticleById(articleID) {
+        
+        //console.log("findArticleById");
+        //console.log(articleID);
+
+        try {
+
+            const query = ArticleModel.findById(articleID);
+            const articleFound = await query.exec();
+            //console.log(articleFound);
+            return articleFound;
+
+
+        } catch(err) {
+            console.log(err);
+            return false;
+        }
+
+    }
+
+    async findArticleBySlug(slugValue) {
+
+        try {
+
+            const query = ArticleModel.findOne({slug: slugValue});
+            const articleFound = await query.exec();
+            //console.log(articleFound);
+            return articleFound;
+
+
+        } catch(err) {
+            console.log(err);
+            return false;
+        }
+
+    }
+
+    async getUserPsw(userID) {
+
+        const query = UserModel.findById(userID);
+        query.select('_id password');
+        const userPsw = await query.exec();
+
+        return userPsw;
+
+    }
+
+    async getUserCrd(userID) {
+
+        const query = UserModel.findById(userID);
+        query.select('_id credit');
+        const result = await query.exec();
+
+        return result.credit;
+
+    }
+
+    async getUserStripeId(userID) {
+
+        const query = UserModel.findById(userID);
+        query.select('_id stripeCustomerId');
+        const result = await query.exec();
+
+        return result.stripeCustomerId;
+
+    }
+
     async getUserName(userID) {
 
         const query = UserModel.findById(userID);
@@ -215,30 +372,27 @@ class DataBase {
 
     }
 
-    async createOrder(webhookOrderObj) {
+    async getUserArticles(userID) {
 
-        console.log('init createOrder func');
+        const userFound = await this.findUserById(userID);
 
-        //get the order object generated from the webhook post route and save it in MongoDB
-        const orderObjToSave = new OrderModel(webhookOrderObj);
+        if (userFound) {
 
-        let orderSaved = null;
+            let filter = {
+                otisUserId: userID
+            }
 
-        try {
+            const query = ArticleModel.find(filter).sort({createdAt: 'desc'});
 
-            orderSaved = await orderObjToSave.save();
-            console.log("orderSaved:")
-            console.log(orderSaved);
+            const result = await query.exec();
 
-        } catch (err) {
+            if (result) {
+                return result;
+            }
 
-            console.log(err);
-            res.json({Error: err});
         }
 
-        console.log('--------------------');
-
-        return orderSaved;
+        return false;
 
     }
 

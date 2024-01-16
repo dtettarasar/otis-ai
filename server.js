@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
+const methodOverride = require('method-override');
 
 const userRouter = require('./routes/user_routes');
 const stripePaymentRouter = require('./routes/stripe_api_routes');
+const articleRouter = require('./routes/article_routes');
 
 const app = express();
 require('dotenv').config();
@@ -31,9 +33,12 @@ app.use((req, res, next) => {
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+app.use(methodOverride('_method'));
+
 // routes
 app.use('/user', userRouter);
 app.use('/payment-api', stripePaymentRouter);
+app.use('/article', articleRouter);
 
 app.get('/', (req, res) => {
     //res.sendFile(__dirname + '/views/index.html');
