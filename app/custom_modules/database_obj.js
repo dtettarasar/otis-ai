@@ -30,6 +30,8 @@ const dataBaseObj = {
 
     },
 
+    // methods for user object
+
     async createUser(username, email, password) {
 
         console.log("init create user method from databaseObj");
@@ -38,11 +40,42 @@ const dataBaseObj = {
         console.log(`email: ${email}`);
         console.log(`password: ${password}`);
 
+        // Check if username already exist in database
+        const usernameInDB = await this.findUserByName(username);
+        console.log(`usernameInDB: ${usernameInDB}`);
+
+        // Check if email already exist in database
+        const emailInDB = await this.findUserByEmail(email);
+        console.log(`emailInDB: ${emailInDB}`);
+
+        console.log("end of create user method in database object");
+        console.log("-----------------");
+
     },
 
     async findUserById(userId) {
 
         const query = UserModel.findById(userId);
+        const userFound = await query.exec();
+
+        return userFound;
+
+    },
+
+    async findUserByName(userName) {
+
+        const query = UserModel.find({username: userName});
+        query.select('username');
+        const userFound = await query.exec();
+
+        return userFound;
+
+    },
+
+    async findUserByEmail(userEmail) {
+
+        const query = UserModel.find({email: userEmail});
+        query.select('email');
         const userFound = await query.exec();
 
         return userFound;
@@ -74,6 +107,8 @@ const dataBaseObj = {
         }
 
     },
+
+    // methods for article object
 
     async createArticle(titleStr, descriptionStr, markdownStr, otisUserIdStr) {
 

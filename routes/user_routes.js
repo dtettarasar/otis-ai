@@ -29,7 +29,7 @@ router.post('/register', async (req, res) => {
         password: req.body.psw
     } ;
 
-    dataBaseObj.createUser(userObj.username, userObj.email, userObj.password);
+    await dataBaseObj.createUser(userObj.username, userObj.email, userObj.password);
   
     dataBase.createUser(req, res);
 
