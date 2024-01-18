@@ -30,6 +30,16 @@ const dataBaseObj = {
 
     },
 
+    async createUser(username, email, password) {
+
+        console.log("init create user method from databaseObj");
+
+        console.log(`username: ${username}`);
+        console.log(`email: ${email}`);
+        console.log(`password: ${password}`);
+
+    },
+
     async findUserById(userId) {
 
         const query = UserModel.findById(userId);

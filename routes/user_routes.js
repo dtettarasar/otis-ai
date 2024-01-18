@@ -5,18 +5,31 @@ const userTokenClass = require('../app/custom_modules/user_token_class');
 const userToken = new userTokenClass();
 
 const dataBaseClass = require('../app/config/db.config');
+
 const dataBase = new dataBaseClass();
-dataBase.initDB();
+//dataBase.initDB();
+
+const dataBaseObj = require('../app/custom_modules/database_obj');
+dataBaseObj.initDB();
 
 router.get('/test', (req, res) => {
     res.send('test user route');
 })
 
 router.get('/register', (req, res) => {
+
     res.render('user/new-user');
 });
 
 router.post('/register', async (req, res) => {
+
+    const userObj = {
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.psw
+    } ;
+
+    dataBaseObj.createUser(userObj.username, userObj.email, userObj.password);
   
     dataBase.createUser(req, res);
 
