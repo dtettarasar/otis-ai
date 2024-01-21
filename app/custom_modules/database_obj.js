@@ -32,19 +32,21 @@ const dataBaseObj = {
 
     // methods for user object
 
-    async createUser(username, email, password) {
+    async createUser(usernameParam, emailParam, passwordParam) {
 
         console.log("init create user method from databaseObj");
 
-        console.log(`username: ${username}`);
-        console.log(`email: ${email}`);
-        console.log(`password: ${password}`);
+        /*
+        console.log(`username: ${usernameParam}`);
+        console.log(`email: ${emailParam}`);
+        console.log(`password: ${passwordParam}`);
+        */
 
         // Check if username already exist in database
-        const usernameInDB = await this.findUserByName(username);
+        const usernameInDB = await this.findUserByName(usernameParam);
 
         // Check if email already exist in database
-        const emailInDB = await this.findUserByEmail(email);
+        const emailInDB = await this.findUserByEmail(emailParam);
 
         if (usernameInDB.length !== 0) {
 
@@ -66,6 +68,14 @@ const dataBaseObj = {
 
             console.log("username & email doesn't exist in database");
             console.log("we can create new user");
+
+            const userObj = new UserModel({
+                username: usernameParam,
+                email: emailParam,
+                password: passwordParam
+            });
+
+            console.log(userObj);
 
             return {Creation: "OK"};
 
