@@ -5,6 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "jest",
+    "test-troubleshoot": "jest --detectOpenHandles",
+    "test-coverage": "jest --coverage",
     "dev-start": "nodemon server.js",
     "start": "node server.js",
     "get-secrets": "node secrets_generator.js"

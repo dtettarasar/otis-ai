@@ -22,9 +22,10 @@ const dataBaseObj = {
         try {
             const connect = await mongoose.connect(this.dbUrl);
             console.log("DataBase Object: Successfully connect to MongoDB.");
+            return connect;
         } catch (err) {
             console.error("DataBase Object: Connection error", err);
-            process.exit();
+            throw err;
         }
         
 
