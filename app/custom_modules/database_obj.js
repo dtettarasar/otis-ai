@@ -42,11 +42,27 @@ const dataBaseObj = {
 
         // Check if username already exist in database
         const usernameInDB = await this.findUserByName(username);
-        console.log(`usernameInDB: ${usernameInDB}`);
 
         // Check if email already exist in database
         const emailInDB = await this.findUserByEmail(email);
-        console.log(`emailInDB: ${emailInDB}`);
+
+        if (usernameInDB.length !== 0) {
+
+            console.log("username already exist in database");
+            console.log(`usernameInDB:`);
+            console.log(usernameInDB);
+
+            //res.json({Error: "username already used"});
+
+        } else if (emailInDB.length !== 0) {
+
+            console.log('email already exist in database');
+            console.log(`emailInDB:`);
+            console.log(emailInDB);
+
+            //res.json({Error: "email already used"});
+
+        }
 
         console.log("end of create user method in database object");
         console.log("-----------------");
