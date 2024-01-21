@@ -10,7 +10,7 @@ const dataBase = new dataBaseClass();
 //dataBase.initDB();
 
 const dataBaseObj = require('../app/custom_modules/database_obj');
-dataBaseObj.initDB();
+//dataBaseObj.initDB();
 
 router.get('/test', (req, res) => {
     res.send('test user route');

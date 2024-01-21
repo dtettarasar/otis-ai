@@ -8,8 +8,11 @@ const dataBaseClass = require('../app/config/db.config');
 const dataBase = new dataBaseClass();
 
 const aiArticleCreator = require('../app/custom_modules/ai_article_creator');
+
 const dataBaseObj = require('../app/custom_modules/database_obj');
-dataBaseObj.initDB();
+
+//dataBaseObj.initDB();
+
 
 router.get("/", userToken.authToken, async (req, res) => {
 

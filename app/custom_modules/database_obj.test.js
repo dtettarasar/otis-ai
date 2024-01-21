@@ -1,0 +1,1 @@
+const dataBaseObj = require('./database_obj');
