@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/dtettarasar/otis-ai#readme",
   "devDependencies": {
+    "jest": "^29.7.0",
     "nodemon": "^3.0.1"
   },
   "dependencies": {
