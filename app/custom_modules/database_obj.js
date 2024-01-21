@@ -52,7 +52,7 @@ const dataBaseObj = {
             console.log(`usernameInDB:`);
             console.log(usernameInDB);
 
-            //res.json({Error: "username already used"});
+            return {Error: "username already used"};
 
         } else if (emailInDB.length !== 0) {
 
@@ -60,12 +60,16 @@ const dataBaseObj = {
             console.log(`emailInDB:`);
             console.log(emailInDB);
 
-            //res.json({Error: "email already used"});
+            return {Error: "email already used"};
+
+        } else {
+
+            console.log("username & email doesn't exist in database");
+            console.log("we can create new user");
+
+            return {Creation: "OK"};
 
         }
-
-        console.log("end of create user method in database object");
-        console.log("-----------------");
 
     },
 
