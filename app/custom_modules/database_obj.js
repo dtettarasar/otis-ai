@@ -54,7 +54,7 @@ const dataBaseObj = {
             console.log(`usernameInDB:`);
             console.log(usernameInDB);
 
-            return {Error: "username already used"};
+            return {creationStatus: false, Error: "username already used"};
 
         } else if (emailInDB.length !== 0) {
 
@@ -62,7 +62,7 @@ const dataBaseObj = {
             console.log(`emailInDB:`);
             console.log(emailInDB);
 
-            return {Error: "email already used"};
+            return {creationStatus: false, Error: "email already used"};
 
         } else {
 
@@ -75,9 +75,21 @@ const dataBaseObj = {
                 password: passwordParam
             });
 
-            console.log(userObj);
+            //console.log(userObj);
 
-            return {Creation: "OK"};
+            try {
+
+                const savedUserObj = await userObj.save();
+                console.log(savedUserObj);
+                return {creationStatus: true, userData: savedUserObj};
+                
+            } catch (err) {
+        
+                console.log(err);
+                //res.json({Error: err});
+                return {Error: err};
+        
+            }
 
         }
 
