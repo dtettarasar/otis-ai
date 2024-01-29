@@ -125,6 +125,26 @@ const dataBaseObj = {
 
     },
 
+    async getUserCrd(userID) {
+
+        const query = UserModel.findById(userID);
+        query.select('_id credit');
+        const result = await query.exec();
+
+        return result.credit;
+
+    },
+
+    async getUserName(userID) {
+
+        const query = UserModel.findById(userID);
+        query.select('_id username');
+        const result = await query.exec();
+
+        return result.username;
+
+    },
+
     async updateCreditBalance(userId, creditAmount) {
 
         console.log("Database Obj: init updateCreditBalance method");
