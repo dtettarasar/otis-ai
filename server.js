@@ -6,6 +6,9 @@ const userRouter = require('./routes/user_routes');
 const stripePaymentRouter = require('./routes/stripe_api_routes');
 const articleRouter = require('./routes/article_routes');
 
+const dataBaseObj = require('./app/custom_modules/database_obj');
+dataBaseObj.initDB();
+
 const app = express();
 require('dotenv').config();
 

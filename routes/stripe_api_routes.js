@@ -13,8 +13,10 @@ const userTokenClass = require('../app/custom_modules/user_token_class');
 const userToken = new userTokenClass();
 
 const dataBaseClass = require('../app/config/db.config');
+
 const dataBase = new dataBaseClass();
-dataBase.initDB();
+//dataBase.initDB();
+
 
 // get the secret here: https://dashboard.stripe.com/webhooks
 const stripeEndpointSecret = process.env.STRIPE_ENDPOINT_SECRET;

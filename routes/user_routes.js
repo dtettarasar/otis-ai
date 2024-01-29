@@ -4,21 +4,28 @@ const router = express.Router();
 const userTokenClass = require('../app/custom_modules/user_token_class');
 const userToken = new userTokenClass();
 
-const dataBaseClass = require('../app/config/db.config');
-const dataBase = new dataBaseClass();
-dataBase.initDB();
+const dataBaseObj = require('../app/custom_modules/database_obj');
 
 router.get('/test', (req, res) => {
     res.send('test user route');
 })
 
 router.get('/register', (req, res) => {
+
     res.render('user/new-user');
 });
 
 router.post('/register', async (req, res) => {
-  
-    dataBase.createUser(req, res);
+
+    const userObj = {
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.psw
+    } ;
+
+    const userCreation = await dataBaseObj.createUser(userObj.username, userObj.email, userObj.password);
+
+    res.json(userCreation);
 
 });
 
@@ -55,8 +62,8 @@ router.get('/my-account', userToken.authToken, async (req, res) => {
 
     const userInfo = {
         userId: req.user['_id'],
-        username: await dataBase.getUserName(req.user['_id']),
-        credit: await dataBase.getUserCrd(req.user['_id'])
+        username: await dataBaseObj.getUserName(req.user['_id']),
+        credit: await dataBaseObj.getUserCrd(req.user['_id'])
     };
 
     /*
@@ -90,8 +97,8 @@ router.get('/add-credits', userToken.authToken, async (req, res) => {
 
     const userInfo = {
         userId: req.user['_id'],
-        username: await dataBase.getUserName(req.user['_id']),
-        credit: await dataBase.getUserCrd(req.user['_id'])
+        username: await dataBaseObj.getUserName(req.user['_id']),
+        credit: await dataBaseObj.getUserCrd(req.user['_id'])
     };
 
     console.log("access to /add-credits");

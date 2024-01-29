@@ -4,7 +4,9 @@
   "description": "a web app to build search engine optimized content with the help of open ai",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test-troubleshoot": "jest --detectOpenHandles",
+    "test-coverage": "jest --coverage",
     "dev-start": "nodemon server.js",
     "start": "node server.js",
     "get-secrets": "node secrets_generator.js"
@@ -24,6 +26,7 @@
   },
   "homepage": "https://github.com/dtettarasar/otis-ai#readme",
   "devDependencies": {
+    "jest": "^29.7.0",
     "nodemon": "^3.0.1"
   },
   "dependencies": {
