@@ -4,13 +4,7 @@ const router = express.Router();
 const userTokenClass = require('../app/custom_modules/user_token_class');
 const userToken = new userTokenClass();
 
-//const dataBaseClass = require('../app/config/db.config');
-
-//const dataBase = new dataBaseClass();
-//dataBase.initDB();
-
 const dataBaseObj = require('../app/custom_modules/database_obj');
-//dataBaseObj.initDB();
 
 router.get('/test', (req, res) => {
     res.send('test user route');
@@ -32,8 +26,6 @@ router.post('/register', async (req, res) => {
     const userCreation = await dataBaseObj.createUser(userObj.username, userObj.email, userObj.password);
 
     res.json(userCreation);
-  
-    //dataBase.createUser(req, res);
 
 });
 
