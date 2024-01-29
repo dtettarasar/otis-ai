@@ -25,8 +25,8 @@ router.get("/", userToken.authToken, async (req, res) => {
 
     const userInfo = {
         userId: req.user['_id'],
-        username: await dataBase.getUserName(req.user['_id']),
-        credit: await dataBase.getUserCrd(req.user['_id']),
+        username: await dataBaseObj.getUserName(req.user['_id']),
+        credit: await dataBaseObj.getUserCrd(req.user['_id']),
         userArticles: []
     };
 
@@ -53,8 +53,8 @@ router.get('/new', userToken.authToken, async (req, res) => {
 
     const userInfo = {
         userId: req.user['_id'],
-        username: await dataBase.getUserName(req.user['_id']),
-        credit: await dataBase.getUserCrd(req.user['_id']),
+        username: await dataBaseObj.getUserName(req.user['_id']),
+        credit: await dataBaseObj.getUserCrd(req.user['_id']),
         article: {
             title: "",
             description: "",
@@ -73,8 +73,8 @@ router.get('/edit/:id', userToken.authToken, async (req, res) => {
 
     const userInfo = {
         userId: req.user['_id'],
-        username: await dataBase.getUserName(req.user['_id']),
-        credit: await dataBase.getUserCrd(req.user['_id']),
+        username: await dataBaseObj.getUserName(req.user['_id']),
+        credit: await dataBaseObj.getUserCrd(req.user['_id']),
         article: await dataBase.findArticleById(req.params.id)
     };
 
@@ -89,7 +89,7 @@ router.get('/:id', userToken.authToken, async (req, res) => {
 
     const userInfo = {
         userId: req.user['_id'],
-        username: await dataBase.getUserName(req.user['_id'])
+        username: await dataBaseObj.getUserName(req.user['_id'])
     };
 
     let articleisOwnbyUser = null;
@@ -139,7 +139,7 @@ router.post('/create-ai', userToken.authToken, async (req, res) => {
 
     const userInfo = {
         userId: req.user['_id'],
-        username: await dataBase.getUserName(req.user['_id']),
+        username: await dataBaseObj.getUserName(req.user['_id']),
         articleParams: {
             description: req.body.description_param,
             keywords: []
