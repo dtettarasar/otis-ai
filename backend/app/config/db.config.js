@@ -1,5 +1,5 @@
 //Packages
-const env = require('dotenv').config();
+const env = require('dotenv').config({ path: '../.env' });
 const mongoose = require('mongoose');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const {marked} = require("marked");
