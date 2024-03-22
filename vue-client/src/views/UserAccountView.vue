@@ -3,6 +3,6 @@
 
 <template>
   <main>
-    <h1>About</h1>
+    <h1>User Account</h1>
   </main>
 </template>
