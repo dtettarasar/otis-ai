@@ -4,12 +4,10 @@
   "description": "a web app to build search engine optimized content with the help of open ai",
   "main": "server.js",
   "scripts": {
-    "test": "jest",
-    "test-troubleshoot": "jest --detectOpenHandles",
-    "test-coverage": "jest --coverage",
     "dev-start": "nodemon server.js",
     "start": "node server.js",
-    "get-secrets": "node secrets_generator.js"
+    "get-secrets": "node secrets_generator.js",
+    "vitest": "vitest --globals"
   },
   "repository": {
     "type": "git",
@@ -26,8 +24,8 @@
   },
   "homepage": "https://github.com/dtettarasar/otis-ai#readme",
   "devDependencies": {
-    "jest": "^29.7.0",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "vitest": "^1.4.0"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
