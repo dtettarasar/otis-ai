@@ -1,4 +1,4 @@
-const env = require('dotenv').config();
+const env = require('dotenv').config({ path: '../.env' });
 const strHasher = require('./str_hasher');
 const jwt = require("jsonwebtoken");
 

@@ -10,7 +10,7 @@ const dataBaseObj = require('./app/custom_modules/database_obj');
 dataBaseObj.initDB();
 
 const app = express();
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 
 const cookies = require("cookie-parser");
 app.use(cookies(process.env.COOKIE_SIGNATURE_SECRET));

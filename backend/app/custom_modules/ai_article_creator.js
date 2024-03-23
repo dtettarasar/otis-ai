@@ -1,5 +1,5 @@
 const OpenAI = require("openai");
-const env = require('dotenv').config();
+const env = require('dotenv').config({ path: '../.env' });
 
 const aiArticleCreator = {
 
