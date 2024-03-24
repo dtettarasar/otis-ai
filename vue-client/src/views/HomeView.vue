@@ -14,7 +14,7 @@
 
 <template>
   <main>
-    <PageTitle txtValue="Home"></PageTitle>
+    <PageTitle txtValue="Home Page"></PageTitle>
   </main>
 </template>
 

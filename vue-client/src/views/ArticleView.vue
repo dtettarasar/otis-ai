@@ -1,8 +1,19 @@
-<script setup>
+<script>
+
+  import PageTitle from '@/components/PageTitle.vue'
+
+  export default {
+    name: 'ArticleView',
+    components: {
+      PageTitle
+    }
+
+  };
+
 </script>
 
 <template>
   <main>
-    <h1>View article</h1>
+    <PageTitle txtValue="View article Page"></PageTitle>
   </main>
 </template>

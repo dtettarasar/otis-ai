@@ -1,8 +1,18 @@
-<script setup>
+<script>
+
+  import PageTitle from '@/components/PageTitle.vue';
+
+  export default {
+    name: 'AboutView',
+    components: {
+      PageTitle
+    }
+  }
+
 </script>
 
 <template>
   <main>
-    <h1>About</h1>
+    <PageTitle txtValue="About Page"></PageTitle>
   </main>
 </template>

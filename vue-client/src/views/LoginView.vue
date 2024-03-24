@@ -1,8 +1,19 @@
-<script setup>
+<script>
+
+  import PageTitle from '@/components/PageTitle.vue'
+
+  export default {
+    name: 'LoginView',
+    components: {
+      PageTitle
+    }
+
+  };
+
 </script>
 
 <template>
   <main>
-    <h1>Login</h1>
+    <PageTitle txtValue="Login Page"></PageTitle>
   </main>
 </template>

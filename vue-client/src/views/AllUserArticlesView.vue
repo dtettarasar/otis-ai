@@ -1,8 +1,18 @@
-<script setup>
+<script>
+
+  import PageTitle from '@/components/PageTitle.vue';
+
+  export default {
+    name: 'AllUserArticlesView',
+    components: {
+      PageTitle
+    }
+  }
+
 </script>
 
 <template>
   <main>
-    <h1>All user articles</h1>
+    <PageTitle txtValue="All user articles Page"></PageTitle>
   </main>
 </template>

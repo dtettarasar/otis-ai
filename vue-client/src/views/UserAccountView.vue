@@ -1,8 +1,19 @@
-<script setup>
+<script>
+
+  import PageTitle from '@/components/PageTitle.vue'
+
+  export default {
+    name: 'UserAccountView',
+    components: {
+      PageTitle
+    }
+
+  };
+
 </script>
 
 <template>
   <main>
-    <h1>User Account</h1>
+    <PageTitle txtValue="User Account Page"></PageTitle>
   </main>
 </template>

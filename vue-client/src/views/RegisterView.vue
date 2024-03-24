@@ -1,8 +1,19 @@
-<script setup>
+<script>
+
+  import PageTitle from '@/components/PageTitle.vue'
+
+  export default {
+    name: 'RegisterView',
+    components: {
+      PageTitle
+    }
+
+  };
+
 </script>
 
 <template>
   <main>
-    <h1>Register</h1>
+    <PageTitle txtValue="Register Page"></PageTitle>
   </main>
 </template>

@@ -1,8 +1,19 @@
-<script setup>
+<script>
+
+  import PageTitle from '@/components/PageTitle.vue'
+
+  export default {
+    name: 'EditArticleView',
+    components: {
+      PageTitle
+    }
+
+  };
+
 </script>
 
 <template>
   <main>
-    <h1>Edit article</h1>
+    <PageTitle txtValue="Edit article Page"></PageTitle>
   </main>
 </template>
