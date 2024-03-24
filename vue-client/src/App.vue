@@ -3,6 +3,7 @@ import { RouterLink, RouterView } from 'vue-router';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from '@/components/NavBar.vue'
+import Footer from '@/components/Footer.vue'
 </script>
 
 <template>
@@ -13,6 +14,8 @@ import NavBar from '@/components/NavBar.vue'
   </header>
 
   <RouterView />
+
+  <Footer></Footer>
 </template>
 
 <style scoped>
