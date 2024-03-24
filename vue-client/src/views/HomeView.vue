@@ -1,8 +1,23 @@
-<script setup>
+<script>
+
+  import PageTitle from '@/components/PageTitle.vue'
+
+  export default {
+    name: 'HomeView',
+    components: {
+      PageTitle
+    }
+
+  };
+
 </script>
 
 <template>
   <main>
-    <h1>Home</h1>
+    <PageTitle txtValue="Home"></PageTitle>
   </main>
 </template>
+
+<style>
+
+</style>
