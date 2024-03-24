@@ -13,12 +13,18 @@ import Footer from '@/components/Footer.vue'
     </div>
   </header>
 
-  <RouterView />
+  <div id="inner-content" class="container">
+    <RouterView />
+  </div>
 
   <Footer></Footer>
 </template>
 
 <style scoped>
+
+#inner-content {
+  margin-top: 40px;
+}
 
 nav a {
   margin: 5px;
