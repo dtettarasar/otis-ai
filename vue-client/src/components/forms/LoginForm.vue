@@ -9,14 +9,14 @@
             <div class="mb-3">
 
                 <label class="form-label" for="username"><b>Username</b></label>
-                <input class="form-control" type="text" placeholder="Enter Username" name="username" id="username" required>
+                <input v-model="user.name" class="form-control" type="text" placeholder="Enter Username" name="username" id="username" required>
 
             </div>
 
             <div class="mb-3">
 
                 <label class="form-label" for="psw"><b>Password</b></label>
-                <input class="form-control" type="password" placeholder="Enter Password" name="psw" id="psw" required>
+                <input v-model="user.pwd" class="form-control" type="password" placeholder="Enter Password" name="psw" id="psw" required>
                 
             </div>
 
@@ -32,6 +32,11 @@
 
     export default {
         name: 'LoginForm',
+        data() {
+            return {
+                user: {}
+            }
+        }
     }
 
 </script>
