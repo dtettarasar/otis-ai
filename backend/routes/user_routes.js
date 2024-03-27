@@ -39,6 +39,12 @@ router.post('/login', userToken.checkUserAuth, userToken.createToken, userToken.
 
 });
 
+router.post('/vc-login', async (req, res) => {
+    res.json({
+        test: 'test'
+    });
+})
+
 router.get('/logout', userToken.authToken, userToken.logout, (req, res) => {
 
     return res.redirect("/");

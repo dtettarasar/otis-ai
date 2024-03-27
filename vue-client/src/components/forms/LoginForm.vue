@@ -34,7 +34,15 @@
         name: 'LoginForm',
         data() {
             return {
-                user: {}
+                user: {
+                    name: '',
+                    pwd: ''
+                }
+            }
+        },
+        computed: {
+            loginBackEndUrl() {
+                return this.$backendUrl + 'user/vc-login';
             }
         },
         mounted() {
