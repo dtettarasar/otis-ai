@@ -36,6 +36,10 @@
             return {
                 user: {}
             }
+        },
+        mounted() {
+            console.log(`the login form component is now mounted.`);
+            console.log('backend url to use: ' + this.$backendUrl);
         }
     }
 

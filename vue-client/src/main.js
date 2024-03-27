@@ -1,5 +1,4 @@
 import './assets/main.css';
-
 import { createApp } from 'vue';
 
 
@@ -19,8 +18,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
    backendUrl = backendConfig.production;
 }
 
-console.log(backendUrl);
-
+app.config.globalProperties.$backendUrl = backendUrl;
 
 app.use(router);
 //app.use(store)
