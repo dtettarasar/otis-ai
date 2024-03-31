@@ -15,13 +15,15 @@ require('dotenv').config({ path: '../.env' });
 const cookies = require("cookie-parser");
 app.use(cookies(process.env.COOKIE_SIGNATURE_SECRET));
 
-const corsOptions = {
-    origin: "http://localhost:8081"
-}
+console.log("vue client server:");
+console.log(process.env.VUE_CLIENT_SERVER);
+
 
 app.set('view engine', 'ejs');
 
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
+
+app.use(cors({ origin: [process.env.VUE_CLIENT_SERVER], }))
 
 // parse requests of content-type - application/json
 // necessary condition to avoid using express.json in the stripe_payment route

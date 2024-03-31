@@ -40,10 +40,18 @@ router.post('/login', userToken.checkUserAuth, userToken.createToken, userToken.
 });
 
 router.post('/vc-login', async (req, res) => {
+    console.log('test post request /vc-login');
+    console.log(req);
     res.json({
         test: 'test'
     });
-})
+});
+
+router.get('/vc-login', async (req, res) => {
+    res.json({
+        test: 'test vc login'
+    });
+});
 
 router.get('/logout', userToken.authToken, userToken.logout, (req, res) => {
 

@@ -2,7 +2,7 @@
 
     <div>
         
-        <form action="#" method="post">
+        <form @submit.prevent="submitForm" method="post">
 
             <p>Please use the form below to login to your account.</p>
 
@@ -30,6 +30,8 @@
 
 <script>
 
+    import axios from 'axios';
+
     export default {
         name: 'LoginForm',
         data() {
@@ -47,7 +49,55 @@
         },
         mounted() {
             console.log(`the login form component is now mounted.`);
-            console.log('backend url to use: ' + this.$backendUrl);
+        },
+        methods: {
+            async submitForm() {
+                
+                console.log(this.user);
+                console.log('backend url to use: ' + this.loginBackEndUrl);
+
+                try {
+
+                    const response = await fetch(this.loginBackEndUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            username: this.user.name,
+                            password: this.user.pwd
+                        }) 
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Erreur lors de la requête au serveur');
+                    }
+
+                    const data = await response.json();
+                    console.log(data);
+
+                } catch(err) {
+                    console.error(err);
+                }
+
+                /*
+                try {
+
+                    fetch(this.loginBackEndUrl,{
+                        method: "POST", 
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            username: this.user.name,
+                            password: this.user.pwd
+                        })
+                    });
+
+
+                } catch (err) {console.log(err)};*/
+
+            }
         }
     }
 
