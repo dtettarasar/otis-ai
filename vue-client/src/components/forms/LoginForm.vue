@@ -22,6 +22,14 @@
 
             <button type="submit" class="btn btn-primary">Login</button>
 
+            <div v-if="showError" class="alert mt-3 alert-danger" role="alert">
+                Authentication failed. Please check your credentials and try again.
+            </div>
+
+            <div v-if="showSuccess" class="alert mt-3 alert-success" role="alert">
+                You are now logged in. You will be redirected to your account page shortly.
+            </div>
+
         </form>
 
     </div>
@@ -39,7 +47,9 @@
                 user: {
                     name: '',
                     pwd: ''
-                }
+                },
+                showError: false,
+                showSuccess: false
             }
         },
         computed: {
@@ -66,11 +76,36 @@
 
                     console.log(response.data);
 
+                    if (response.data.authOk) {
+
+                        this.showSuccess = true;
+                        this.showError = false;
+
+                        setTimeout(()=> {
+                            this.$router.push('/user-account');
+                        }, 3000);
+
+
+                    } else {
+
+                        this.showError = true;
+                        this.showSuccess = false;
+
+                    }
+
                 } catch (err) {
 
                     console.error(err);
+                    this.showError = true;
+                    this.showSuccess = false;
 
                 }
+
+                /*
+                console.log('test data for messages');
+                console.log('showError: ' + this.showError);
+                console.log('showSuccess: ' + this.showSuccess);
+                */
 
             }
         }
