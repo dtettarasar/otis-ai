@@ -3,25 +3,22 @@
 const express = require('express');
 const router = express.Router();
 const dataBaseObj = require('../app/custom_modules/database_obj');
+const userTokenObj = require('../app/custom_modules/user_token_obj');
 
 router.post('/user-login', async (req, res) => {
     console.log('test post request');
     //console.log(req);
 
     const userObj = {
-        existInDB: null,
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        authOk: null
     }
 
-    const usernameInDB = await dataBaseObj.findUserByName(userObj.username);
-    console.log(usernameInDB);
+    const testUserAuth = await userTokenObj.checkUserLogin(userObj.username, userObj.password); 
 
-    if (usernameInDB.length === 1 && usernameInDB[0].username === userObj.username) {
-        userObj.existInDB = true;
-    } else {
-        userObj.existInDB = false;
-    }
+    console.log("test user auth");
+    console.log(testUserAuth);
 
     res.json(userObj);
 });
