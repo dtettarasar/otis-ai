@@ -53,8 +53,9 @@
         methods: {
             async submitForm() {
                 
-                console.log(this.user);
-                console.log('backend url to use: ' + this.loginBackEndUrl);
+                //console.log(this.user);
+                //console.log('backend url to use: ' + this.loginBackEndUrl);
+                console.log('init login process');
 
                 try {
 
