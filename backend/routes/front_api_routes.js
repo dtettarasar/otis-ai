@@ -6,8 +6,6 @@ const dataBaseObj = require('../app/custom_modules/database_obj');
 const userTokenObj = require('../app/custom_modules/user_token_obj');
 
 router.post('/user-login', async (req, res) => {
-    console.log('test post request');
-    //console.log(req);
 
     const userObj = {
         username: req.body.username,
@@ -15,10 +13,7 @@ router.post('/user-login', async (req, res) => {
         authOk: null
     }
 
-    const testUserAuth = await userTokenObj.checkUserLogin(userObj.username, userObj.password); 
-
-    console.log("test user auth");
-    console.log(testUserAuth);
+    userObj.authOk = await userTokenObj.checkUserLogin(userObj.username, userObj.password); 
 
     res.json(userObj);
 });

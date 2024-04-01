@@ -5,30 +5,47 @@ const dataBaseObj = require('./database_obj');
 
 const userTokenObj = {
 
-    async checkUserLogin(username, password) {
+    async checkUserLogin(usernameToCheck, passwordToCheck) {
 
         console.log('init checkUserLogin from userTokenObj');
 
-        console.log(username);
-        console.log(password);
+        /*
+        console.log(usernameToCheck);
+        console.log(passwordToCheck);
+        */
 
-        const usernameInDB = await dataBaseObj.findUserByName(username);
-        console.log(usernameInDB);
+        const usernameInDB = await dataBaseObj.findUserByName(usernameToCheck);
+        //console.log(usernameInDB);
 
         if (usernameInDB.length === 0) {
-            
+
             console.log('Error: invalid username');
             return false;
 
         } else {
 
-            console.log('user exist in DB');
+            console.log('User exist in DB');
+            const userToCheckAuth = usernameInDB[0];
+            const hashObj = await dataBaseObj.getUserPsw(userToCheckAuth._id);
+
+            /*
+            console.log('test hashObj');
+            console.log(hashObj);
+            */
+
+            const checkHash = await strHasher.method.checkHash(passwordToCheck, hashObj.password);
+
+            if (!checkHash) {
+
+                console.log('Error: invalid password');
+                return false;
+
+            } else {
+                console.log('Password is valid, auth OK');
+                return true;
+            }
 
         }
-
-        console.log('end of checkUserLogin');
-
-        return null;
 
     }
 
