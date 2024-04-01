@@ -44,7 +44,7 @@
         },
         computed: {
             loginBackEndUrl() {
-                return this.$backendUrl + 'user/vc-login';
+                return this.$backendUrl + 'front-api/user-login';
             }
         },
         mounted() {
@@ -58,44 +58,18 @@
 
                 try {
 
-                    const response = await fetch(this.loginBackEndUrl, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            username: this.user.name,
-                            password: this.user.pwd
-                        }) 
+                    const response = await axios.post(this.loginBackEndUrl, {
+                        username: this.user.name,
+                        password: this.user.pwd
                     });
 
-                    if (!response.ok) {
-                        throw new Error('Erreur lors de la requête au serveur');
-                    }
+                    console.log(response.data);
 
-                    const data = await response.json();
-                    console.log(data);
+                } catch (err) {
 
-                } catch(err) {
                     console.error(err);
+
                 }
-
-                /*
-                try {
-
-                    fetch(this.loginBackEndUrl,{
-                        method: "POST", 
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            username: this.user.name,
-                            password: this.user.pwd
-                        })
-                    });
-
-
-                } catch (err) {console.log(err)};*/
 
             }
         }

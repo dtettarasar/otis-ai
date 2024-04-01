@@ -5,6 +5,7 @@ const methodOverride = require('method-override');
 const userRouter = require('./routes/user_routes');
 const stripePaymentRouter = require('./routes/stripe_api_routes');
 const articleRouter = require('./routes/article_routes');
+const frontApiRouter = require('./routes/front_api_routes');
 
 const dataBaseObj = require('./app/custom_modules/database_obj');
 dataBaseObj.initDB();
@@ -28,7 +29,7 @@ app.use(cors({ origin: [process.env.VUE_CLIENT_SERVER], }))
 // parse requests of content-type - application/json
 // necessary condition to avoid using express.json in the stripe_payment route
 app.use((req, res, next) => {
-    if (req.originalUrl.includes('/user')) {
+    if (req.originalUrl.includes('/user') || req.originalUrl.includes('/front-api')) {
         express.json()(req, res, next);
     } else {
         next();
@@ -44,6 +45,7 @@ app.use(methodOverride('_method'));
 app.use('/user', userRouter);
 app.use('/payment-api', stripePaymentRouter);
 app.use('/article', articleRouter);
+app.use('/front-api', frontApiRouter);
 
 app.get('/', (req, res) => {
     //res.sendFile(__dirname + '/views/index.html');
