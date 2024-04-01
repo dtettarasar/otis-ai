@@ -31,6 +31,14 @@ use the command npm run get-secrets in the terminal, to get the required secrets
 
 ## Vue client parameters
 
+### Add the link of the vue client in the .env file 
+In the .env file, add the link of the Vue client, to make sure the backend app can interact with the client. 
+
+~~~
+VUE_CLIENT_SERVER="http://localhost:5173/"
+~~~
+
+
 ### Build the file for the connection with the backend API
 
 build the file 'src/backend.config.js' and make sure it follows the structure below: 
