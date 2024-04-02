@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
 import 'bootstrap';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'

@@ -23,11 +23,11 @@
             <button type="submit" class="btn btn-primary">Login</button>
 
             <div v-if="showError" class="alert mt-3 alert-danger" role="alert">
-                Authentication failed. Please check your credentials and try again.
+                <i class="bi bi-exclamation-circle"></i> Authentication failed. Please check your credentials and try again.
             </div>
 
             <div v-if="showSuccess" class="alert mt-3 alert-success" role="alert">
-                You are now logged in. You will be redirected to your account page shortly.
+                <i class="bi bi-check-circle"></i> You are now logged in. You will be redirected to your account page shortly.
             </div>
 
         </form>
