@@ -14,6 +14,13 @@
 
             <div class="mb-3">
 
+                <label class="form-label" for="email"><i class="bi bi-envelope-at-fill"></i> <b>Email</b></label>
+                <input v-model="user.email" class="form-control" type="email" placeholder="Enter Email" name="email" id="email" required>
+
+            </div>
+
+            <div class="mb-3">
+
                 <label class="form-label" for="psw"><i class="bi bi-key-fill"></i> <b>Password</b></label>
                 <input v-model="user.pwd" class="form-control" type="password" placeholder="Enter Password" name="psw" id="psw" required>
 
@@ -26,6 +33,7 @@
 
             </div>
 
+            <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
             <button type="submit" class="btn btn-primary">Create account</button>
 
         </form>
@@ -44,6 +52,7 @@
                 user: {
                     name: '',
                     pwd: '',
+                    email:'',
                     pswRepeat: ''
                 },
                 showError: false,
