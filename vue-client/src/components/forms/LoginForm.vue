@@ -8,14 +8,14 @@
 
             <div class="mb-3">
 
-                <label class="form-label" for="username"><b>Username</b></label>
+                <label class="form-label" for="username"><i class="bi bi-person-fill"></i> <b>Username</b></label>
                 <input v-model="user.name" class="form-control" type="text" placeholder="Enter Username" name="username" id="username" required>
 
             </div>
 
             <div class="mb-3">
 
-                <label class="form-label" for="psw"><b>Password</b></label>
+                <label class="form-label" for="psw"><i class="bi bi-key-fill"></i> <b>Password</b></label>
                 <input v-model="user.pwd" class="form-control" type="password" placeholder="Enter Password" name="psw" id="psw" required>
                 
             </div>
