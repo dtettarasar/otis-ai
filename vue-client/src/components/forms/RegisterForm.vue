@@ -65,4 +65,9 @@
 
 <style>
 
+    .form-label,
+    .btn {
+            font-size: 1.3rem;
+    }
+
 </style>

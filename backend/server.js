@@ -24,7 +24,7 @@ app.set('view engine', 'ejs');
 
 //app.use(cors(corsOptions));
 
-app.use(cors({ origin: [process.env.VUE_CLIENT_SERVER], }))
+app.use(cors({ origin: [process.env.VUE_CLIENT_SERVER], }));
 
 // parse requests of content-type - application/json
 // necessary condition to avoid using express.json in the stripe_payment route
