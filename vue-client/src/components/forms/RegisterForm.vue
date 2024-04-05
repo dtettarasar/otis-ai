@@ -22,14 +22,21 @@
             <div class="mb-3">
 
                 <label class="form-label" for="psw"><i class="bi bi-key-fill"></i> <b>Password</b></label>
-                <input v-model="user.pwd" class="form-control" type="password" placeholder="Enter Password" name="psw" id="psw" required>
+
+                <div class="input-group">
+                    <input v-bind:type="showPassword ? 'text' : 'password'" v-model="user.pwd" class="form-control" placeholder="Enter Password" name="psw" id="psw" required>
+                    <button @click="showPassword = !showPassword" class="btn btn-outline-secondary" type="button">
+                        <i v-if="!showPassword" class="bi bi-eye-fill"></i>
+                        <i v-else class="bi bi-eye-slash-fill"></i>
+                    </button>
+                </div>
 
             </div>
 
             <div class="mb-3">
 
                 <label class="form-label" for="psw-repeat"><i class="bi bi-key-fill"></i> <b>Repeat Password</b></label>
-                <input v-model="user.pwdRepeat" class="form-control" type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
+                <input v-model="user.pwdRepeat" class="form-control" type="password" placeholder="Repeat Password" name="pwd-repeat" id="pwd-repeat" required>
 
             </div>
 
@@ -64,7 +71,8 @@
                     pwdRepeat: ''
                 },
                 showError: false,
-                showSuccess: false
+                showSuccess: false,
+                showPassword: false
             }
         },
         computed: {
