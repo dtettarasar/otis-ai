@@ -40,6 +40,10 @@
                 <i class="bi bi-exclamation-circle"></i> Please make sure your password match.
             </div>
 
+            <div v-if="!isPasswordSecure && user.pwd != ''" class="alert mt-3 alert-danger" >
+                <i class="bi bi-exclamation-circle"></i> Your password isn't secure enough: please make sure it contains at least 8 characters, including at least one lowercase letter, one uppercase letter, one number and one special character.
+            </div>
+
         </form>
     </div>
 
@@ -66,6 +70,10 @@
         computed: {
             passwordsMatch() {
                 return this.user.pwd === this.user.pwdRepeat;
+            },
+            isPasswordSecure() {
+                const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                return regex.test(this.user.pwd);
             }
         },
         methods: {
@@ -83,6 +91,8 @@
 
                 if (this.passwordsMatch == false) {
                     console.log('Error: password mismatch, form cannot create account');
+                } else if (this.isPasswordSecure == false) {
+                    console.log('Error: password isnt secure, form cannot create account');
                 }
 
             }
