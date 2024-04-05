@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <form method="post">
+        <form @submit.prevent="submitForm" method="post">
 
             <p>Please use the form below to create your account.</p>
 
@@ -29,12 +29,16 @@
             <div class="mb-3">
 
                 <label class="form-label" for="psw-repeat"><i class="bi bi-key-fill"></i> <b>Repeat Password</b></label>
-                <input v-model="user.pswRepeat" class="form-control" type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
+                <input v-model="user.pwdRepeat" class="form-control" type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
 
             </div>
 
             <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
             <button type="submit" class="btn btn-primary">Create account</button>
+
+            <div v-if="!passwordsMatch" class="alert mt-3 alert-danger" role="alert">
+                <i class="bi bi-exclamation-circle"></i> Please make sure your password match.
+            </div>
 
         </form>
     </div>
@@ -53,12 +57,37 @@
                     name: '',
                     pwd: '',
                     email:'',
-                    pswRepeat: ''
+                    pwdRepeat: ''
                 },
                 showError: false,
                 showSuccess: false
             }
         },
+        computed: {
+            passwordsMatch() {
+                return this.user.pwd === this.user.pwdRepeat;
+            }
+        },
+        methods: {
+
+            async submitForm() {
+                console.log('init registration process');
+
+                const dataToSend = {
+                    username: this.user.name,
+                    password: this.user.pwd,
+                    email: this.user.email
+                }
+
+                console.log(dataToSend);
+
+                if (this.passwordsMatch == false) {
+                    console.log('Error: password mismatch, form cannot create account');
+                }
+
+            }
+
+        }
     }
 
 </script>
