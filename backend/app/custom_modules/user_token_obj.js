@@ -7,20 +7,19 @@ const userTokenObj = {
 
     async checkUserLogin(usernameToCheck, passwordToCheck) {
 
+        const userLoginData = {
+            username: null,
+            _id: null,
+            authSuccess: false
+        }
+
         console.log('init checkUserLogin from userTokenObj');
 
-        /*
-        console.log(usernameToCheck);
-        console.log(passwordToCheck);
-        */
-
         const usernameInDB = await dataBaseObj.findUserByName(usernameToCheck);
-        //console.log(usernameInDB);
 
         if (usernameInDB.length === 0) {
 
             console.log('Error: invalid username');
-            return false;
 
         } else {
 
@@ -28,25 +27,42 @@ const userTokenObj = {
             const userToCheckAuth = usernameInDB[0];
             const hashObj = await dataBaseObj.getUserPsw(userToCheckAuth._id);
 
-            /*
-            console.log('test hashObj');
-            console.log(hashObj);
-            */
-
             const checkHash = await strHasher.method.checkHash(passwordToCheck, hashObj.password);
 
             if (!checkHash) {
 
                 console.log('Error: invalid password');
-                return false;
 
             } else {
                 console.log('Password is valid, auth OK');
-                return true;
+                userLoginData.authSuccess = true;
+                userLoginData._id = userToCheckAuth._id;
+                userLoginData.username = userToCheckAuth.username;
             }
 
         }
 
+        return userLoginData;
+
+    },
+
+    async createToken (user) {
+
+        //Get the user for which we create the token
+        // Data filled by the user on the login form
+
+        if (user) {
+
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
+
+            return accessToken;
+
+        } else {
+
+            res.json({Error: "create token error"});
+            return false;
+
+        }
     }
 
 

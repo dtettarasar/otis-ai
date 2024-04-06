@@ -87,7 +87,7 @@
 
                     console.log(response.data);
 
-                    if (response.data.authOk) {
+                    if (response.data.authSuccess) {
 
                         this.showSuccess = true;
                         this.showError = false;
