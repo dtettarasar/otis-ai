@@ -25,7 +25,7 @@
 
                 <div class="input-group">
 
-                    <input v-bind:type="showPassword ? 'text' : 'password'" v-model="user.pwd" class="form-control" placeholder="Enter Password" name="psw" id="psw" required>
+                    <input v-bind:type="showPassword ? 'text' : 'password'" v-model="user.pwd" class="form-control" placeholder="Enter Password" name="pwd" id="pwd" required>
                     
                     <button @click="showPassword = !showPassword" class="btn btn-outline-secondary" type="button">
                         <i v-if="!showPassword" class="bi bi-eye-fill"></i>
