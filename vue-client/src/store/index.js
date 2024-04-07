@@ -9,11 +9,15 @@ import axios from 'axios';
 export default createStore({
   // données utilisées par les composants
   state: {
-    
+    accessToken: null,
+    refreshToken: null,
   },
   // Fait l'intermédiaire entre actions et state
   mutations: {
-
+    setTokens(state, { accessToken, refreshToken }) {
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+    },
   },
   // actions sert aux appels API et les méthodes que l'on appelle depuis les components pour interagir avec les données du store
   actions: {
