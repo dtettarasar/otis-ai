@@ -49,6 +49,7 @@
 <script>
 
     import axios from 'axios';
+    import Cookies from 'js-cookie';
 
     export default {
         name: 'LoginForm',
@@ -85,12 +86,16 @@
                         password: this.user.pwd
                     });
 
+                    console.log("response data:")
                     console.log(response.data);
 
                     if (response.data.authSuccess) {
 
                         this.showSuccess = true;
                         this.showError = false;
+
+                        Cookies.set('accessToken', response.data.accessToken);
+                        Cookies.set('refreshToken', response.data.refreshToken);
 
                         setTimeout(()=> {
                             this.$router.push('/user-account');
@@ -111,12 +116,6 @@
                     this.showSuccess = false;
 
                 }
-
-                /*
-                console.log('test data for messages');
-                console.log('showError: ' + this.showError);
-                console.log('showSuccess: ' + this.showSuccess);
-                */
 
             }
         }

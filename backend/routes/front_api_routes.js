@@ -18,7 +18,8 @@ router.post('/user-login', async (req, res) => {
         username: req.body.username,
         password: req.body.password,
         authSuccess: false,
-        accessToken: null
+        accessToken: null,
+        refreshToken: null
     }
 
     const checkAuth = await userTokenObj.checkUserLogin(userObj.username, userObj.password);
