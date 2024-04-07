@@ -54,7 +54,6 @@ const userTokenObj = {
         if (user) {
 
             const accessToken = jwt.sign(user, secretKey, {expiresIn: expirationTime});
-
             return accessToken;
 
         } else {
