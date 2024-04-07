@@ -25,7 +25,7 @@ router.post('/user-login', async (req, res) => {
 
     if(checkAuth.authSuccess) {
 
-        const accessToken = await userTokenObj.createToken(checkAuth);
+        const accessToken = await userTokenObj.createToken(checkAuth, process.env.ACCESS_TOKEN_SECRET, '15m');
 
         userObj.authSuccess = checkAuth.authSuccess;
         userObj.accessToken = accessToken;

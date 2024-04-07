@@ -46,20 +46,20 @@ const userTokenObj = {
 
     },
 
-    async createToken (user) {
+    async createToken (user, secretKey, expirationTime) {
 
         //Get the user for which we create the token
         // Data filled by the user on the login form
 
         if (user) {
 
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
+            const accessToken = jwt.sign(user, secretKey, {expiresIn: expirationTime});
 
             return accessToken;
 
         } else {
 
-            res.json({Error: "create token error"});
+            console.error("create token error");
             return false;
 
         }
