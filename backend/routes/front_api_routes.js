@@ -38,4 +38,17 @@ router.post('/user-login', async (req, res) => {
     res.json(userObj);
 });
 
+router.get('/user-auth', async (req, res) => {
+
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    const tokenAuthentication =  userTokenObj.authToken(token);
+
+    console.log('json sent to the vue app:')
+    console.log(tokenAuthentication);
+    res.json(tokenAuthentication);
+
+})
+
 module.exports = router;

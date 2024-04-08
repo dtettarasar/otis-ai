@@ -62,6 +62,38 @@ const userTokenObj = {
             return false;
 
         }
+    },
+
+    authToken (token) {
+
+        // console.log('init authToken method')
+
+        const authTokenObj = {
+            token: token,
+            status: null,
+            result: {}
+        }
+
+        try {
+
+            const tokenVerification = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+            authTokenObj.status = true;
+            authTokenObj.result = tokenVerification;
+
+        } catch(err) {
+
+            // console.log(err);
+            authTokenObj.status = false;
+            authTokenObj.result.name = err.name;
+            authTokenObj.result.message = err.message;
+
+        }
+
+        // console.log(authTokenObj);
+        // console.log('end of authToken method');
+
+        return authTokenObj;
+
     }
 
 
