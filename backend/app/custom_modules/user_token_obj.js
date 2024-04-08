@@ -9,7 +9,7 @@ const userTokenObj = {
 
         const userLoginData = {
             username: null,
-            _id: null,
+            userId: null,
             authSuccess: false
         }
 
@@ -36,7 +36,8 @@ const userTokenObj = {
             } else {
                 console.log('Password is valid, auth OK');
                 userLoginData.authSuccess = true;
-                userLoginData._id = userToCheckAuth._id;
+                // todo : make an encrypted version of the id that will be passed to the token
+                userLoginData.userId = userToCheckAuth._id;
                 userLoginData.username = userToCheckAuth.username;
             }
 

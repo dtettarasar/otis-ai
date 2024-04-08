@@ -44,6 +44,12 @@ router.get('/user-auth', async (req, res) => {
     const token = authHeader && authHeader.split(' ')[1];
 
     const tokenAuthentication =  userTokenObj.authToken(token);
+    console.log('tokenAuthentication');
+    console.log(tokenAuthentication);
+
+    if (tokenAuthentication.status) {
+        delete tokenAuthentication.result._id;
+    }
 
     console.log('json sent to the vue app:')
     console.log(tokenAuthentication);

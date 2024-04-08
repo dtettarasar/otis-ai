@@ -98,7 +98,8 @@
                         Cookies.set('refreshToken', response.data.refreshToken);
 
                         setTimeout(()=> {
-                            this.$router.push('/user-account');
+                            //this.$router.push('/user-account');
+                            window.location.href = '/user-account';
                         }, 3000);
 
 
