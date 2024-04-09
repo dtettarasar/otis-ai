@@ -94,12 +94,12 @@
                         this.showSuccess = true;
                         this.showError = false;
 
-                        Cookies.set('accessToken', response.data.accessToken);
-                        Cookies.set('refreshToken', response.data.refreshToken);
+                        Cookies.set('accessToken', response.data.accessToken, { sameSite: 'Strict' });
+                        Cookies.set('refreshToken', response.data.refreshToken, { sameSite: 'Strict' });
 
                         setTimeout(()=> {
-                            //this.$router.push('/user-account');
-                            window.location.href = '/user-account';
+                            this.$router.push('/user-account');
+                            //window.location.href = '/user-account';
                         }, 3000);
 
 
