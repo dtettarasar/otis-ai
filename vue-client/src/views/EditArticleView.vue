@@ -1,11 +1,15 @@
 <script>
 
-  import PageTitle from '@/components/PageTitle.vue'
+  import PageTitle from '@/components/PageTitle.vue';
+  import EditArticleContent from '@/components/page_main_containers/EditArticleContent.vue';
+  import UserRestrictedContent from '@/components/UserRestrictedContent.vue';
 
   export default {
     name: 'EditArticleView',
     components: {
-      PageTitle
+      PageTitle,
+      UserRestrictedContent,
+      EditArticleContent
     }
 
   };
@@ -15,5 +19,8 @@
 <template>
   <main>
     <PageTitle txtValue="Edit article Page"></PageTitle>
+    <UserRestrictedContent>
+      <EditArticleContent></EditArticleContent>
+    </UserRestrictedContent>
   </main>
 </template>

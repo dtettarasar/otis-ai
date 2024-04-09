@@ -9,6 +9,15 @@ Si le navigateur contient un access Token valide mais que le store ne contient p
 qui va envoyer une requête au backend pour garder en mémoire l'id 
 */
 
+/*
+Item à charger dans le store après le login process: 
+- username
+- nb de credit
+- liste des articles existants (charger les ids)
+
+Tous ces éléments doivent également être effacé du store lorsque l'utilisateur se déconnecte ou si l'accessToken a expiré
+*/
+
 import { createStore } from 'vuex'
 import axios from 'axios'; 
 

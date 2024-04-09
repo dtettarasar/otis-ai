@@ -1,11 +1,15 @@
 <script>
 
-  import PageTitle from '@/components/PageTitle.vue'
+  import PageTitle from '@/components/PageTitle.vue';
+  import UserRestrictedContent from '@/components/UserRestrictedContent.vue';
+  import CreateArticleContent from '@/components/page_main_containers/CreateArticleContent.vue'
 
   export default {
     name: 'CreateArticleView',
     components: {
-      PageTitle
+      PageTitle,
+      UserRestrictedContent,
+      CreateArticleContent
     }
 
   };
@@ -15,5 +19,8 @@
 <template>
   <main>
     <PageTitle txtValue="Create article Page"></PageTitle>
+    <UserRestrictedContent>
+      <CreateArticleContent></CreateArticleContent>
+    </UserRestrictedContent>
   </main>
 </template>
