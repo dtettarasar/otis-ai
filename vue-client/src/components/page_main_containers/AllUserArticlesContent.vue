@@ -2,7 +2,7 @@
 
     
     <div>
-        <h2>The user is connected to the All User Articles page</h2>
+        <h2>{{ username }} is connected to the All User Articles page</h2>
     </div>
     
 
@@ -10,18 +10,22 @@
 
 <script>
 
+    import { mapState } from 'vuex';
+
     export default {
         name: 'AllUserArticlesContent.vue',
 
         data() {
 
             return {
-                //Grab the username from the store
+
             }
 
         },
 
         computed: {
+
+            ...mapState(['username']),
 
         },
 

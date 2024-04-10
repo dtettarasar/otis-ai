@@ -12,7 +12,8 @@
 
 <script>
 
-import { axiosInstance } from '@/custom_modules/createAxiosInstance.js';
+    import { axiosInstance } from '@/custom_modules/createAxiosInstance.js';
+    import { mapActions } from 'vuex';
 
     export default {
         name: 'UserRestrictedContent',
@@ -37,22 +38,34 @@ import { axiosInstance } from '@/custom_modules/createAxiosInstance.js';
 
         methods: {
 
+            ...mapActions(['saveUsername', 'updateUserLoggedIn']),
+
             fetchData() {
 
-            console.log('init fetch data');
+                console.log('init fetch data');
 
-            // get the data from the user token
-            axiosInstance.get(this.loginBackEndUrl)
-                .then(response => {
+                // get the data from the user token
+                axiosInstance.get(this.loginBackEndUrl)
+                    .then(response => {
 
-                    console.log('response.data');
-                    console.log(response.data);
-                    this.loginStatus = response.data.status;
+                        console.log('response.data');
+                        console.log(response.data);
+                        this.loginStatus = response.data.status;
 
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+                        if (this.loginStatus) {
+                            // Save the username in the vuex store
+                            this.saveUsername(response.data.result.username);
+                        }
+
+                        // Track the user Logged In in the store
+                        this.updateUserLoggedIn(this.loginStatus);
+
+                        // Si loginStatus est égal à false, supprimer les tokens du navigateur
+
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
             
             }
 

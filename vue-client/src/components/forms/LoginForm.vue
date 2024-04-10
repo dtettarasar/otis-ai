@@ -80,7 +80,8 @@
                 console.log('init login process');
 
                 try {
-
+                    
+                    // Check with the backend the login data provided by the user
                     const response = await axios.post(this.loginBackEndUrl, {
                         username: this.user.name,
                         password: this.user.pwd

@@ -19,19 +19,42 @@ Tous ces éléments doivent également être effacé du store lorsque l'utilisat
 */
 
 import { createStore } from 'vuex'
-import axios from 'axios'; 
 
 export default createStore({
   // données utilisées par les composants
   state: {
-      username: null
+      username: null,
+      userLoggedIn: null,
   },
   // Fait l'intermédiaire entre actions et state
   mutations: {
 
+      setUsername(state, username) {
+        state.username = username;
+      },
+
+      updateUserLoggedIn(state, userLoggedIn) {
+        state.userLoggedIn = userLoggedIn;
+      },
+
   },
   // actions sert aux appels API et les méthodes que l'on appelle depuis les components pour interagir avec les données du store
   actions: {
+      saveUsername({commit}, username) {
 
+        console.log('init the saveUsername action from vuex');
+        console.log(username);
+
+        commit('setUsername', username);
+
+      },
+      updateUserLoggedIn({commit}, userLoggedIn) {
+
+        console.log('init the updateUserLoggedIn action from vuex');
+        console.log(userLoggedIn);
+
+        commit('updateUserLoggedIn', userLoggedIn);
+
+      }
   }
 })
