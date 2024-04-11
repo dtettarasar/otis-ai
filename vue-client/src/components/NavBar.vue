@@ -32,6 +32,7 @@
 <script>
 
     import { mapState } from 'vuex';
+    import Cookies from 'js-cookie';
 
     export default {
         
@@ -46,7 +47,13 @@
         methods: {
 
             initLoggout () {
-                console.log('init the user loggout method');
+                
+                //console.log('init the user loggout method');
+
+                Cookies.remove('accessToken');
+                Cookies.remove('refreshToken');
+                window.location.href = '/';
+
             }
 
         }
