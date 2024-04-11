@@ -1,5 +1,6 @@
 const env = require('dotenv').config({ path: '../.env' });
 const strHasher = require('./str_hasher');
+const strEncrypter = require('./str_encrypter');
 const jwt = require("jsonwebtoken");
 const dataBaseObj = require('./database_obj');
 
@@ -36,13 +37,15 @@ const userTokenObj = {
             } else {
                 console.log('Password is valid, auth OK');
                 userLoginData.authSuccess = true;
-                // todo : make an encrypted version of the id that will be passed to the token
                 userLoginData.userId = userToCheckAuth._id;
+                // todo : make an encrypted version of the id that will be passed to the token before its creation
+                //strEncrypter.method.encryptString();
                 userLoginData.username = userToCheckAuth.username;
             }
 
         }
 
+        console.log(userLoginData);
         return userLoginData;
 
     },
@@ -51,6 +54,12 @@ const userTokenObj = {
 
         //Get the user for which we create the token
         // Data filled by the user on the login form
+
+        /*
+        console.log('init createToken Method');
+        console.log('user data that will be recorded in the token:');
+        console.log(user);
+        */
 
         if (user) {
 
@@ -67,7 +76,7 @@ const userTokenObj = {
 
     authToken (token) {
 
-        // console.log('init authToken method')
+        console.log('init authToken method')
 
         const authTokenObj = {
             token: token,
@@ -78,8 +87,12 @@ const userTokenObj = {
         try {
 
             const tokenVerification = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+            // todo : decrypt the user id contained in the token here.
             authTokenObj.status = true;
             authTokenObj.result = tokenVerification;
+
+            console.log("AuthTokenObj:");
+            console.log(authTokenObj);
 
         } catch(err) {
 
