@@ -17,6 +17,7 @@ const generator = (sizeInt) => {
 const accessSecret = generator(64);
 const refreshSecret = generator(64);
 const cookieSecret = generator(32);
+const encryptionKey = generator(32);
 
 const instructions = `
 This small script will generate secret to use with JSON Web Token, and the cookie signature. 
@@ -25,6 +26,7 @@ get your secrets and store them in the .env file:`
 console.log(instructions);
 console.log("ACCESS_TOKEN_SECRET='"+ accessSecret + "'");
 console.log("REFRESH_TOKEN_SECRET='"+ refreshSecret + "'");
-console.log("COOKIE_SIGNATURE_SECRET='" + cookieSecret + "'")
+console.log("COOKIE_SIGNATURE_SECRET='" + cookieSecret + "'");
+console.log("ENCRYPTION_KEY='" + encryptionKey + "'");
 
 console.log("------------");
