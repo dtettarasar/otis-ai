@@ -38,9 +38,11 @@ const userTokenObj = {
                 console.log('Password is valid, auth OK');
                 userLoginData.authSuccess = true;
                 userLoginData.userId = userToCheckAuth._id;
+
                 // todo : make an encrypted version of the id that will be passed to the token before its creation
-                const testEncryption = await strEncrypter.method.encryptString();
-                console.log('test encryption: ' + testEncryption);
+
+                const userIdEncryption = await strEncrypter.method.encryptString(userLoginData.userId.toHexString());
+                console.log('userIdEncryption: ' + userIdEncryption);
                 userLoginData.username = userToCheckAuth.username;
             }
 

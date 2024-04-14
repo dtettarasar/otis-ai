@@ -5,9 +5,9 @@ const strEncrypter = {
 
     secretKey: process.env.ENCRYPTION_KEY,
 
-    encryptString: async function (strToEncrypt) {
+    encryptionAlgo: 'aes-256-cbc',
 
-        const testStr = 'this is a test string';
+    encryptString: async function (strToEncrypt) {
 
         console.log('init encryptString method');
         console.log('secret key: ' + this.secretKey);
@@ -19,8 +19,8 @@ const strEncrypter = {
                 encryptedStr: null
             }
 
-            let cypher = crypto.createCipheriv('aes-256-cbc', this.secretKey, encryptionObj.iv);
-            encryptionObj.encryptedStr = cypher.update(testStr, 'utf-8', 'hex');
+            let cypher = crypto.createCipheriv(this.encryptionAlgo, this.secretKey, encryptionObj.iv);
+            encryptionObj.encryptedStr = cypher.update(strToEncrypt, 'utf-8', 'hex');
             encryptionObj.encryptedStr += cypher.final('hex');
 
             this.decryptString(encryptionObj);
@@ -44,7 +44,7 @@ const strEncrypter = {
 
         try {
 
-            let decipher = crypto.createDecipheriv('aes-256-cbc', this.secretKey, encryptionObj.iv);
+            let decipher = crypto.createDecipheriv(this.encryptionAlgo, this.secretKey, encryptionObj.iv);
             let decrypted = decipher.update(encryptionObj.encryptedStr, 'hex', 'utf-8');
             decrypted += decipher.final('utf-8');
             console.log('decrypted: ' + decrypted);
