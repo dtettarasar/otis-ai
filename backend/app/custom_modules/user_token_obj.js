@@ -11,7 +11,8 @@ const userTokenObj = {
         const userLoginData = {
             username: null,
             userId: null,
-            authSuccess: false
+            authSuccess: false,
+            userIdEncryption: {}
         }
 
         console.log('init checkUserLogin from userTokenObj');
@@ -39,10 +40,8 @@ const userTokenObj = {
                 userLoginData.authSuccess = true;
                 userLoginData.userId = userToCheckAuth._id;
 
-                // todo : make an encrypted version of the id that will be passed to the token before its creation
-
-                const userIdEncryption = await strEncrypter.method.encryptString(userLoginData.userId.toHexString());
-                console.log('userIdEncryption: ' + userIdEncryption);
+                // make an encrypted version of the id that will be passed to the token before its creation
+                userLoginData.userIdEncryption = await strEncrypter.method.encryptString(userLoginData.userId.toHexString());
                 userLoginData.username = userToCheckAuth.username;
             }
 

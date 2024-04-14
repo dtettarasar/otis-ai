@@ -35,6 +35,9 @@ router.post('/user-login', async (req, res) => {
 
     }
 
+    console.log('user obj from user login route');
+    console.log(userObj);
+
     res.json(userObj);
 });
 

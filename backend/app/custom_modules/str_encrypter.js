@@ -23,9 +23,9 @@ const strEncrypter = {
             encryptionObj.encryptedStr = cypher.update(strToEncrypt, 'utf-8', 'hex');
             encryptionObj.encryptedStr += cypher.final('hex');
 
-            this.decryptString(encryptionObj);
+            //this.decryptString(encryptionObj);
 
-            return true;
+            return encryptionObj;
 
         } catch (err) {
 
