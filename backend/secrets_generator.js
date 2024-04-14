@@ -17,7 +17,7 @@ const generator = (sizeInt) => {
 const accessSecret = generator(64);
 const refreshSecret = generator(64);
 const cookieSecret = generator(32);
-const encryptionKey = generator(32);
+const encryptionKey = generator(16);
 
 const instructions = `
 This small script will generate secret to use with JSON Web Token, and the cookie signature. 
