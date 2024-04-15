@@ -65,6 +65,10 @@
 
                         if (this.loginStatus && this.username !== response.data.result.username) {
                             // Save the username in the vuex store
+                            /* 
+                            Passer en argument dans l'action saveUsername, l'user ID crypté issue du token.
+                            Checker également les conditions du if qu'il faudra ajuster (car response.data.result.username n'existe plus dans le token) 
+                            */
                             this.saveUsername('test username');
                             
                         } else if (this.loginStatus === false && this.username !== null) {
