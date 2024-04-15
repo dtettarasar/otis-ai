@@ -9,8 +9,6 @@ const userTokenObj = {
     async checkUserLogin(usernameToCheck, passwordToCheck) {
 
         const userLoginData = {
-            username: null,
-            userId: null,
             authSuccess: false,
             userIdEncryption: {}
         }
@@ -36,13 +34,13 @@ const userTokenObj = {
                 console.log('Error: invalid password');
 
             } else {
+
                 console.log('Password is valid, auth OK');
                 userLoginData.authSuccess = true;
-                userLoginData.userId = userToCheckAuth._id;
 
                 // make an encrypted version of the id that will be passed to the token before its creation
-                userLoginData.userIdEncryption = await strEncrypter.method.encryptString(userLoginData.userId.toHexString());
-                userLoginData.username = userToCheckAuth.username;
+                userLoginData.userIdEncryption = await strEncrypter.method.encryptString(userToCheckAuth._id.toHexString());
+
             }
 
         }

@@ -42,8 +42,17 @@ export default createStore({
   actions: {
       saveUsername({commit}, username) {
 
+        // to do:
+
+        /*
+        Utiliser Vuex pour stocker le nom d'utilisateur :
+        MAJ l'action pour prendre l'ID utilisateur crypté en paramètre,
+        envoyer une requête Axios vers le backend pour récupérer le nom d'utilisateur correspondant,
+        puis stocker le nom d'utilisateur dans le store Vuex.
+        */
+
         console.log('init the saveUsername action from vuex');
-        console.log(username);
+        console.log(username); 
 
         commit('setUsername', username);
 

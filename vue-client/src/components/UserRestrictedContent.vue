@@ -65,7 +65,7 @@
 
                         if (this.loginStatus && this.username !== response.data.result.username) {
                             // Save the username in the vuex store
-                            this.saveUsername(response.data.result.username);
+                            this.saveUsername('test username');
                             
                         } else if (this.loginStatus === false && this.username !== null) {
 

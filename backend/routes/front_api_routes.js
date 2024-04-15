@@ -60,4 +60,13 @@ router.get('/user-auth', async (req, res) => {
 
 })
 
+// To do
+
+/*
+Créer une route get pour fournir le username à l'appli vue js
+
+Requête vers le backend pour récupérer le nom d'utilisateur : Le backend reçoit l'ID utilisateur crypté via une route GET, le déchiffre,
+puis effectue une requête pour récupérer le nom d'utilisateur à partir de l'ID utilisateur déchiffré.
+*/
+
 module.exports = router;
