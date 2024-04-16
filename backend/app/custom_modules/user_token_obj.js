@@ -91,8 +91,8 @@ const userTokenObj = {
             authTokenObj.status = true;
             authTokenObj.result = tokenVerification;
 
-            console.log("AuthTokenObj:");
-            console.log(authTokenObj);
+            //console.log("AuthTokenObj:");
+            //console.log(authTokenObj);
 
         } catch(err) {
 

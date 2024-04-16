@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const dataBaseObj = require('../app/custom_modules/database_obj');
 const userTokenObj = require('../app/custom_modules/user_token_obj');
+const strEncrypter = require('../app/custom_modules/str_encrypter');
 
 router.post('/user-login', async (req, res) => {
 
@@ -47,8 +48,11 @@ router.get('/user-auth', async (req, res) => {
     const token = authHeader && authHeader.split(' ')[1];
 
     const tokenAuthentication =  userTokenObj.authToken(token);
+
+    /*
     console.log('tokenAuthentication');
     console.log(tokenAuthentication);
+    */
 
     if (tokenAuthentication.status) {
         delete tokenAuthentication.result._id;
@@ -58,7 +62,21 @@ router.get('/user-auth', async (req, res) => {
     console.log(tokenAuthentication);
     res.json(tokenAuthentication);
 
-})
+});
+
+router.get('/user-datas', async (req, res) => {
+
+    console.log('got request for user-datas route');
+
+    const userIdObj = req.query.userId;
+    console.log('User ID object:', userIdObj);
+
+    const decryptUserID = await strEncrypter.method.decryptString(userIdObj);
+    console.log('decryptUserID: ' + decryptUserID);
+
+    res.status(200).send('User ID object received successfully');
+
+});
 
 // To do
 
