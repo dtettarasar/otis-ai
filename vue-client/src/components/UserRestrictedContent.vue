@@ -30,7 +30,7 @@
 
         computed: {
 
-            ...mapState(['username', 'userLoggedIn']),
+            ...mapState(['username', 'userLoggedIn', 'userInitialInfoSaved']),
 
             loginBackEndUrl() {
                 return this.$backendUrl + 'front-api/user-auth';
@@ -44,7 +44,7 @@
 
         methods: {
 
-            ...mapActions(['saveUsername', 'updateUserLoggedIn']),
+            ...mapActions(['saveUsername', 'updateUserLoggedIn', 'saveUserInfo']),
 
             fetchData() {
 
@@ -63,20 +63,10 @@
                         console.log(response.data);
                         this.loginStatus = response.data.status;
 
-                        if (this.loginStatus && this.username !== response.data.result.username) {
-                            // Save the username in the vuex store
-                            /* 
-                            Passer en argument dans l'action saveUsername, l'user ID crypté issue du token.
-                            Checker également les conditions du if qu'il faudra ajuster (car response.data.result.username n'existe plus dans le token) 
-                            */
-                            this.saveUsername('test username');
-                            
-                        } else if (this.loginStatus === false && this.username !== null) {
-
-                            // Todo: Si loginStatus est égal à false, supprimer les tokens du navigateur
-                            this.saveUsername(null);
-
-                        }
+                        if (this.loginStatus && !this.userInitialInfoSaved) {
+                            // Save the intial user info in the vuex store
+                            this.saveUserInfo();  
+                        } 
 
                         /*
                         - Track the login status

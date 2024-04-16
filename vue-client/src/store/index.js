@@ -1,6 +1,6 @@
-/* créer une variable bool userLogged. Pour identifier si un utilisateur est connecté. 
+/* créer une variable bool userLoggedIn. Pour identifier si un utilisateur est connecté. 
 Permettra de conditionner l'affichage de certains composants + gérer les requêtes pour alimenter le store. 
-userLogged sera à utiliser pour vérifier qu'un utilisateur est bien connecté, pour faire les requêtes au backend (récupérer username, crédit, id des articles, etc...)
+userLoggedIn sera à utiliser pour vérifier qu'un utilisateur est bien connecté, pour faire les requêtes au backend (récupérer username, crédit, id des articles, etc...)
 */
 
 /* 
@@ -10,12 +10,8 @@ qui va envoyer une requête au backend pour garder en mémoire l'id
 */
 
 /*
-Item à charger dans le store après le login process: 
-- username
-- nb de credit
-- liste des articles existants (charger les ids)
-
-Tous ces éléments doivent également être effacé du store lorsque l'utilisateur se déconnecte ou si l'accessToken a expiré
+saveUserInfo() va servir à charger les premières datas de l'utilisateur juste après sa connexion. 
+créer ensuite une méthode qui permettra de d'updater chacune des infos séparement, notamment les crédits et la liste des articles à afficher dans le dashboard (les ids des articles). 
 */
 
 import { createStore } from 'vuex'
@@ -23,8 +19,9 @@ import { createStore } from 'vuex'
 export default createStore({
   // données utilisées par les composants
   state: {
-      username: null,
+      username: 'test username',
       userLoggedIn: null,
+      userInitialInfoSaved: false
   },
   // Fait l'intermédiaire entre actions et state
   mutations: {
@@ -36,6 +33,11 @@ export default createStore({
       updateUserLoggedIn(state, userLoggedIn) {
         state.userLoggedIn = userLoggedIn;
       },
+
+      userInitialInfoSaved(state) {
+        state.userInitialInfoSaved = true;
+        console.log("userInitialInfoSaved: " + state.userInitialInfoSaved);
+      }
 
   },
   // actions sert aux appels API et les méthodes que l'on appelle depuis les components pour interagir avec les données du store
@@ -55,6 +57,23 @@ export default createStore({
         console.log(username); 
 
         commit('setUsername', username);
+
+      },
+      saveUserInfo({commit}) {
+
+        /*
+          Méthode qui va charger tous les éléments initiaux de l'utilisateur après sa connexion
+          Item à charger dans le store après le login process: 
+          - username
+          - nb de credit
+          - liste des articles existants (charger les ids)
+
+          Tous ces éléments doivent également être effacés du store lorsque l'utilisateur se déconnecte ou si l'accessToken a expiré
+        */
+
+        console.log('init save user info');
+
+        commit('userInitialInfoSaved')
 
       },
       updateUserLoggedIn({commit}, userLoggedIn) {
