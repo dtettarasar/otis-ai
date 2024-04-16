@@ -14,7 +14,7 @@ saveUserInfo() va servir à charger les premières datas de l'utilisateur juste 
 créer ensuite une méthode qui permettra de d'updater chacune des infos séparement, notamment les crédits et la liste des articles à afficher dans le dashboard (les ids des articles). 
 */
 
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
 
 export default createStore({
   // données utilisées par les composants
@@ -59,7 +59,7 @@ export default createStore({
         commit('setUsername', username);
 
       },
-      saveUserInfo({commit}) {
+      saveUserInfo({commit}, userDataObj) {
 
         /*
           Méthode qui va charger tous les éléments initiaux de l'utilisateur après sa connexion
@@ -72,6 +72,8 @@ export default createStore({
         */
 
         console.log('init save user info');
+
+        console.log(userDataObj);
 
         commit('userInitialInfoSaved')
 
