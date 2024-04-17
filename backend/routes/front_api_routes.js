@@ -78,7 +78,13 @@ router.get('/user-datas', async (req, res) => {
     const findUser = await dataBaseObj.findUserById(decryptUserID);
     console.log(findUser);
 
-    res.status(200).send('User ID object received successfully');
+    const userData = {
+        username: findUser.username,
+        credit: findUser.credit
+    }
+
+    //res.status(200).send('User ID object received successfully');
+    res.json(userData);
 
 });
 
