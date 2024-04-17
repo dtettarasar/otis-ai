@@ -74,6 +74,10 @@ router.get('/user-datas', async (req, res) => {
     const decryptUserID = await strEncrypter.method.decryptString(userIdObj);
     console.log('decryptUserID: ' + decryptUserID);
 
+    // check that the user exist in db
+    const findUser = await dataBaseObj.findUserById(decryptUserID);
+    console.log(findUser);
+
     res.status(200).send('User ID object received successfully');
 
 });
