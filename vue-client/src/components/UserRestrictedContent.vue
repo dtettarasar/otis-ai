@@ -31,7 +31,7 @@ import axios from 'axios';
 
         computed: {
 
-            ...mapState(['username', 'userLoggedIn', 'userInitialInfoSaved']),
+            ...mapState(['username', 'credit', 'userLoggedIn', 'userInitialInfoSaved']),
 
             loginBackEndUrl() {
                 return this.$backendUrl + 'front-api/user-auth';
@@ -51,7 +51,7 @@ import axios from 'axios';
 
             ...mapActions(['updateUserLoggedIn', 'saveUserInfo']),
 
-            fetchData() {
+            async fetchData() {
 
                 console.log('init fetch data');
 
@@ -62,7 +62,7 @@ import axios from 'axios';
                 */
 
                 // get the data from the user token
-                axiosInstance.get(this.loginBackEndUrl)
+                await axiosInstance.get(this.loginBackEndUrl)
                     .then(response => {
 
                         /*
@@ -98,7 +98,7 @@ import axios from 'axios';
             
             },
 
-            getUserInitialData(userIdObj) {
+            async getUserInitialData(userIdObj) {
 
                 //Méthode qui va récupérer les infos initiales de l'utilisateur après la connexion à son compte 
                 /*
@@ -117,22 +117,33 @@ import axios from 'axios';
 
                 */
 
-                console.log('init getUserInitialData method');
+                //console.log('init getUserInitialData method');
 
                 //console.log('backend route to call: ' + this.getUserDataUrl);
 
-                console.log(userIdObj);
+                //console.log(userIdObj);
 
                 const reqData = {
                     userId: userIdObj
                 };
 
-                axios.get(this.getUserDataUrl, {
+                const userDataObj = {
+                    username: null,
+                    credit: 0
+                }
+
+                await axios.get(this.getUserDataUrl, {
                     params: reqData
                 })
                 .then(res => {
 
-                    console.log('Response from backend:', res.data);
+                    //console.log('Response from backend:', res.data);
+
+                    userDataObj.username = res.data.username;
+                    userDataObj.credit = res.data.credit;
+
+                    //console.log('userDataObj from component method');
+                    //console.log(userDataObj);
 
                 })
                 .catch(err => {
@@ -140,11 +151,6 @@ import axios from 'axios';
                     console.error('Error fetching user data:', err);
 
                 });
-
-                const userDataObj = {
-                    username: null,
-                    credit: null
-                }
 
                 this.saveUserInfo(userDataObj);
 

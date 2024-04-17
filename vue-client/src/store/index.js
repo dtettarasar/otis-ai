@@ -19,9 +19,10 @@ import { createStore } from 'vuex';
 export default createStore({
   // données utilisées par les composants
   state: {
-      username: 'test username',
+      username: null,
       userLoggedIn: null,
-      userInitialInfoSaved: false
+      userInitialInfoSaved: false,
+      credit: 0,
   },
   // Fait l'intermédiaire entre actions et state
   mutations: {
@@ -34,9 +35,13 @@ export default createStore({
         state.userLoggedIn = userLoggedIn;
       },
 
-      userInitialInfoSaved(state) {
+      userInitialInfoSaved(state, userDataObj) {
         state.userInitialInfoSaved = true;
+        state.username = userDataObj.username;
+        state.credit = userDataObj.credit
         console.log("userInitialInfoSaved: " + state.userInitialInfoSaved);
+        console.log("username saved: " + state.username);
+        console.log("credit balance saved: " + state.credit);
       }
 
   },
@@ -71,11 +76,10 @@ export default createStore({
           Tous ces éléments doivent également être effacés du store lorsque l'utilisateur se déconnecte ou si l'accessToken a expiré
         */
 
-        console.log('init save user info');
+        //console.log('init save user info action');
+        //console.log(userDataObj);
 
-        console.log(userDataObj);
-
-        commit('userInitialInfoSaved')
+        commit('userInitialInfoSaved', userDataObj);
 
       },
       updateUserLoggedIn({commit}, userLoggedIn) {
