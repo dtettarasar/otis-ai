@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-//const env = require('dotenv').config({ path: '../.env' });
+const env = require('dotenv').config();
 
 const strEncrypter = {
 

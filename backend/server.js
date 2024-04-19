@@ -11,7 +11,7 @@ const dataBaseObj = require('./app/custom_modules/database_obj');
 dataBaseObj.initDB();
 
 const app = express();
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config();
 
 const cookies = require("cookie-parser");
 app.use(cookies(process.env.COOKIE_SIGNATURE_SECRET));
