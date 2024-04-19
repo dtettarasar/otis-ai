@@ -7,7 +7,7 @@ test('test the encrypter: make sure it returns an object', async () => {
 
     const testEncryption = await strEncrypter.method.encryptString(testStr);
     console.log(testEncryption);
-    console.log("secretkey: " + strEncrypter.secretKey);
 
-    //await expect(testEncryption)
+    expectTypeOf(testEncryption).toBeObject();
+
 });
