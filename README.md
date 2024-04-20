@@ -4,7 +4,7 @@ Otis AI: Your Digital SEO Scribe!
 ## Backend parameters 
 
 ### Connect your Database first
-create a .env file at the root of the backend folfer and store in it the connection string, using the variable name "DB_URL"
+create a .env file at the root of the backend folder and store in it the connection string, using the variable name "DB_URL"
 
 ~~~
 DB_URL="mongodb+srv://<username>:<password>@<clustername>.0a0a0a0.mongodb.net/otis-ai?retryWrites=true&w=majority"
