@@ -41,7 +41,7 @@ VUE_CLIENT_SERVER="http://localhost:5173/"
 
 ### Build the file for the connection with the backend API
 
-build the file 'src/backend.config.js' and make sure it follows the structure below: 
+build the file 'vue-client/src/backend.config.js' and make sure it follows the structure below: 
 
 ~~~
 const backendConfig = {
