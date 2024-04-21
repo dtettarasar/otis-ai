@@ -23,7 +23,8 @@ import axios from 'axios';
 
             return {
                 loginStatus: null,
-                expTimestamp: null
+                expTimestamp: null,
+                countdownInterval: null
             }
 
         },
@@ -44,8 +45,11 @@ import axios from 'axios';
 
         },
 
-        mounted() {
-            this.fetchData();
+        async mounted() {
+            
+            await this.fetchData();
+            this.calculateTokenExpiration();
+
         },
 
         methods: {
@@ -69,8 +73,6 @@ import axios from 'axios';
                         
                         console.log('response.data');
                         console.log(response.data);
-
-                        console.log('token expiration: ' + response.data.result.exp);
 
                         this.expTimestamp = response.data.result.exp;
 
@@ -157,6 +159,54 @@ import axios from 'axios';
                 });
 
                 this.saveUserInfo(userDataObj);
+
+            },
+
+            calculateTokenExpiration() {
+
+                // Method a utiliser pour calculer le délai avant l'expiration du token pour afficher le modal
+                // Modal qui permettra à l'utilisateur de se déconnecter ou de rester connecté (en utilisant le refresh token pour accéder un nouveau access token)
+
+                console.log('init calculateTokenExpiration method');
+                console.log('token expiration: ' + this.expTimestamp);
+
+                // delai à ajouter avant l'expiration du token. Permet d'afficher le modal pendant un temps donné, avant l'expiration du token et la deconnexion automatique de l'utilisateur.
+                const timeToModal = 30;
+
+                const modalTimestamp = this.expTimestamp - timeToModal;
+
+                // Calcul du temps restant en secondes
+                const currentTime = Math.floor(Date.now() / 1000); // Timestamp actuel en secondes
+                const timeRemaining = modalTimestamp - currentTime;
+                console.log("timeRemaining: " + timeRemaining);
+
+                if (timeRemaining <= 0) {
+
+                    console.log('activate the modal!');
+
+                } else if (timeRemaining > 0 && !this.countdownInterval) {
+
+                    // Si le temps restant est positif et que l'on n'a pas encore lancé le countdown, on le démarre
+    
+                    console.log("Modal à afficher dans " + timeRemaining + " secondes.");
+
+                    this.countdownInterval = setInterval(() => {
+
+                        const countdown = modalTimestamp - Math.floor(Date.now() / 1000);
+
+                        console.log("Modal à afficher dans " + countdown + " secondes.");
+
+                        if (countdown <= 0) {
+                            clearInterval(this.countdownInterval);
+                            this.countdownInterval = null;
+                            console.log('activate the modal!');
+                        }
+
+                    }, 1000); // Rafraîchit toutes les secondes
+
+                    //console.log(currentTime);
+
+                }
 
             }
 
