@@ -22,7 +22,8 @@ import axios from 'axios';
         data() {
 
             return {
-                loginStatus: null
+                loginStatus: null,
+                expTimestamp: null
             }
 
         },
@@ -65,10 +66,13 @@ import axios from 'axios';
                 await axiosInstance.get(this.loginBackEndUrl)
                     .then(response => {
 
-                        /*
+                        
                         console.log('response.data');
                         console.log(response.data);
-                        */
+
+                        console.log('token expiration: ' + response.data.result.exp);
+
+                        this.expTimestamp = response.data.result.exp;
 
                         this.loginStatus = response.data.status;
 
