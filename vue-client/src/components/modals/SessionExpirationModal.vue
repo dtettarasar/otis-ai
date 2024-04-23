@@ -2,14 +2,6 @@
 
 export default {
         name: 'SessionExpirationModal',
-        
-        props: {
-            modalId: {
-                type: String,
-                required: true
-            }
-        }
-        
 }
 
 </script>
@@ -17,7 +9,7 @@ export default {
 <template>
 
     <!-- Modal -->
-    <div class="modal fade" :id="modalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="session-expire" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">

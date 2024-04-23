@@ -8,17 +8,15 @@
         <slot></slot>
     </div>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#session-expire">
-    Launch demo modal
-    </button>
+    <a @click="triggerModal()">test trigger modal</a>
 
-    <SessionExpirationModal :modalId="'session-expire'"></SessionExpirationModal>
+    <SessionExpirationModal></SessionExpirationModal>
 
 </template>
 
 <script>
 
+    import { Modal } from 'bootstrap'
     import axios from 'axios';
     import { mapActions, mapState } from 'vuex';
     
@@ -198,6 +196,7 @@
                 if (timeRemaining <= 0) {
 
                     console.log('activate the modal!');
+                    this.triggerModal();
 
                 } else if (timeRemaining > 0 && !this.countdownInterval) {
 
@@ -215,6 +214,7 @@
                             clearInterval(this.countdownInterval);
                             this.countdownInterval = null;
                             console.log('activate the modal!');
+                            this.triggerModal();
                         }
 
                     }, 1000); // Rafraîchit toutes les secondes
@@ -222,6 +222,15 @@
                     //console.log(currentTime);
 
                 }
+
+            },
+
+            triggerModal() {
+
+                console.log('init trigger modal')
+
+                let myModal = new Modal(document.getElementById('session-expire'));
+                myModal.show();
 
             }
 
