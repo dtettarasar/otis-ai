@@ -232,6 +232,8 @@
                 let myModal = new Modal(document.getElementById('session-expire'));
                 myModal.show();
 
+                // Todo : track the active modal in the vuex store
+
             }
 
         }

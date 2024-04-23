@@ -23,6 +23,7 @@ export default createStore({
       userLoggedIn: null,
       userInitialInfoSaved: false,
       credit: 0,
+      activeModal: null
   },
   // Fait l'intermédiaire entre actions et state
   mutations: {
@@ -42,6 +43,14 @@ export default createStore({
         console.log("userInitialInfoSaved: " + state.userInitialInfoSaved);
         console.log("username saved: " + state.username);
         console.log("credit balance saved: " + state.credit);
+      },
+
+      setActiveModal(state, modalId) {
+        state.activeModal = modalId;
+      },
+      
+      clearActiveModal(state) {
+        state.activeModal = null;
       }
 
   },
