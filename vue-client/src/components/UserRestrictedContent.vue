@@ -8,16 +8,31 @@
         <slot></slot>
     </div>
 
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#session-expire">
+    Launch demo modal
+    </button>
+
+    <SessionExpirationModal :modalId="'session-expire'"></SessionExpirationModal>
+
 </template>
 
 <script>
 
-    import { axiosInstance } from '@/custom_modules/createAxiosInstance.js';
-import axios from 'axios';
+    import axios from 'axios';
     import { mapActions, mapState } from 'vuex';
+    
+    import { axiosInstance } from '@/custom_modules/createAxiosInstance.js';
+    import SessionExpirationModal from '@/components/modals/SessionExpirationModal.vue';
+
+
 
     export default {
         name: 'UserRestrictedContent',
+
+        components: {
+            SessionExpirationModal
+        },
 
         data() {
 
