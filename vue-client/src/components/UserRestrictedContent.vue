@@ -6,6 +6,9 @@
 
     <div v-else>
         <slot></slot>
+        <!-- Pour les composants 'page main containers' faire en sorte que l'on pass un props bool 'login required'. -->
+        <!-- Et utiliser le composant UserRestricted Content sur chaque view, cela permettra de pouvoir afficher la pop up d'alerte de fin de session sur les pages publiques si besoin, pour les utilisateurs connectés -->
+        <!-- Ou sinon créer un composant à part pour gérer la pop up, que l'on pourra utiliser sur toutes les pages -->
     </div>
 
     <a @click="triggerModal()">test trigger modal</a>
@@ -233,6 +236,13 @@
                 myModal.show();
 
                 // Todo : track the active modal in the vuex store
+                /* 
+                    
+                    Utiliser le state activeModal dans le store pour tracker si la pop up est déjà active.
+                    Car pour le moment à chaque fois qu'on change de page entre le moment oul'on est connecté
+                    et le moment ou la pop up doit s'afficher la pop up se crée plusieurs fois dans le code. 
+
+                */
 
             }
 
