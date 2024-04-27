@@ -23,7 +23,8 @@ export default createStore({
       userLoggedIn: null,
       userInitialInfoSaved: false,
       credit: 0,
-      activeModal: null
+      activeModal: null,
+      cookieExpTimestamp: 0
   },
   // Fait l'intermédiaire entre actions et state
   mutations: {
@@ -51,6 +52,11 @@ export default createStore({
       
       clearActiveModal(state) {
         state.activeModal = null;
+      },
+
+      setCookieExpTime(state, cookieExpTimestamp) {
+        state.cookieExpTimestamp = cookieExpTimestamp;
+        console.log("setCookieExpTime saved: " + state.cookieExpTimestamp);
       }
 
   },
@@ -97,6 +103,14 @@ export default createStore({
         console.log(userLoggedIn);
 
         commit('updateUserLoggedIn', userLoggedIn);
+
+      },
+      saveCookieExpTimestamp({commit}, cookieExpTimestamp) {
+
+        console.log('init the saveCookieExpTimestamp action from vuex');
+        console.log('cookieExpTimestamp: ' + cookieExpTimestamp);
+
+        commit('setCookieExpTime', cookieExpTimestamp);
 
       }
   }

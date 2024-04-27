@@ -25,17 +25,30 @@
 
 <script>
 
-    import { Modal } from 'bootstrap'
+    import { Modal } from 'bootstrap';
+    import { mapActions, mapState } from 'vuex';
 
     export default {
         
         name: 'SessionExpirationModal',
 
+        computed: {
+
+            ...mapState(['cookieExpTimestamp', 'activeModal']),
+
+        },
+
+        async mounted() {
+            
+            this.calculateTokenExpiration();
+
+        },
+
         methods: {
             
             triggerModal() {
 
-                console.log('init trigger modal')
+                console.log('init trigger modal');
 
                 let myModal = new Modal(document.getElementById('session-expire'));
                 myModal.show();
@@ -48,6 +61,13 @@
                     et le moment ou la pop up doit s'afficher la pop up se crée plusieurs fois dans le code. 
 
                 */
+
+            },
+
+            calculateTokenExpiration() {
+
+                console.log('init calculateTokenExpiration()');
+                console.log('cookieExpTimestamp: ' + this.cookieExpTimestamp);
 
             }
 

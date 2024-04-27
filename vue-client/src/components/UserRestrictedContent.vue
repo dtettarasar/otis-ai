@@ -68,7 +68,7 @@
 
         methods: {
 
-            ...mapActions(['updateUserLoggedIn', 'saveUserInfo']),
+            ...mapActions(['updateUserLoggedIn', 'saveUserInfo', 'saveCookieExpTimestamp']),
 
             async fetchData() {
 
@@ -88,7 +88,7 @@
                         console.log('response.data');
                         console.log(response.data);
 
-                        this.expTimestamp = response.data.result.exp;
+                        //this.expTimestamp = response.data.result.exp;
 
                         this.loginStatus = response.data.status;
 
@@ -96,6 +96,7 @@
 
                             // Save the intial user info in the vuex store
                             this.getUserInitialData(response.data.result.userIdEncryption);
+                            this.saveCookieExpTimestamp(response.data.result.exp);
 
                         } 
 
