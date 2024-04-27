@@ -1,12 +1,6 @@
-<script>
-
-export default {
-        name: 'SessionExpirationModal',
-}
-
-</script>
-
 <template>
+
+    <a @click="triggerModal()">test trigger modal</a>
 
     <!-- Modal -->
     <div class="modal fade" id="session-expire" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -28,3 +22,37 @@ export default {
     </div>
 
 </template>
+
+<script>
+
+    import { Modal } from 'bootstrap'
+
+    export default {
+        
+        name: 'SessionExpirationModal',
+
+        methods: {
+            
+            triggerModal() {
+
+                console.log('init trigger modal')
+
+                let myModal = new Modal(document.getElementById('session-expire'));
+                myModal.show();
+
+                // Todo : track the active modal in the vuex store
+                /* 
+                    
+                    Utiliser le state activeModal dans le store pour tracker si la pop up est déjà active.
+                    Car pour le moment à chaque fois qu'on change de page entre le moment oul'on est connecté
+                    et le moment ou la pop up doit s'afficher la pop up se crée plusieurs fois dans le code. 
+
+                */
+
+            }
+
+        }
+
+    }
+
+</script>
