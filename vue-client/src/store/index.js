@@ -24,10 +24,12 @@ export default createStore({
       userInitialInfoSaved: false,
       credit: 0,
       activeModal: null,
-      cookieExpTimestamp: 0
+      cookieExpTimestamp: 0,
+      sessionCountdownTriggered: false
   },
   getters: {
-    getCookieExpTimestamp: state => state.cookieExpTimestamp
+    getCookieExpTimestamp: state => state.cookieExpTimestamp,
+    getSessionCountdownTriggered: state => state.sessionCountdownTriggered
   },
   // Fait l'intermédiaire entre actions et state
   mutations: {
@@ -60,6 +62,10 @@ export default createStore({
       setCookieExpTime(state, cookieExpTimestamp) {
         state.cookieExpTimestamp = cookieExpTimestamp;
         console.log("setCookieExpTime saved: " + state.cookieExpTimestamp);
+      }, 
+
+      setSessionCountdown(state, sessionCountdownTriggered) {
+        state.sessionCountdownTriggered = sessionCountdownTriggered;
       }
 
   },
@@ -114,6 +120,12 @@ export default createStore({
         console.log('cookieExpTimestamp: ' + cookieExpTimestamp);
 
         commit('setCookieExpTime', cookieExpTimestamp);
+
+      },
+
+      setSessionCountdown({commit}, sessionCountdownTriggered) {
+
+        commit('setSessionCountdown', sessionCountdownTriggered); 
 
       }
   }

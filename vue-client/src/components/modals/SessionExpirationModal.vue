@@ -43,7 +43,7 @@
         computed: {
 
             ...mapState(['activeModal', 'userLoggedIn']),
-            ...mapGetters(['getCookieExpTimestamp'])
+            ...mapGetters(['getCookieExpTimestamp', 'getSessionCountdownTriggered'])
 
         },
 
@@ -55,6 +55,8 @@
         },
 
         methods: {
+
+            ...mapActions(['setSessionCountdown']),
             
             triggerModal() {
 
@@ -79,6 +81,7 @@
                 console.log('init calculateTokenExpiration()');
                 console.log('cookieExpTimestamp: ' + this.getCookieExpTimestamp);
                 console.log('userLoggedIn: ' + this.userLoggedIn);
+                console.log('sessionCountdownTriggered: ' + this.getSessionCountdownTriggered );
 
                 // Méthode a utiliser pour calculer le délai avant l'expiration du token pour afficher le modal
                 // Modal qui permettra à l'utilisateur de se déconnecter ou de rester connecté (en utilisant le refresh token pour accéder un nouveau access token)
@@ -101,9 +104,11 @@
                     console.log('activate the modal!');
                     this.triggerModal();
 
-                } else if (timeRemaining > 0 && !this.countdownInterval) {
+                } else if (timeRemaining > 0 && !this.countdownInterval && !this.getSessionCountdownTriggered) {
 
                     // Si le temps restant est positif et que l'on n'a pas encore lancé le countdown, on le démarre
+
+                    this.setSessionCountdown(true);
     
                     console.log("Modal à afficher dans " + timeRemaining + " secondes.");
 
