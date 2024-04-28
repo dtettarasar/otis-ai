@@ -26,6 +26,9 @@ export default createStore({
       activeModal: null,
       cookieExpTimestamp: 0
   },
+  getters: {
+    getCookieExpTimestamp: state => state.cookieExpTimestamp
+  },
   // Fait l'intermédiaire entre actions et state
   mutations: {
 

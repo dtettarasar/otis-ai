@@ -11,7 +11,9 @@
         <!-- Ou sinon créer un composant à part pour gérer la pop up, que l'on pourra utiliser sur toutes les pages -->
     </div>
 
-    <SessionExpirationModal></SessionExpirationModal>
+    <div v-if="this.getCookieExpTimestamp" >
+        <SessionExpirationModal></SessionExpirationModal>
+    </div>
 
 </template>
 
@@ -19,7 +21,7 @@
 
     import { Modal } from 'bootstrap'
     import axios from 'axios';
-    import { mapActions, mapState } from 'vuex';
+    import { mapActions, mapState, mapGetters } from 'vuex';
     
     import { axiosInstance } from '@/custom_modules/createAxiosInstance.js';
     import SessionExpirationModal from '@/components/modals/SessionExpirationModal.vue';
@@ -49,6 +51,8 @@
 
             ...mapState(['username', 'credit', 'userLoggedIn', 'userInitialInfoSaved']),
 
+            ...mapGetters(['getCookieExpTimestamp']),
+
             loginBackEndUrl() {
                 return this.$backendUrl + 'front-api/user-auth';
             },
@@ -63,6 +67,7 @@
             
             await this.fetchData();
             //this.calculateTokenExpiration();
+            console.log('cookieExpTimestamp from getter (UserRestrictedContent component):', this.getCookieExpTimestamp);
 
         },
 

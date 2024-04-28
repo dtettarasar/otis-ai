@@ -26,7 +26,7 @@
 <script>
 
     import { Modal } from 'bootstrap';
-    import { mapActions, mapState } from 'vuex';
+    import { mapActions, mapState, mapGetters } from 'vuex';
 
     export default {
         
@@ -34,13 +34,15 @@
 
         computed: {
 
-            ...mapState(['cookieExpTimestamp', 'activeModal']),
+            ...mapState(['cookieExpTimestamp', 'activeModal', 'userLoggedIn']),
+            ...mapGetters(['getCookieExpTimestamp'])
 
         },
 
         async mounted() {
             
-            this.calculateTokenExpiration();
+            await this.calculateTokenExpiration();
+            console.log('cookieExpTimestamp from getter (SessionExpirationModal component):', this.getCookieExpTimestamp);
 
         },
 
@@ -68,6 +70,7 @@
 
                 console.log('init calculateTokenExpiration()');
                 console.log('cookieExpTimestamp: ' + this.cookieExpTimestamp);
+                console.log('userLoggedIn: ' + this.userLoggedIn);
 
             }
 
