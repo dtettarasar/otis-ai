@@ -27,6 +27,7 @@
 
     import { Modal } from 'bootstrap';
     import { mapActions, mapState, mapGetters } from 'vuex';
+    import { initLogout } from '@/custom_modules/logoutSession';
 
     export default {
         
@@ -57,6 +58,10 @@
         methods: {
 
             ...mapActions(['setSessionCountdown']),
+
+            logout() {
+                initLogout();
+            },
             
             triggerModal() {
 
@@ -99,7 +104,16 @@
                 const timeRemaining = modalTimestamp - currentTime;
                 console.log("timeRemaining: " + timeRemaining);
 
-                if (timeRemaining < 0) {
+                const timeBeforeSessionExp = this.getCookieExpTimestamp - currentTime;
+
+                /*
+                if (timeBeforeSessionExp === 0) {
+                    this.logout;
+                }*/
+
+                console.log("timeBeforeSessionExp: " + timeBeforeSessionExp);
+
+                if (timeRemaining <= 0) {
 
                     console.log('activate the modal!');
                     this.triggerModal();
@@ -107,6 +121,9 @@
                 } else if (timeRemaining > 0 && !this.countdownInterval && !this.getSessionCountdownTriggered) {
 
                     // Si le temps restant est positif et que l'on n'a pas encore lancé le countdown, on le démarre
+
+                    // todo : updater le countdown pour qu'il aille jusqu'au délai d'expiration, pour qu'à la fin on puisse initier le logout.
+                    // actuellement, le setInterval va s'arrêter une fois le délai atteint avant affichage du modal.
 
                     this.setSessionCountdown(true);
     
@@ -119,12 +136,14 @@
                         //console.log("Modal à afficher dans " + countdown + " secondes.");
 
                         if (countdown <= 0) {
+
                             clearInterval(this.countdownInterval);
                             this.countdownInterval = null;
                             console.log('activate the modal!');
                             this.triggerModal();
-                        }
 
+                        }
+ 
                     }, 1000); // Rafraîchit toutes les secondes
 
                     //console.log(currentTime);
