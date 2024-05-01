@@ -99,7 +99,7 @@
                 const timeRemaining = modalTimestamp - currentTime;
                 console.log("timeRemaining: " + timeRemaining);
 
-                if (timeRemaining <= 0) {
+                if (timeRemaining < 0) {
 
                     console.log('activate the modal!');
                     this.triggerModal();
