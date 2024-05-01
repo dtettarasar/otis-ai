@@ -1,16 +1,14 @@
 <template>
 
-    <a @click="triggerModal()">test trigger modal</a>
-
     <!-- Modal -->
     <div class="modal fade" id="session-expire" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Still there?</h1>
             </div>
             <div class="modal-body">
-                ...
+                <p> For security, we'll suspend your session. If you don't click on "Continue Working" within approximately 30 seconds, we log you out.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary">Continue Working</button>
@@ -19,7 +17,6 @@
             </div>
         </div>
     </div>
-
 
 </template>
 
@@ -55,6 +52,10 @@
 
             timeBeforeSessionExp() {
                 return this.getCookieExpTimestamp - this.getCurrentTime();
+            },
+
+            countdownToDispModal() {
+                return this.getCookieExpTimestamp - this.delayToDispModal - this.getCurrentTime();
             }
 
         },
@@ -76,6 +77,14 @@
 
             getCurrentTime() {
                 return Math.floor(Date.now() / 1000);
+            },
+
+            getCountdownToDispModal() {
+                return this.getCookieExpTimestamp - this.delayToDispModal - this.getCurrentTime();
+            },
+
+            getCountdownToEndSession() {
+                return this.getCookieExpTimestamp - this.getCurrentTime();
             },
             
             triggerModal() {
@@ -100,12 +109,6 @@
 
             calculateTokenExpiration() {
 
-                console.log('init calculateTokenExpiration()');
-                // console.log('cookieExpTimestamp: ' + this.getCookieExpTimestamp);
-                // console.log('userLoggedIn: ' + this.userLoggedIn);
-                // console.log('sessionCountdownTriggered: ' + this.getSessionCountdownTriggered );
-                // console.log('token expiration: ' + this.getCookieExpTimestamp);
-
                 // Méthode a utiliser pour calculer le délai avant l'expiration du token pour afficher le modal
                 // Modal qui permettra à l'utilisateur de se déconnecter ou de rester connecté (en utilisant le refresh token pour accéder un nouveau access token)
                 
@@ -128,19 +131,16 @@
 
                     this.countdownInterval = setInterval(() => {
 
-                        const countdownToDispModal = this.getCookieExpTimestamp - this.delayToDispModal - this.getCurrentTime();
-                        const countdownToEndSession = this.getCookieExpTimestamp - this.getCurrentTime();
+                        console.log("Modal à afficher dans " + this.getCountdownToDispModal() + " secondes.");
+                        console.log('La session se cloture dans ' + this.getCountdownToEndSession() + " secondes.");
 
-                        console.log("Modal à afficher dans " + countdownToDispModal + " secondes.");
-                        console.log('La session se cloture dans ' + countdownToEndSession + " secondes.");
-
-                        if (countdownToDispModal <= 0 && !this.modalTriggered) {
+                        if (this.getCountdownToDispModal() <= 0 && !this.modalTriggered) {
 
                             this.triggerModal();
 
                         }
 
-                        if (countdownToEndSession <= 0) {
+                        if (this.getCountdownToEndSession() <= 0) {
 
                             clearInterval(this.countdownInterval);
                             this.countdownInterval = null;
