@@ -1,14 +1,14 @@
 <script>
 
   import PageTitle from '@/components/PageTitle.vue';
-  import UserRestrictedContent from '@/components/UserRestrictedContent.vue';
+  import UserAccessControl from '@/components/UserAccessControl.vue';
   import CreateArticleContent from '@/components/page_main_containers/CreateArticleContent.vue'
 
   export default {
     name: 'CreateArticleView',
     components: {
       PageTitle,
-      UserRestrictedContent,
+      UserAccessControl,
       CreateArticleContent
     }
 
@@ -19,8 +19,8 @@
 <template>
   <main>
     <PageTitle txtValue="Create article Page"></PageTitle>
-    <UserRestrictedContent v-bind:loginRequired="true">
+    <UserAccessControl v-bind:loginRequired="true">
       <CreateArticleContent></CreateArticleContent>
-    </UserRestrictedContent>
+    </UserAccessControl>
   </main>
 </template>

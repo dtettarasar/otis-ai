@@ -32,7 +32,7 @@
 
     export default {
 
-        name: 'UserRestrictedContent',
+        name: 'UserAccessControl',
 
         props: {
             loginRequired: {

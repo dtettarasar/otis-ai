@@ -2,13 +2,13 @@
 
   import PageTitle from '@/components/PageTitle.vue';
   import EditArticleContent from '@/components/page_main_containers/EditArticleContent.vue';
-  import UserRestrictedContent from '@/components/UserRestrictedContent.vue';
+  import UserAccessControl from '@/components/UserAccessControl.vue';
 
   export default {
     name: 'EditArticleView',
     components: {
       PageTitle,
-      UserRestrictedContent,
+      UserAccessControl,
       EditArticleContent
     }
 
@@ -19,8 +19,8 @@
 <template>
   <main>
     <PageTitle txtValue="Edit article Page"></PageTitle>
-    <UserRestrictedContent v-bind:loginRequired="true">
+    <UserAccessControl v-bind:loginRequired="true">
       <EditArticleContent></EditArticleContent>
-    </UserRestrictedContent>
+    </UserAccessControl>
   </main>
 </template>

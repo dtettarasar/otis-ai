@@ -2,14 +2,14 @@
 
   import PageTitle from '@/components/PageTitle.vue';
   import UserAccountContent from '@/components/page_main_containers/UserAccountContent.vue';
-  import UserRestrictedContent from '@/components/UserRestrictedContent.vue';
+  import UserAccessControl from '@/components/UserAccessControl.vue';
 
   export default {
     name: 'UserAccountView',
     components: {
       PageTitle,
       UserAccountContent,
-      UserRestrictedContent
+      UserAccessControl
     }
 
   };
@@ -19,8 +19,8 @@
 <template>
   <main>
     <PageTitle txtValue="User Account Page"></PageTitle>
-    <UserRestrictedContent v-bind:loginRequired="true">
+    <UserAccessControl v-bind:loginRequired="true">
       <UserAccountContent></UserAccountContent>
-    </UserRestrictedContent>
+    </UserAccessControl>
   </main>
 </template>

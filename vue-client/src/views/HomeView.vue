@@ -1,7 +1,7 @@
 <script>
 
   import PageTitle from '@/components/PageTitle.vue';
-  import UserRestrictedContent from '@/components/UserRestrictedContent.vue';
+  import UserAccessControl from '@/components/UserAccessControl.vue';
   import HomeContent from '@/components/page_main_containers/HomeContent.vue';
 
   export default {
@@ -9,7 +9,7 @@
 
     components: {
       PageTitle,
-      UserRestrictedContent,
+      UserAccessControl,
       HomeContent,
     }
 
@@ -20,9 +20,9 @@
 <template>
   <main>
     <PageTitle txtValue="Home Page"></PageTitle>
-    <UserRestrictedContent v-bind:loginRequired="false">
+    <UserAccessControl v-bind:loginRequired="false">
       <HomeContent></HomeContent>
-    </UserRestrictedContent>
+    </UserAccessControl>
   </main>
 </template>
 
