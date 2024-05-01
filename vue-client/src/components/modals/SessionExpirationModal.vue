@@ -4,16 +4,16 @@
     <div class="modal fade" id="session-expire" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Still there?</h1>
-            </div>
-            <div class="modal-body">
-                <p> For security, we'll suspend your session. If you don't click on "Continue Working" within approximately 30 seconds, we log you out.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary">Continue Working</button>
-                <button v-on:click="logout" type="button" class="btn btn-primary">Log Out</button>
-            </div>
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Still there?</h1>
+                </div>
+                <div class="modal-body">
+                    <p> For security, we'll suspend your session. If you don't click on "Continue Working" within approximately 30 seconds, we log you out.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary">Continue Working</button>
+                    <button v-on:click="logout" type="button" class="btn btn-primary">Log Out</button>
+                </div>
             </div>
         </div>
     </div>
@@ -95,7 +95,7 @@
 
                     let myModal = new Modal(document.getElementById('session-expire'));
                     myModal.show();
-                    
+
                 }
 
                 this.modalTriggered = true;
