@@ -110,13 +110,13 @@
 
                     this.setSessionCountdown(true);
     
-                    console.log("Modal à afficher dans " + timeRemaining + " secondes.");
+                    //console.log("Modal à afficher dans " + timeRemaining + " secondes.");
 
                     this.countdownInterval = setInterval(() => {
 
                         const countdown = modalTimestamp - Math.floor(Date.now() / 1000);
 
-                        console.log("Modal à afficher dans " + countdown + " secondes.");
+                        //console.log("Modal à afficher dans " + countdown + " secondes.");
 
                         if (countdown <= 0) {
                             clearInterval(this.countdownInterval);

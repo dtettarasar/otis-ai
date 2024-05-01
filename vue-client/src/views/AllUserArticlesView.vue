@@ -18,7 +18,7 @@
 <template>
   <main>
     <PageTitle txtValue="All user articles Page"></PageTitle>
-    <UserRestrictedContent>
+    <UserRestrictedContent v-bind:loginRequired="true">
       <AllUserArticlesContent></AllUserArticlesContent>
     </UserRestrictedContent>
   </main>

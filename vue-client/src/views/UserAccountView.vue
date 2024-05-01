@@ -19,7 +19,7 @@
 <template>
   <main>
     <PageTitle txtValue="User Account Page"></PageTitle>
-    <UserRestrictedContent>
+    <UserRestrictedContent v-bind:loginRequired="true">
       <UserAccountContent></UserAccountContent>
     </UserRestrictedContent>
   </main>

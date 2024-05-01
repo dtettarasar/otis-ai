@@ -1,14 +1,17 @@
 <template>
 
-    <div v-if="!this.loginStatus">
-        You must be logged in to access this page
-    </div>
+    <div v-if="this.loginRequired === true && this.loginStatus === false">
+        
+        <p>You must be logged in to access this page</p>
 
-    <div v-else>
-        <slot></slot>
         <!-- Pour les composants 'page main containers' faire en sorte que l'on pass un props bool 'login required'. -->
         <!-- Et utiliser le composant UserRestricted Content sur chaque view, cela permettra de pouvoir afficher la pop up d'alerte de fin de session sur les pages publiques si besoin, pour les utilisateurs connectés -->
         <!-- Ou sinon créer un composant à part pour gérer la pop up, que l'on pourra utiliser sur toutes les pages -->
+    </div>
+
+    <div v-else-if="this.loginRequired === true && this.loginStatus === true || this.loginRequired === false">
+        <slot></slot>
+
     </div>
 
     <div v-if="this.getCookieExpTimestamp" >
@@ -30,6 +33,13 @@
     export default {
 
         name: 'UserRestrictedContent',
+
+        props: {
+            loginRequired: {
+                type: Boolean,
+                required: true
+            }
+        },
 
         components: {
             SessionExpirationModal
@@ -64,8 +74,12 @@
         async mounted() {
             
             await this.fetchData();
-            console.log('cookieExpTimestamp from getter (UserRestrictedContent component):', this.getCookieExpTimestamp);
+            //console.log('cookieExpTimestamp from getter (UserRestrictedContent component):', this.getCookieExpTimestamp);
 
+        },
+
+        beforeCreate() {
+            
         },
 
         methods: {

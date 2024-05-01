@@ -19,7 +19,7 @@
 <template>
   <main>
     <PageTitle txtValue="Edit article Page"></PageTitle>
-    <UserRestrictedContent>
+    <UserRestrictedContent v-bind:loginRequired="true">
       <EditArticleContent></EditArticleContent>
     </UserRestrictedContent>
   </main>
