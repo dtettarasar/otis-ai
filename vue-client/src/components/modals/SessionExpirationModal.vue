@@ -3,23 +3,23 @@
     <a @click="triggerModal()">test trigger modal</a>
 
     <!-- Modal -->
-    <div class="modal fade" id="session-expire" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="session-expire" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
             </div>
             <div class="modal-body">
                 ...
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary">Continue Working</button>
+                <button v-on:click="logout" type="button" class="btn btn-primary">Log Out</button>
             </div>
             </div>
         </div>
     </div>
+
 
 </template>
 
@@ -34,9 +34,11 @@
         name: 'SessionExpirationModal',
 
         data() {
-
+            
             return {
-                countdownInterval: null
+                countdownInterval: null,
+                delayToDispModal: 30,
+                modalTriggered: false
             }
 
         },
@@ -44,7 +46,16 @@
         computed: {
 
             ...mapState(['activeModal', 'userLoggedIn']),
-            ...mapGetters(['getCookieExpTimestamp', 'getSessionCountdownTriggered'])
+
+            ...mapGetters(['getCookieExpTimestamp', 'getSessionCountdownTriggered']),
+
+            timeBeforeModalDisplay() {
+                return this.getCookieExpTimestamp - this.delayToDispModal - this.getCurrentTime();
+            },
+
+            timeBeforeSessionExp() {
+                return this.getCookieExpTimestamp - this.getCurrentTime();
+            }
 
         },
 
@@ -62,12 +73,18 @@
             logout() {
                 initLogout();
             },
+
+            getCurrentTime() {
+                return Math.floor(Date.now() / 1000);
+            },
             
             triggerModal() {
 
                 console.log('init trigger modal');
 
                 let myModal = new Modal(document.getElementById('session-expire'));
+                this.modalTriggered = true;
+                console.log('this.modalTriggered: ' + this.modalTriggered);
                 myModal.show();
 
                 // Todo : track the active modal in the vuex store
@@ -84,69 +101,54 @@
             calculateTokenExpiration() {
 
                 console.log('init calculateTokenExpiration()');
-                console.log('cookieExpTimestamp: ' + this.getCookieExpTimestamp);
-                console.log('userLoggedIn: ' + this.userLoggedIn);
-                console.log('sessionCountdownTriggered: ' + this.getSessionCountdownTriggered );
+                // console.log('cookieExpTimestamp: ' + this.getCookieExpTimestamp);
+                // console.log('userLoggedIn: ' + this.userLoggedIn);
+                // console.log('sessionCountdownTriggered: ' + this.getSessionCountdownTriggered );
+                // console.log('token expiration: ' + this.getCookieExpTimestamp);
 
                 // Méthode a utiliser pour calculer le délai avant l'expiration du token pour afficher le modal
                 // Modal qui permettra à l'utilisateur de se déconnecter ou de rester connecté (en utilisant le refresh token pour accéder un nouveau access token)
+                
+                console.log("timeBeforeModalDisplay: " + this.timeBeforeModalDisplay);
 
-                console.log('init calculateTokenExpiration method');
-                console.log('token expiration: ' + this.getCookieExpTimestamp);
+                console.log("timeBeforeSessionExp: " + this.timeBeforeSessionExp);
 
-                // Délai à ajouter avant l'expiration du token. Permet d'afficher le modal pendant un temps donné, avant l'expiration du token et la deconnexion automatique de l'utilisateur.
-                const timeToModal = 30;
-
-                const modalTimestamp = this.getCookieExpTimestamp - timeToModal;
-
-                // Calcul du temps restant en secondes
-                const currentTime = Math.floor(Date.now() / 1000); // Timestamp actuel en secondes
-                const timeRemaining = modalTimestamp - currentTime;
-                console.log("timeRemaining: " + timeRemaining);
-
-                const timeBeforeSessionExp = this.getCookieExpTimestamp - currentTime;
-
-                /*
-                if (timeBeforeSessionExp === 0) {
-                    this.logout;
-                }*/
-
-                console.log("timeBeforeSessionExp: " + timeBeforeSessionExp);
-
-                if (timeRemaining <= 0) {
+                if (this.timeBeforeModalDisplay <= 0 && !this.modalTriggered) {
 
                     console.log('activate the modal!');
                     this.triggerModal();
 
-                } else if (timeRemaining > 0 && !this.countdownInterval && !this.getSessionCountdownTriggered) {
+                }
+                
+                if (this.timeBeforeSessionExp > 0 && !this.countdownInterval && !this.getSessionCountdownTriggered) {
 
-                    // Si le temps restant est positif et que l'on n'a pas encore lancé le countdown, on le démarre
-
-                    // todo : updater le countdown pour qu'il aille jusqu'au délai d'expiration, pour qu'à la fin on puisse initier le logout.
-                    // actuellement, le setInterval va s'arrêter une fois le délai atteint avant affichage du modal.
+                    // Si le temps restant est positif et que l'on n'a pas encore lancé le countdown, on le démarre.
 
                     this.setSessionCountdown(true);
-    
-                    //console.log("Modal à afficher dans " + timeRemaining + " secondes.");
 
                     this.countdownInterval = setInterval(() => {
 
-                        const countdown = modalTimestamp - Math.floor(Date.now() / 1000);
+                        const countdownToDispModal = this.getCookieExpTimestamp - this.delayToDispModal - this.getCurrentTime();
+                        const countdownToEndSession = this.getCookieExpTimestamp - this.getCurrentTime();
 
-                        //console.log("Modal à afficher dans " + countdown + " secondes.");
+                        console.log("Modal à afficher dans " + countdownToDispModal + " secondes.");
+                        console.log('La session se cloture dans ' + countdownToEndSession + " secondes.");
 
-                        if (countdown <= 0) {
+                        if (countdownToDispModal <= 0 && !this.modalTriggered) {
+
+                            this.triggerModal();
+
+                        }
+
+                        if (countdownToEndSession <= 0) {
 
                             clearInterval(this.countdownInterval);
                             this.countdownInterval = null;
-                            console.log('activate the modal!');
-                            this.triggerModal();
+                            this.logout();
 
                         }
  
                     }, 1000); // Rafraîchit toutes les secondes
-
-                    //console.log(currentTime);
 
                 }
 
