@@ -91,10 +91,15 @@
 
                 console.log('init trigger modal');
 
-                let myModal = new Modal(document.getElementById('session-expire'));
+                if (!this.modalTriggered) {
+
+                    let myModal = new Modal(document.getElementById('session-expire'));
+                    myModal.show();
+                    
+                }
+
                 this.modalTriggered = true;
                 console.log('this.modalTriggered: ' + this.modalTriggered);
-                myModal.show();
 
                 // Todo : track the active modal in the vuex store
                 /* 
