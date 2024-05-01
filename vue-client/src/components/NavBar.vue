@@ -19,7 +19,7 @@
                         <router-link v-if="this.userLoggedIn" class="nav-link" to="/user-account">User Account</router-link>
                         <router-link v-if="!this.userLoggedIn" class="nav-link" to="/login">Login</router-link>
                         <router-link v-if="!this.userLoggedIn" class="nav-link" to="/register">Register</router-link>
-                        <a v-on:click="initLoggout" href="#" v-if="this.userLoggedIn" class="nav-link" >Loggout</a>
+                        <a v-on:click="logout" href="#" v-if="this.userLoggedIn" class="nav-link" >Loggout</a>
 
                     </div>
                 </div>
@@ -32,7 +32,7 @@
 <script>
 
     import { mapState } from 'vuex';
-    import Cookies from 'js-cookie';
+    import { initLogout } from '@/custom_modules/logoutSession';
 
     export default {
         
@@ -46,14 +46,8 @@
 
         methods: {
 
-            initLoggout () {
-                
-                //console.log('init the user loggout method');
-
-                Cookies.remove('accessToken');
-                Cookies.remove('refreshToken');
-                window.location.href = '/';
-
+            logout() {
+                initLogout();
             }
 
         }
