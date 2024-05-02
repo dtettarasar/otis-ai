@@ -23,6 +23,7 @@
 <script>
 
     import axios from 'axios';
+    import Cookies from 'js-cookie';
     import { mapActions, mapState, mapGetters } from 'vuex';
     
     import { axiosInstance } from '@/custom_modules/createAxiosInstance.js';
@@ -90,48 +91,39 @@
 
                 console.log('init fetch data');
 
-                /*
-                console.log('check in the store the existing values:');
-                console.log('username: ' + this.username);
-                console.log('userLoggedIn: ' + this.userLoggedIn);
-                */
+                const accessToken = Cookies.get('accessToken');
+                console.log("accessToken in fetch data: " + accessToken);
 
-                // get the data from the user token
-                await axiosInstance.get(this.loginBackEndUrl)
-                    .then(response => {
+                // Création d'une instance Axios avec le token actuel
+                const axiosWithAuth = axiosInstance(accessToken);
 
+                try {
+
+                    const response = await axiosWithAuth.get(this.loginBackEndUrl);
+                    
+                    console.log('response.data');
+                    console.log(response.data);
+
+                    this.loginStatus = response.data.status;
+
+                    if (this.loginStatus && !this.userInitialInfoSaved) {
+
+                        this.getUserInitialData(response.data.result.userIdEncryption);
+                        this.saveCookieExpTimestamp(response.data.result.exp);
+
+                    }
+
+                    if (this.loginStatus !== this.userLoggedIn) {
+
+                        this.updateUserLoggedIn(this.loginStatus);
                         
-                        console.log('response.data');
-                        console.log(response.data);
+                    }
 
-                        //this.expTimestamp = response.data.result.exp;
+                } catch(err) {
 
-                        this.loginStatus = response.data.status;
+                    console.error(err);
 
-                        if (this.loginStatus && !this.userInitialInfoSaved) {
-
-                            // Save the intial user info in the vuex store
-                            this.getUserInitialData(response.data.result.userIdEncryption);
-                            this.saveCookieExpTimestamp(response.data.result.exp);
-
-                        } 
-
-                        /*
-                        - Track the login status
-                        - this.loginStatus correspond to the values we get from the backend, based on the token's validity
-                        - this.userLoggedIn is used to track the login in the vuex store to manipulate vue components
-                        */
-                        if (this.loginStatus !== this.userLoggedIn) {
-
-                            this.updateUserLoggedIn(this.loginStatus);
-
-                        }
-
-
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
+                }
             
             },
 
