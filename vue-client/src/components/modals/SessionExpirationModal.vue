@@ -25,7 +25,10 @@
 
     import { Modal } from 'bootstrap';
     import { mapActions, mapState, mapGetters } from 'vuex';
+    import Cookies from 'js-cookie';
+
     import { initLogout } from '@/custom_modules/logoutSession';
+    import { axiosInstance } from '@/custom_modules/createAxiosInstance.js';
 
     export default {
         
@@ -57,6 +60,10 @@
 
             countdownToDispModal() {
                 return this.getCookieExpTimestamp - this.delayToDispModal - this.getCurrentTime();
+            },
+
+            refreshTokenUrl() {
+                return this.$backendUrl + 'front-api/refresh-token';
             }
 
         },
@@ -155,8 +162,31 @@
 
             },
 
-            refreshToken() {
+            async refreshToken() {
+
                 console.log('init refresh token session');
+                console.log('refreshTokenUrl: ' + this.refreshTokenUrl);
+
+                const refreshToken = Cookies.get('refreshToken');
+                console.log("refreshToken: " + refreshToken);
+
+                // Création d'une instance Axios avec le refresh token actuel
+                const axiosWithAuth = axiosInstance(refreshToken);
+
+                try {
+
+                    const response = await axiosWithAuth.get(this.refreshTokenUrl);
+
+                    console.log('response.data');
+                    console.log(response.data);
+
+
+                } catch(err) {
+
+                    console.error(err);
+
+                }
+
             }
 
         }

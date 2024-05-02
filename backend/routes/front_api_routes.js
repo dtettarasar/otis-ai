@@ -64,6 +64,18 @@ router.get('/user-auth', async (req, res) => {
 
 });
 
+router.get('/refresh-token', async (req, res) => {
+
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    res.json({
+        responsefromApi: 'ok',
+        tokenReceivedInBackend: token
+    });
+
+});
+
 router.get('/user-datas', async (req, res) => {
 
     console.log('got request for user-datas route');

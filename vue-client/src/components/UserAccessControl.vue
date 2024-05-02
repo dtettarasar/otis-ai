@@ -89,10 +89,10 @@
 
             async fetchData() {
 
-                console.log('init fetch data');
+                // console.log('init fetch data');
 
                 const accessToken = Cookies.get('accessToken');
-                console.log("accessToken in fetch data: " + accessToken);
+                // console.log("accessToken in fetch data: " + accessToken);
 
                 // Création d'une instance Axios avec le token actuel
                 const axiosWithAuth = axiosInstance(accessToken);
@@ -101,8 +101,8 @@
 
                     const response = await axiosWithAuth.get(this.loginBackEndUrl);
                     
-                    console.log('response.data');
-                    console.log(response.data);
+                    // console.log('response.data');
+                    // console.log(response.data);
 
                     this.loginStatus = response.data.status;
 
