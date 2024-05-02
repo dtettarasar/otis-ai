@@ -5,13 +5,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Still there?</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Session expire warning</h1>
                 </div>
                 <div class="modal-body">
-                    <p> For security, we'll suspend your session. If you don't click on "Continue Working" within approximately 30 seconds, we log you out.</p>
+                    <p>For security, your session will expire in 30 seconds.</p>
+                    <p>Do you want to extend the session?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary">Continue Working</button>
+                    <button v-on:click="refreshToken" type="button" class="btn btn-secondary">Extend my session</button>
                     <button v-on:click="logout" type="button" class="btn btn-primary">Log Out</button>
                 </div>
             </div>
@@ -63,7 +64,6 @@
         async mounted() {
             
             await this.calculateTokenExpiration();
-            console.log('cookieExpTimestamp from getter (SessionExpirationModal component):', this.getCookieExpTimestamp);
 
         },
 
@@ -118,7 +118,6 @@
                 // Modal qui permettra à l'utilisateur de se déconnecter ou de rester connecté (en utilisant le refresh token pour accéder un nouveau access token)
                 
                 console.log("timeBeforeModalDisplay: " + this.timeBeforeModalDisplay);
-
                 console.log("timeBeforeSessionExp: " + this.timeBeforeSessionExp);
 
                 if (this.timeBeforeModalDisplay <= 0 && !this.modalTriggered) {
@@ -135,9 +134,6 @@
                     this.setSessionCountdown(true);
 
                     this.countdownInterval = setInterval(() => {
-
-                        console.log("Modal à afficher dans " + this.getCountdownToDispModal() + " secondes.");
-                        console.log('La session se cloture dans ' + this.getCountdownToEndSession() + " secondes.");
 
                         if (this.getCountdownToDispModal() <= 0 && !this.modalTriggered) {
 
@@ -157,6 +153,10 @@
 
                 }
 
+            },
+
+            refreshToken() {
+                console.log('init refresh token session');
             }
 
         }
