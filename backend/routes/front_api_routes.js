@@ -58,8 +58,8 @@ router.get('/user-auth', async (req, res) => {
         delete tokenAuthentication.result._id;
     }
 
-    console.log('json sent to the vue app:')
-    console.log(tokenAuthentication);
+    //console.log('json sent to the vue app:')
+    //console.log(tokenAuthentication);
     res.json(tokenAuthentication);
 
 });
@@ -69,12 +69,30 @@ router.get('/refresh-token', async (req, res) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    const refreshTokenAuthentication =  userTokenObj.authRefreshToken(token, process.env.REFRESH_TOKEN_SECRET);
+    const refreshTokenAuthentication =  await userTokenObj.authRefreshToken(token, process.env.REFRESH_TOKEN_SECRET);
 
-    res.json({
-        responsefromApi: 'ok',
-        tokenReceivedInBackend: token
-    });
+    if (refreshTokenAuthentication.authSuccess) {
+
+        console.log('refreshTokenAuthentication: '); 
+        console.log(refreshTokenAuthentication);
+
+        const accessToken = await userTokenObj.createToken(refreshTokenAuthentication, process.env.ACCESS_TOKEN_SECRET, '2m');
+
+        res.json({
+            responsefromApi: 'ok',
+            tokenReceivedInBackend: token,
+            newToken: accessToken
+        });
+
+    } else {
+
+        res.json({
+            responsefromApi: 'error',
+            tokenReceivedInBackend: token,
+            newToken: false
+        });
+
+    }
 
 });
 

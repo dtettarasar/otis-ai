@@ -70,7 +70,7 @@ const userTokenObj = {
 
     authToken (token, secretKey) {
 
-        console.log('init authToken method')
+        //console.log('init authToken method');
 
         const authTokenObj = {
             token: token,
@@ -99,6 +99,11 @@ const userTokenObj = {
 
     async authRefreshToken(token, secretKey) {
 
+        const userLoginData = {
+            authSuccess: false,
+            userIdEncryption: {}
+        }
+
         console.log('init authRefreshToken method'); 
 
         const refreshTokenData = this.authToken(token, secretKey);
@@ -115,10 +120,23 @@ const userTokenObj = {
             console.log('decryptUserID: ' + decryptUserID);
 
             // check that the user exist in db
+
             const findUser = await dataBaseObj.findUserById(decryptUserID);
             console.log(findUser);
 
+            if (findUser) {
+
+                //console.log('user has been authenticated and still exist in DB');
+
+                userLoginData.authSuccess = true;
+                userLoginData.userIdEncryption = await strEncrypter.method.encryptString(decryptUserID);
+
+            } 
+
         }
+
+        //console.log(userLoginData);
+        return userLoginData;
 
     }
 
