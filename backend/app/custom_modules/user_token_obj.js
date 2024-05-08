@@ -105,6 +105,21 @@ const userTokenObj = {
         console.log('token data:')
         console.log(refreshTokenData);
 
+        if (refreshTokenData.status === true) {
+
+            const userIdObj = refreshTokenData.result.userIdEncryption;
+            console.log('userIdObj: ');
+            console.log(userIdObj);
+
+            const decryptUserID = await strEncrypter.method.decryptString(userIdObj);
+            console.log('decryptUserID: ' + decryptUserID);
+
+            // check that the user exist in db
+            const findUser = await dataBaseObj.findUserById(decryptUserID);
+            console.log(findUser);
+
+        }
+
     }
 
 
