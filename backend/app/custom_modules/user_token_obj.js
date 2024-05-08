@@ -4,6 +4,8 @@ const strEncrypter = require('./str_encrypter');
 const jwt = require("jsonwebtoken");
 const dataBaseObj = require('./database_obj');
 
+// todo : handle the expirationTime in .env file
+
 const userTokenObj = {
 
     async checkUserLogin(usernameToCheck, passwordToCheck) {
