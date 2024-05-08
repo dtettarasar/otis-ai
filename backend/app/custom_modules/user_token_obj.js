@@ -52,14 +52,8 @@ const userTokenObj = {
 
     async createToken (user, secretKey, expirationTime) {
 
-        //Get the user for which we create the token
+        // Get the user for which we create the token
         // Data filled by the user on the login form
-
-        /*
-        console.log('init createToken Method');
-        console.log('user data that will be recorded in the token:');
-        console.log(user);
-        */
 
         if (user) {
 
@@ -74,7 +68,7 @@ const userTokenObj = {
         }
     },
 
-    authToken (token) {
+    authToken (token, secretKey) {
 
         console.log('init authToken method')
 
@@ -86,27 +80,30 @@ const userTokenObj = {
 
         try {
 
-            const tokenVerification = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-            // todo : decrypt the user id contained in the token here.
+            const tokenVerification = jwt.verify(token, secretKey);
+            
             authTokenObj.status = true;
             authTokenObj.result = tokenVerification;
 
-            //console.log("AuthTokenObj:");
-            //console.log(authTokenObj);
-
         } catch(err) {
 
-            // console.log(err);
             authTokenObj.status = false;
             authTokenObj.result.name = err.name;
             authTokenObj.result.message = err.message;
 
         }
 
-        // console.log(authTokenObj);
-        // console.log('end of authToken method');
-
         return authTokenObj;
+
+    },
+
+    async authRefreshToken(token, secretKey) {
+
+        console.log('init authRefreshToken method'); 
+
+        const refreshTokenData = this.authToken(token, secretKey);
+        console.log('token data:')
+        console.log(refreshTokenData);
 
     }
 

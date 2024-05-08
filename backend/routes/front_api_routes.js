@@ -47,7 +47,7 @@ router.get('/user-auth', async (req, res) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    const tokenAuthentication =  userTokenObj.authToken(token);
+    const tokenAuthentication =  userTokenObj.authToken(token, process.env.ACCESS_TOKEN_SECRET);
 
     /*
     console.log('tokenAuthentication');
@@ -68,6 +68,8 @@ router.get('/refresh-token', async (req, res) => {
 
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
+
+    const refreshTokenAuthentication =  userTokenObj.authRefreshToken(token, process.env.REFRESH_TOKEN_SECRET);
 
     res.json({
         responsefromApi: 'ok',
