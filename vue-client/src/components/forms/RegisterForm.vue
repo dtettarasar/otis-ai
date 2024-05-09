@@ -92,18 +92,42 @@
             }
         },
         computed: {
+
             passwordsMatch() {
                 return this.user.pwd === this.user.pwdRepeat;
             },
+
             isPasswordSecure() {
                 const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
                 return regex.test(this.user.pwd);
+            },
+
+            registerBackEndUrl() {
+                return this.$backendUrl + 'front-api/user-create';
             }
+
         },
         methods: {
 
             async submitForm() {
-                console.log('init registration process');
+
+                console.log('init form submission');
+
+                if (this.passwordsMatch == false) {
+                    console.log('Error: password mismatch, form cannot create account');
+                } else if (this.isPasswordSecure == false) {
+                    console.log('Error: password isnt secure, form cannot create account');
+                } else {
+
+                    this.createUserReq();
+
+                }
+
+            },
+
+            async createUserReq() {
+
+                console.log("init createUserReq Method");
 
                 const dataToSend = {
                     username: this.user.name,
@@ -112,12 +136,6 @@
                 }
 
                 console.log(dataToSend);
-
-                if (this.passwordsMatch == false) {
-                    console.log('Error: password mismatch, form cannot create account');
-                } else if (this.isPasswordSecure == false) {
-                    console.log('Error: password isnt secure, form cannot create account');
-                }
 
             }
 
