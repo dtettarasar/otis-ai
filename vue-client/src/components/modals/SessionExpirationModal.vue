@@ -55,7 +55,7 @@
             },
 
             timeBeforeSessionExp() {
-                return this.getCookieExpTimestamp - this.getCurrentTime();
+                return this.getCountdownToEndSession();
             },
 
             countdownToDispModal() {
@@ -126,6 +126,7 @@
                 
                 console.log("timeBeforeModalDisplay: " + this.timeBeforeModalDisplay);
                 console.log("timeBeforeSessionExp: " + this.timeBeforeSessionExp);
+                console.log("getCountdownToEndSession(): " + this.getCountdownToEndSession());
 
                 if (this.timeBeforeModalDisplay <= 0 && !this.modalTriggered) {
 
@@ -134,7 +135,7 @@
 
                 }
                 
-                if (this.timeBeforeSessionExp > 0 && !this.countdownInterval && !this.getSessionCountdownTriggered) {
+                if (this.getCountdownToEndSession() > 0 && !this.countdownInterval && !this.getSessionCountdownTriggered) {
 
                     // Si le temps restant est positif et que l'on n'a pas encore lancé le countdown, on le démarre.
 
@@ -145,6 +146,11 @@
                         if (this.getCountdownToDispModal() <= 0 && !this.modalTriggered) {
 
                             this.triggerModal();
+
+                        } else if (this.modalTriggered) {
+
+                            console.log("getCountdownToEndSession(): " + this.getCountdownToEndSession());
+                            console.log("timeBeforeSessionExp(): " + this.timeBeforeSessionExp);
 
                         }
 
