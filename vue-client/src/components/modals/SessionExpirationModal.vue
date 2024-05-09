@@ -177,8 +177,19 @@
 
                     const response = await axiosWithAuth.get(this.refreshTokenUrl);
 
+                    /*
                     console.log('response.data');
                     console.log(response.data);
+                    */
+
+                    const newAccessToken = response.data.newToken;
+
+                    if (newAccessToken) {
+
+                        Cookies.set('accessToken', newAccessToken, { sameSite: 'Strict' });
+                        window.location.reload();
+
+                    }
 
 
                 } catch(err) {
