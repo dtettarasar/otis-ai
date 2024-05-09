@@ -29,6 +29,13 @@ STRIPE_ENDPOINT_SECRET="whsec_8mb***********************************************
 ### Generate the required secrets 
 use the command npm run get-secrets in the terminal, to get the required secrets for the JSON web tokens.
 
+### Define the expiration time for the JSON web tokens 
+
+~~~
+ACCESS_TOKEN_EXP='2m'
+REFRESH_TOKEN_EXP='4h'
+~~~
+
 ## Vue client parameters
 
 ### Add the link of the vue client in the .env file 

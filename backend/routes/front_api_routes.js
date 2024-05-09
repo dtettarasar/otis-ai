@@ -27,8 +27,8 @@ router.post('/user-login', async (req, res) => {
 
     if(checkAuth.authSuccess) {
 
-        const accessToken = await userTokenObj.createToken(checkAuth, process.env.ACCESS_TOKEN_SECRET, '2m');
-        const refreshToken = await userTokenObj.createToken(checkAuth, process.env.REFRESH_TOKEN_SECRET, '4h');
+        const accessToken = await userTokenObj.createToken(checkAuth, process.env.ACCESS_TOKEN_SECRET, process.env.ACCESS_TOKEN_EXP);
+        const refreshToken = await userTokenObj.createToken(checkAuth, process.env.REFRESH_TOKEN_SECRET, process.env.REFRESH_TOKEN_EXP);
 
         userObj.authSuccess = checkAuth.authSuccess;
         userObj.accessToken = accessToken;
@@ -85,7 +85,7 @@ router.get('/refresh-token', async (req, res) => {
         console.log('refreshTokenAuthentication: '); 
         console.log(refreshTokenAuthentication);
 
-        const accessToken = await userTokenObj.createToken(refreshTokenAuthentication, process.env.ACCESS_TOKEN_SECRET, '2m');
+        const accessToken = await userTokenObj.createToken(refreshTokenAuthentication, process.env.ACCESS_TOKEN_SECRET, process.env.ACCESS_TOKEN_EXP);
 
         res.json({
             responsefromApi: 'ok',
