@@ -135,7 +135,9 @@
                     email: this.user.email
                 }
 
-                console.log(dataToSend);
+                const response = await axios.post(this.registerBackEndUrl, dataToSend);
+                console.log('response.data');
+                console.log(response.data);
 
             }
 

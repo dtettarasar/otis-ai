@@ -42,6 +42,15 @@ router.post('/user-login', async (req, res) => {
     res.json(userObj);
 });
 
+router.post('/user-create', async (req, res) => {
+
+    console.log('post req from user-create route');
+    console.log(req.body);
+
+    res.json(req.body);
+
+});
+
 router.get('/user-auth', async (req, res) => {
 
     const authHeader = req.headers['authorization'];
