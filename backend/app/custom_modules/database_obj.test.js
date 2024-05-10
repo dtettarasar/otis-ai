@@ -23,6 +23,8 @@ const generateCorrectUser = (userNameStr) => {
 
 let correctUserOne = null;
 let correctUserTwo = null;
+let testCreateUserOne = null;
+let testCreateUserTwo = null;
 
 beforeAll(async () => {
 
@@ -53,8 +55,8 @@ test('test user creation', async () => {
     console.log(correctUserOne);
     console.log(correctUserTwo);
 
-    const testCreateUserOne = await dataBaseObj.createUser(correctUserOne.username, correctUserOne.email, correctUserOne.password);
-    const testCreateUserTwo = await dataBaseObj.createUser(correctUserTwo.username, correctUserTwo.email, correctUserTwo.password);
+    testCreateUserOne = await dataBaseObj.createUser(correctUserOne.username, correctUserOne.email, correctUserOne.password);
+    testCreateUserTwo = await dataBaseObj.createUser(correctUserTwo.username, correctUserTwo.email, correctUserTwo.password);
 
     console.log(testCreateUserOne);
     console.log(testCreateUserTwo);
