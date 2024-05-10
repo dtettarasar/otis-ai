@@ -56,6 +56,7 @@
             </div>
 
             <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+
             <button type="submit" class="btn btn-primary">Create account</button>
 
             <div v-if="!passwordsMatch" class="alert mt-3 alert-danger" role="alert">
@@ -64,6 +65,18 @@
 
             <div v-if="!isPasswordSecure && user.pwd != ''" class="alert mt-3 alert-danger" >
                 <i class="bi bi-exclamation-circle"></i> Your password isn't secure enough: please make sure it contains at least 8 characters, including at least one lowercase letter, one uppercase letter, one number and one special character.
+            </div>
+
+            <div v-if="!isUsernameValid && user.name != ''" class="alert mt-3 alert-danger">
+                <i class="bi bi-exclamation-circle"></i> The username can only contain letters (upper and lower case) and numbers.
+            </div>
+
+            <div v-if="showError" class="alert mt-3 alert-danger" role="alert">
+                <i class="bi bi-exclamation-circle"></i> Account creation error
+            </div>
+
+            <div v-if="showSuccess" class="alert mt-3 alert-success" role="alert">
+                <i class="bi bi-check-circle"></i> Account created
             </div>
 
         </form>
@@ -102,6 +115,11 @@
                 return regex.test(this.user.pwd);
             },
 
+            isUsernameValid() {
+                const regex = /^[a-zA-Z0-9]+$/; // Regex pour vérifier si le username ne contient que des lettres (majuscules et minuscules) et des chiffres
+                return regex.test(this.user.name);
+            },
+
             registerBackEndUrl() {
                 return this.$backendUrl + 'front-api/user-create';
             }
@@ -117,6 +135,8 @@
                     console.log('Error: password mismatch, form cannot create account');
                 } else if (this.isPasswordSecure == false) {
                     console.log('Error: password isnt secure, form cannot create account');
+                }  else if (this.isUsernameValid == false) {
+                    console.log("Error: username isn't valid");
                 } else {
 
                     this.createUserReq();
@@ -135,9 +155,31 @@
                     email: this.user.email
                 }
 
-                const response = await axios.post(this.registerBackEndUrl, dataToSend);
-                console.log('response.data');
-                console.log(response.data);
+                try {
+
+                    const response = await axios.post(this.registerBackEndUrl, dataToSend);
+                    console.log('response.data');
+                    console.log(response.data);
+
+                    if (response.data == true) {
+
+                        this.showSuccess = true;
+                        this.showError = false;
+
+                    } else {
+
+                        this.showSuccess = false;
+                        this.showError = true;
+
+                    }
+
+                } catch (err) {
+
+                    console.error(err);
+                    this.showSuccess = false;
+                    this.showError = true;
+
+                }
 
             }
 
