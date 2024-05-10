@@ -50,7 +50,7 @@ router.post('/user-create', async (req, res) => {
     const userCreation = await dataBaseObj.createUser(req.body.username, req.body.email, req.body.password);
     console.log(userCreation);
 
-    res.json(req.body);
+    res.send(userCreation.creationStatus);
 
 });
 
