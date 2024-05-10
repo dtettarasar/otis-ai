@@ -21,10 +21,20 @@ const generateCorrectUser = (userNameStr) => {
     return testUserObj;
 }
 
-let correctUserOne = null;
-let correctUserTwo = null;
+// Test users
+
+let userOne = null;
+let userTwo = null;
 let testCreateUserOne = null;
 let testCreateUserTwo = null;
+
+const userThree = {
+    username: `VivinaDaBest!${getRandomInt(10000)}`,
+    email: `vivinadabest${getRandomInt(10000)}@otis-ai-test.eu`,
+    password: 'TestPwd!!Vivina'
+}
+
+let testCreateUserThree = null;
 
 beforeAll(async () => {
 
@@ -49,19 +59,23 @@ test('test connexion to MongoDB', async () => {
 
 test('test user creation', async () => {
 
-    correctUserOne = generateCorrectUser('DummyTestman');
-    correctUserTwo = generateCorrectUser('KingPilou');
+    userOne = generateCorrectUser('DummyTestman');
+    userTwo = generateCorrectUser('KingPilou');
 
-    console.log(correctUserOne);
-    console.log(correctUserTwo);
+    console.log(userOne);
+    console.log(userTwo);
 
-    testCreateUserOne = await dataBaseObj.createUser(correctUserOne.username, correctUserOne.email, correctUserOne.password);
-    testCreateUserTwo = await dataBaseObj.createUser(correctUserTwo.username, correctUserTwo.email, correctUserTwo.password);
+    testCreateUserOne = await dataBaseObj.createUser(userOne.username, userOne.email, userOne.password);
+    testCreateUserTwo = await dataBaseObj.createUser(userTwo.username, userTwo.email, userTwo.password);
+    testCreateUserThree = await dataBaseObj.createUser(userThree.username, userThree.email, userThree.password);
 
     console.log(testCreateUserOne);
     console.log(testCreateUserTwo);
 
     await expect(testCreateUserOne.creationStatus).toBe(true);
     await expect(testCreateUserTwo.creationStatus).toBe(true);
+
+    // user Three shouldn't be created: the username contain a special character
+    await expect(testCreateUserThree.creationStatus).toBe(false);
 
 });
