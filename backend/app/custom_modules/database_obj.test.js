@@ -31,7 +31,7 @@ let testCreateUserTwo = null;
 const userThree = {
     username: `VivinaDaBest!${getRandomInt(10000)}`,
     email: `vivinadabest${getRandomInt(10000)}@otis-ai-test.eu`,
-    password: 'TestPwd!!Vivina'
+    password: `TestPwd!!${getRandomInt(10000)}Vivina`
 }
 
 let testCreateUserThree = null;
@@ -64,6 +64,7 @@ test('test user creation', async () => {
 
     console.log(userOne);
     console.log(userTwo);
+    console.log(userThree);
 
     testCreateUserOne = await dataBaseObj.createUser(userOne.username, userOne.email, userOne.password);
     testCreateUserTwo = await dataBaseObj.createUser(userTwo.username, userTwo.email, userTwo.password);
