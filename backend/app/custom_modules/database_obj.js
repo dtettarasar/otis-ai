@@ -35,6 +35,8 @@ const dataBaseObj = {
 
     async createUser(usernameParam, emailParam, passwordParam) {
 
+        // Todo : add regex to test the param validity: 
+
         console.log("init create user method from databaseObj");
 
         /*

@@ -2,8 +2,32 @@ const dataBaseObj = require('./database_obj');
 
 let dbConnection;
 
+const getRandomInt = (max) => {
+
+    return Math.floor(Math.random() * max);
+
+}
+
+const generateCorrectUser = (userNameStr) => {
+
+    const int = getRandomInt(10000);
+
+    const testUserObj = {
+        username: `${userNameStr}${int}`,
+        email: `${userNameStr}${int}@otis-ai-test.eu`,
+        password: `TestPwd!!${userNameStr}${int}`
+    }
+
+    return testUserObj;
+}
+
+let correctUserOne = null;
+let correctUserTwo = null;
+
 beforeAll(async () => {
+
     dbConnection = await dataBaseObj.initDB();
+
 });
   
 afterAll(() => {
@@ -18,5 +42,24 @@ test('test connexion to MongoDB', async () => {
 
     await expect(dbConnection.connections[0]['_readyState']).toBe(1);
     await expect(dbConnection.connections[0]['_hasOpened']).toBe(true);
+
+});
+
+test('test user creation', async () => {
+
+    correctUserOne = generateCorrectUser('DummyTestman');
+    correctUserTwo = generateCorrectUser('KingPilou');
+
+    console.log(correctUserOne);
+    console.log(correctUserTwo);
+
+    const testCreateUserOne = await dataBaseObj.createUser(correctUserOne.username, correctUserOne.email, correctUserOne.password);
+    const testCreateUserTwo = await dataBaseObj.createUser(correctUserTwo.username, correctUserTwo.email, correctUserTwo.password);
+
+    console.log(testCreateUserOne);
+    console.log(testCreateUserTwo);
+
+    await expect(testCreateUserOne.creationStatus).toBe(true);
+    await expect(testCreateUserTwo.creationStatus).toBe(true);
 
 });
