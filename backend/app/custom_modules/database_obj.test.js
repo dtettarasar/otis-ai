@@ -98,6 +98,17 @@ test('test user creation', async () => {
 
 });
 
+test('test saved users data', async () => {
+
+    /*
+    Test here the username, email and password for the 2 first users.
+    Make a comparison between the initial users Object and the object returned by Mongodb after creation. 
+    Check that username & email are the same
+    Check that the hashed password in MongoDB object match the initial not hashed password. 
+    */
+
+});
+
 test('test error handling for user creation: test wrong username', async () => {
 
     console.log(userThree);
@@ -138,5 +149,14 @@ test('test error handling for user creation: test wrong password', async () => {
 
 test('test error handling for user creation: test wrong email format', async () => {
 
+
+});
+
+test('test error handling for user creation: try to create user that already exist in mongodb', async () => {
+
+    /*
+        Take the intial user one & two and try to recreate new users with same email or username. 
+        Make sure the database Object return Error object with false creationStatus
+    */
 
 });
