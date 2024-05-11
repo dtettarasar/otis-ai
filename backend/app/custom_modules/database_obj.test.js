@@ -23,8 +23,8 @@ const generateCorrectUser = (userNameStr) => {
 
 // Test users
 
-let userOne = null;
-let userTwo = null;
+let userOne = generateCorrectUser('DummyTestman');
+let userTwo = generateCorrectUser('KingPilou');
 let testCreateUserOne = null;
 let testCreateUserTwo = null;
 
@@ -43,6 +43,22 @@ const userFour = {
 }
 
 let testCreateUserFour = null;
+
+let userFive = {
+    username: `WilliballZ${getRandomInt(10000)}`,
+    email: `williballz${getRandomInt(10000)}@otis-ai-test.eu`,
+    password: `dbz`
+}
+
+let testCreateUserFive = null;
+
+let userSix = {
+    username: `BruceTheSensei${getRandomInt(10000)}`,
+    email: `bruce${getRandomInt(10000)}@otis-ai-test.eu`,
+    password: `thebestracer63`
+}
+
+let testCreateUserSix = null;
 
 beforeAll(async () => {
 
@@ -66,32 +82,50 @@ test('test connexion to MongoDB', async () => {
 });
 
 test('test user creation', async () => {
-
-    userOne = generateCorrectUser('DummyTestman');
-    userTwo = generateCorrectUser('KingPilou');
-
     
     console.log(userOne);
     console.log(userTwo);
-    console.log(userThree);
-    console.log(userFour);
     
-
     testCreateUserOne = await dataBaseObj.createUser(userOne.username, userOne.email, userOne.password);
     testCreateUserTwo = await dataBaseObj.createUser(userTwo.username, userTwo.email, userTwo.password);
-    testCreateUserThree = await dataBaseObj.createUser(userThree.username, userThree.email, userThree.password);
-    testCreateUserFour = await dataBaseObj.createUser(userFour.username, userFour.email, userFour.password);
 
     console.log(testCreateUserOne);
     console.log(testCreateUserTwo);
-    console.log(testCreateUserThree);
-    console.log(testCreateUserFour);
 
     await expect(testCreateUserOne.creationStatus).toBe(true);
     await expect(testCreateUserTwo.creationStatus).toBe(true);
 
-    // user Three & Four shouldn't be created: the username contain a special character
+
+});
+
+test('test error handling for user creation: test wrong username', async () => {
+
+    console.log(userThree);
+    console.log(userFour);
+
+    testCreateUserThree = await dataBaseObj.createUser(userThree.username, userThree.email, userThree.password);
+    testCreateUserFour = await dataBaseObj.createUser(userFour.username, userFour.email, userFour.password);
+
+    console.log(testCreateUserThree);
+    console.log(testCreateUserFour);
+
     await expect(testCreateUserThree.creationStatus).toBe(false);
     await expect(testCreateUserFour.creationStatus).toBe(false);
+
+});
+
+test('test error handling for user creation: test wrong password', async () => {
+
+    console.log(userFive);
+    console.log(userSix);
+
+    testCreateUserFive = await dataBaseObj.createUser(userFive.username, userFive.email, userFive.password);
+    testCreateUserSix = await dataBaseObj.createUser(userSix.username, userSix.email, userSix.password);
+
+    console.log(testCreateUserFive);
+    console.log(testCreateUserSix);
+
+    await expect(testCreateUserFive.creationStatus).toBe(false);
+    await expect(testCreateUserSix.creationStatus).toBe(false);
 
 });

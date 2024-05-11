@@ -37,12 +37,20 @@ const dataBaseObj = {
 
         //regex to test the param validity:
         const validUsernameRegex = /^[a-zA-Z0-9]+$/;
+        const securePwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
         const testUsername = validUsernameRegex.test(usernameParam);
+        const testPassword = securePwdRegex.test(passwordParam);
 
         if(!testUsername) {
 
             return {creationStatus: false, Error: "username not valid"};
+
+        }
+
+        if (!testPassword) {
+
+            return {creationStatus: false, Error: "password not secure enough"};
 
         }
 
