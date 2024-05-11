@@ -110,7 +110,10 @@ test('test error handling for user creation: test wrong username', async () => {
     console.log(testCreateUserFour);
 
     await expect(testCreateUserThree.creationStatus).toBe(false);
+    await expect(testCreateUserThree.Error).toBe('username not valid');
+
     await expect(testCreateUserFour.creationStatus).toBe(false);
+    await expect(testCreateUserFour.Error).toBe('username not valid');
 
 });
 
@@ -126,6 +129,14 @@ test('test error handling for user creation: test wrong password', async () => {
     console.log(testCreateUserSix);
 
     await expect(testCreateUserFive.creationStatus).toBe(false);
+    await expect(testCreateUserFive.Error).toBe('password not secure enough');
+
     await expect(testCreateUserSix.creationStatus).toBe(false);
+    await expect(testCreateUserSix.Error).toBe('password not secure enough');
+
+});
+
+test('test error handling for user creation: test wrong email format', async () => {
+
 
 });
