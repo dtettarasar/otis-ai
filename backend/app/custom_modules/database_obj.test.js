@@ -36,6 +36,14 @@ const userThree = {
 
 let testCreateUserThree = null;
 
+const userFour = {
+    username: `Lea Kpop${getRandomInt(10000)}`,
+    email: `lk${getRandomInt(10000)}@otis-ai-test.eu`,
+    password: `TestPwd!!${getRandomInt(10000)}Lea`
+}
+
+let testCreateUserFour = null;
+
 beforeAll(async () => {
 
     dbConnection = await dataBaseObj.initDB();
@@ -62,21 +70,28 @@ test('test user creation', async () => {
     userOne = generateCorrectUser('DummyTestman');
     userTwo = generateCorrectUser('KingPilou');
 
+    
     console.log(userOne);
     console.log(userTwo);
     console.log(userThree);
+    console.log(userFour);
+    
 
     testCreateUserOne = await dataBaseObj.createUser(userOne.username, userOne.email, userOne.password);
     testCreateUserTwo = await dataBaseObj.createUser(userTwo.username, userTwo.email, userTwo.password);
     testCreateUserThree = await dataBaseObj.createUser(userThree.username, userThree.email, userThree.password);
+    testCreateUserFour = await dataBaseObj.createUser(userFour.username, userFour.email, userFour.password);
 
     console.log(testCreateUserOne);
     console.log(testCreateUserTwo);
+    console.log(testCreateUserThree);
+    console.log(testCreateUserFour);
 
     await expect(testCreateUserOne.creationStatus).toBe(true);
     await expect(testCreateUserTwo.creationStatus).toBe(true);
 
-    // user Three shouldn't be created: the username contain a special character
+    // user Three & Four shouldn't be created: the username contain a special character
     await expect(testCreateUserThree.creationStatus).toBe(false);
+    await expect(testCreateUserFour.creationStatus).toBe(false);
 
 });

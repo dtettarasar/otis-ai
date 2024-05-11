@@ -35,7 +35,16 @@ const dataBaseObj = {
 
     async createUser(usernameParam, emailParam, passwordParam) {
 
-        // Todo : add regex to test the param validity: 
+        //regex to test the param validity:
+        const validUsernameRegex = /^[a-zA-Z0-9]+$/;
+
+        const testUsername = validUsernameRegex.test(usernameParam);
+
+        if(!testUsername) {
+
+            return {creationStatus: false, Error: "username not valid"};
+
+        }
 
         console.log("init create user method from databaseObj");
 
