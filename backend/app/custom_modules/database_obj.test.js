@@ -49,22 +49,8 @@ const testUserObj = {
 
 testUserObj.generateUser('user with correct parameters','DummyTestman', 'dummy.testman', '@otis-ai-test.eu', 'Test001!');
 testUserObj.generateUser('user with correct parameters','KingPilou', 'king.pilou', '@otis-ai-test.eu', 'Test001!');
-
-const userThree = {
-    username: `VivinaDaBest!${getRandomInt(10000)}`,
-    email: `vivinadabest${getRandomInt(10000)}@otis-ai-test.eu`,
-    password: `TestPwd!!${getRandomInt(10000)}Vivina`
-}
-
-let testCreateUserThree = null;
-
-const userFour = {
-    username: `Lea Kpop${getRandomInt(10000)}`,
-    email: `lk${getRandomInt(10000)}@otis-ai-test.eu`,
-    password: `TestPwd!!${getRandomInt(10000)}Lea`
-}
-
-let testCreateUserFour = null;
+testUserObj.generateUser('user with wrong username', 'VivinaDaBest!', 'vivinadabest', '@otis-ai-test.eu', 'Test001!');
+testUserObj.generateUser('user with wrong username', 'Lea Kpop', 'lk', '@otis-ai-test.eu', 'Test001!');
 
 let userFive = {
     username: `WilliballZ${getRandomInt(10000)}`,
@@ -111,8 +97,7 @@ test('test user creation', async () => {
     await expect(testUserObj.userCont[0].result.creationStatus).toBe(true);
     await expect(testUserObj.userCont[1].result.creationStatus).toBe(true);
 
-    console.log(testUserObj.userCont);
-
+    //console.log(testUserObj.userCont);
 
 });
 
@@ -129,20 +114,16 @@ test('test saved users data', async () => {
 
 test('test error handling for user creation: test wrong username', async () => {
 
-    console.log(userThree);
-    console.log(userFour);
+    await testUserObj.testUserCreation(2);
+    await testUserObj.testUserCreation(3);
 
-    testCreateUserThree = await dataBaseObj.createUser(userThree.username, userThree.email, userThree.password);
-    testCreateUserFour = await dataBaseObj.createUser(userFour.username, userFour.email, userFour.password);
+    await expect(testUserObj.userCont[2].result.creationStatus).toBe(false);
+    await expect(testUserObj.userCont[2].result.Error).toBe('username not valid');
 
-    console.log(testCreateUserThree);
-    console.log(testCreateUserFour);
+    await expect(testUserObj.userCont[3].result.creationStatus).toBe(false);
+    await expect(testUserObj.userCont[3].result.Error).toBe('username not valid');
 
-    await expect(testCreateUserThree.creationStatus).toBe(false);
-    await expect(testCreateUserThree.Error).toBe('username not valid');
-
-    await expect(testCreateUserFour.creationStatus).toBe(false);
-    await expect(testCreateUserFour.Error).toBe('username not valid');
+    console.log(testUserObj.userCont);
 
 });
 
