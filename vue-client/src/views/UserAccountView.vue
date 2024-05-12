@@ -18,7 +18,7 @@
 
 <template>
   <main>
-    <PageTitle txtValue="User Account Page"></PageTitle>
+    <PageTitle txtValue="Dashboard"></PageTitle>
     <UserAccessControl v-bind:loginRequired="true">
       <UserAccountContent></UserAccountContent>
     </UserAccessControl>
