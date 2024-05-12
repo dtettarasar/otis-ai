@@ -23,6 +23,33 @@ const generateCorrectUser = (userNameStr) => {
 
 // Test users
 
+const testUserObj = {
+
+    generateCorrectUser: function(userNameStr) {
+
+        const int = Math.floor(Math.random() * 10000);
+
+        const testUserObj = {
+            username: `${userNameStr}${int}`,
+            email: `${userNameStr}${int}@otis-ai-test.eu`,
+            password: `TestPwd!!${userNameStr}${int}`
+        }
+
+        //return testUserObj;
+        this.userCont.push(testUserObj);
+
+    }, 
+
+    userCont: []
+
+}
+
+//testUserObj.userCont.push(testUserObj.generateCorrectUser('DummyTestman'));
+//testUserObj.userCont.push(testUserObj.generateCorrectUser('KingPilou'));
+
+testUserObj.generateCorrectUser('DummyTestman');
+testUserObj.generateCorrectUser('KingPilou');
+
 let userOne = generateCorrectUser('DummyTestman');
 let userTwo = generateCorrectUser('KingPilou');
 let testCreateUserOne = null;
@@ -60,6 +87,22 @@ let userSix = {
 
 let testCreateUserSix = null;
 
+let userSeven = {
+    username: `WilliballZ${getRandomInt(10000)}`,
+    email: `williballz${getRandomInt(10000)}@otis-ai-test.eu`,
+    password: `dbz`
+}
+
+let testCreateUserSeven = null;
+
+let userEight = {
+    username: `BruceTheSensei${getRandomInt(10000)}`,
+    email: `bruce${getRandomInt(10000)}@otis-ai-test.eu`,
+    password: `thebestracer63`
+}
+
+let testCreateUserEight = null;
+
 beforeAll(async () => {
 
     dbConnection = await dataBaseObj.initDB();
@@ -83,17 +126,19 @@ test('test connexion to MongoDB', async () => {
 
 test('test user creation', async () => {
     
-    console.log(userOne);
-    console.log(userTwo);
+    //console.log(testUserObj.userCont[0]);
+    //console.log(testUserObj.userCont[1]);
     
-    testCreateUserOne = await dataBaseObj.createUser(userOne.username, userOne.email, userOne.password);
-    testCreateUserTwo = await dataBaseObj.createUser(userTwo.username, userTwo.email, userTwo.password);
+    testUserObj.userCont[0].result = await dataBaseObj.createUser(testUserObj.userCont[0].username, testUserObj.userCont[0].email, testUserObj.userCont[0].password);
+    testUserObj.userCont[1].result = await dataBaseObj.createUser(testUserObj.userCont[1].username, testUserObj.userCont[1].email, testUserObj.userCont[1].password);
 
-    console.log(testCreateUserOne);
-    console.log(testCreateUserTwo);
+    //console.log(testCreateUserOne);
+    //console.log(testCreateUserTwo);
 
-    await expect(testCreateUserOne.creationStatus).toBe(true);
-    await expect(testCreateUserTwo.creationStatus).toBe(true);
+    await expect(testUserObj.userCont[0].result.creationStatus).toBe(true);
+    await expect(testUserObj.userCont[1].result.creationStatus).toBe(true);
+
+    console.log(testUserObj.userCont);
 
 
 });

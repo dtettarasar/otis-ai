@@ -38,9 +38,12 @@ const dataBaseObj = {
         //regex to test the param validity:
         const validUsernameRegex = /^[a-zA-Z0-9]+$/;
         const securePwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const validEmailRegex = /^[_A-Za-z0-9-]+(?:\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*(?:\.[A-Za-z]{2,})$/gm;
 
         const testUsername = validUsernameRegex.test(usernameParam);
         const testPassword = securePwdRegex.test(passwordParam);
+        const testEmail = validEmailRegex.test(emailParam);
+        //console.log('testEmail: ' + testEmail);
 
         if(!testUsername) {
 
@@ -54,7 +57,13 @@ const dataBaseObj = {
 
         }
 
-        console.log("init create user method from databaseObj");
+        if (!testEmail) {
+
+            return {creationStatus: false, Error: "email format not valid"};
+
+        }
+
+        //console.log("init create user method from databaseObj");
 
         /*
         console.log(`username: ${usernameParam}`);
@@ -70,24 +79,30 @@ const dataBaseObj = {
 
         if (usernameInDB.length !== 0) {
 
+            /*
             console.log("username already exist in database");
             console.log(`usernameInDB:`);
             console.log(usernameInDB);
+            */
 
             return {creationStatus: false, Error: "username already used"};
 
         } else if (emailInDB.length !== 0) {
 
+            /*
             console.log('email already exist in database');
             console.log(`emailInDB:`);
             console.log(emailInDB);
+            */
 
             return {creationStatus: false, Error: "email already used"};
 
         } else {
 
+            /*
             console.log("username & email doesn't exist in database");
             console.log("we can create new user");
+            */
 
             const userObj = new UserModel({
                 username: usernameParam,
@@ -100,7 +115,9 @@ const dataBaseObj = {
             try {
 
                 const savedUserObj = await userObj.save();
-                console.log(savedUserObj);
+
+                //console.log(savedUserObj);
+
                 return {creationStatus: true, userData: savedUserObj};
                 
             } catch (err) {
