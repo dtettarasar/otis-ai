@@ -2,58 +2,53 @@ const dataBaseObj = require('./database_obj');
 
 let dbConnection;
 
+
 const getRandomInt = (max) => {
 
     return Math.floor(Math.random() * max);
 
 }
 
-const generateCorrectUser = (userNameStr) => {
-
-    const int = getRandomInt(10000);
-
-    const testUserObj = {
-        username: `${userNameStr}${int}`,
-        email: `${userNameStr}${int}@otis-ai-test.eu`,
-        password: `TestPwd!!${userNameStr}${int}`
-    }
-
-    return testUserObj;
-}
-
 // Test users
 
 const testUserObj = {
 
-    generateCorrectUser: function(userNameStr) {
+    getRandomInt: function (max) {
 
-        const int = Math.floor(Math.random() * 10000);
+        return Math.floor(Math.random() * max);
+
+    },
+
+    generateUser: function(comment, userNameStr, emailNameStr, emailDomainStr, passwordStr) {
+
+        const int = this.getRandomInt(10000);
 
         const testUserObj = {
+            id: this.userCont.length,
+            comment: comment,
             username: `${userNameStr}${int}`,
-            email: `${userNameStr}${int}@otis-ai-test.eu`,
-            password: `TestPwd!!${userNameStr}${int}`
+            email: `${emailNameStr}${int}${emailDomainStr}`,
+            password: `${passwordStr}`
         }
 
-        //return testUserObj;
         this.userCont.push(testUserObj);
 
-    }, 
+    },
+    
+    testUserCreation: async function(testUserId) {
+
+        const test = await dataBaseObj.createUser(this.userCont[testUserId].username, this.userCont[testUserId].email, this.userCont[testUserId].password);
+
+        this.userCont[testUserId].result = test;
+
+    },
 
     userCont: []
 
 }
 
-//testUserObj.userCont.push(testUserObj.generateCorrectUser('DummyTestman'));
-//testUserObj.userCont.push(testUserObj.generateCorrectUser('KingPilou'));
-
-testUserObj.generateCorrectUser('DummyTestman');
-testUserObj.generateCorrectUser('KingPilou');
-
-let userOne = generateCorrectUser('DummyTestman');
-let userTwo = generateCorrectUser('KingPilou');
-let testCreateUserOne = null;
-let testCreateUserTwo = null;
+testUserObj.generateUser('user with correct parameters','DummyTestman', 'dummy.testman', '@otis-ai-test.eu', 'Test001!');
+testUserObj.generateUser('user with correct parameters','KingPilou', 'king.pilou', '@otis-ai-test.eu', 'Test001!');
 
 const userThree = {
     username: `VivinaDaBest!${getRandomInt(10000)}`,
@@ -87,22 +82,6 @@ let userSix = {
 
 let testCreateUserSix = null;
 
-let userSeven = {
-    username: `WilliballZ${getRandomInt(10000)}`,
-    email: `williballz${getRandomInt(10000)}@otis-ai-test.eu`,
-    password: `dbz`
-}
-
-let testCreateUserSeven = null;
-
-let userEight = {
-    username: `BruceTheSensei${getRandomInt(10000)}`,
-    email: `bruce${getRandomInt(10000)}@otis-ai-test.eu`,
-    password: `thebestracer63`
-}
-
-let testCreateUserEight = null;
-
 beforeAll(async () => {
 
     dbConnection = await dataBaseObj.initDB();
@@ -125,15 +104,9 @@ test('test connexion to MongoDB', async () => {
 });
 
 test('test user creation', async () => {
-    
-    //console.log(testUserObj.userCont[0]);
-    //console.log(testUserObj.userCont[1]);
-    
-    testUserObj.userCont[0].result = await dataBaseObj.createUser(testUserObj.userCont[0].username, testUserObj.userCont[0].email, testUserObj.userCont[0].password);
-    testUserObj.userCont[1].result = await dataBaseObj.createUser(testUserObj.userCont[1].username, testUserObj.userCont[1].email, testUserObj.userCont[1].password);
 
-    //console.log(testCreateUserOne);
-    //console.log(testCreateUserTwo);
+    await testUserObj.testUserCreation(0);
+    await testUserObj.testUserCreation(1);
 
     await expect(testUserObj.userCont[0].result.creationStatus).toBe(true);
     await expect(testUserObj.userCont[1].result.creationStatus).toBe(true);
