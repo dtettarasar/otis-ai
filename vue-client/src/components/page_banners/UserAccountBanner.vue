@@ -1,26 +1,25 @@
 <template>
 
-    <div class="container mt-4 p-5 bg-dark text-white rounded">
+    <div class="d-flex flex-wrap flex-column mt-4 p-5 bg-dark text-white rounded">
 
-        <div class="row justify-content-start">
+        <div class="d-flex flex-column">
 
             <h2>Hello, {{ username }}!</h2>
             <p>& welcome to your account :)</p>
             
         </div>
 
-        <div class="row justify-content-start">
+        <div class="d-flex flex-wrap flex-row bd-highlight mb-3">
 
-            <div class="col-2">
-                <button type="button" class="btn btn-success">Create article</button>
+            <div class="p-2 bd-highlight">
+                <button type="button" class="btn btn-success">Create an article</button>
             </div>
 
-            <div class="col-2">
+            <div class="p-2 bd-highlight">
                 <button type="button" class="btn btn-light">My settings</button>
             </div>
 
         </div>
-
         
     </div>
     
