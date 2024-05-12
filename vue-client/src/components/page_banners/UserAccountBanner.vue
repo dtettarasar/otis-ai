@@ -1,20 +1,19 @@
 <template>
 
-    <UserAccountBanner></UserAccountBanner>
+    
+    <div>
+        <h2>{{ username }} is connected to the Account page</h2>
+    </div>
+    
 
 </template>
 
 <script>
 
     import { mapState } from 'vuex';
-    import UserAccountBanner from '@/components/page_banners/UserAccountBanner.vue'
 
     export default {
-        name: 'UserAccountContent',
-
-        components: {
-            UserAccountBanner
-        },
+        name: 'UserAccountBanner',
 
         data() {
 
