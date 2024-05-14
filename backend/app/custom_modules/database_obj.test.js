@@ -2,13 +2,6 @@ const dataBaseObj = require('./database_obj');
 
 let dbConnection;
 
-
-const getRandomInt = (max) => {
-
-    return Math.floor(Math.random() * max);
-
-}
-
 // Test users
 
 const testUserObj = {
