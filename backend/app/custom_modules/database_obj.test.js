@@ -28,7 +28,8 @@ const testUserObj = {
             comment: comment,
             username: `${userNameStr}${int}`,
             email: `${emailNameStr}${int}${emailDomainStr}`,
-            password: `${passwordStr}`
+            password: `${passwordStr}`,
+            result: null
         }
 
         this.userCont.push(testUserObj);
@@ -51,22 +52,8 @@ testUserObj.generateUser('user with correct parameters','DummyTestman', 'dummy.t
 testUserObj.generateUser('user with correct parameters','KingPilou', 'king.pilou', '@otis-ai-test.eu', 'Test001!');
 testUserObj.generateUser('user with wrong username', 'VivinaDaBest!', 'vivinadabest', '@otis-ai-test.eu', 'Test001!');
 testUserObj.generateUser('user with wrong username', 'Lea Kpop', 'lk', '@otis-ai-test.eu', 'Test001!');
-
-let userFive = {
-    username: `WilliballZ${getRandomInt(10000)}`,
-    email: `williballz${getRandomInt(10000)}@otis-ai-test.eu`,
-    password: `dbz`
-}
-
-let testCreateUserFive = null;
-
-let userSix = {
-    username: `BruceTheSensei${getRandomInt(10000)}`,
-    email: `bruce${getRandomInt(10000)}@otis-ai-test.eu`,
-    password: `thebestracer63`
-}
-
-let testCreateUserSix = null;
+testUserObj.generateUser('user with wrong password', 'WilliballZ', 'williballz', '@otis-ai-test.eu', 'dbz');
+testUserObj.generateUser('user with wrong password', 'BruceTheSensei', 'bruce', '@otis-ai-test.eu', 'thebestracer63');
 
 beforeAll(async () => {
 
@@ -123,26 +110,22 @@ test('test error handling for user creation: test wrong username', async () => {
     await expect(testUserObj.userCont[3].result.creationStatus).toBe(false);
     await expect(testUserObj.userCont[3].result.Error).toBe('username not valid');
 
-    console.log(testUserObj.userCont);
+    //console.log(testUserObj.userCont);
 
 });
 
 test('test error handling for user creation: test wrong password', async () => {
 
-    console.log(userFive);
-    console.log(userSix);
+    await testUserObj.testUserCreation(4);
+    await testUserObj.testUserCreation(5);
 
-    testCreateUserFive = await dataBaseObj.createUser(userFive.username, userFive.email, userFive.password);
-    testCreateUserSix = await dataBaseObj.createUser(userSix.username, userSix.email, userSix.password);
+    await expect(testUserObj.userCont[4].result.creationStatus).toBe(false);
+    await expect(testUserObj.userCont[4].result.Error).toBe('password not secure enough');
 
-    console.log(testCreateUserFive);
-    console.log(testCreateUserSix);
+    await expect(testUserObj.userCont[5].result.creationStatus).toBe(false);
+    await expect(testUserObj.userCont[5].result.Error).toBe('password not secure enough');
 
-    await expect(testCreateUserFive.creationStatus).toBe(false);
-    await expect(testCreateUserFive.Error).toBe('password not secure enough');
-
-    await expect(testCreateUserSix.creationStatus).toBe(false);
-    await expect(testCreateUserSix.Error).toBe('password not secure enough');
+    console.log(testUserObj.userCont);
 
 });
 
