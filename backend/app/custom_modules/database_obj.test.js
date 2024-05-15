@@ -38,8 +38,8 @@ test('test user creation', async () => {
     await testUserObj.testUserCreation(0);
     await testUserObj.testUserCreation(1);
 
-    await expect(testUserObj.userCont[0].result.creationStatus).toBe(true);
-    await expect(testUserObj.userCont[1].result.creationStatus).toBe(true);
+    await expect(testUserObj.userCont[0].creationResult.creationStatus).toBe(true);
+    await expect(testUserObj.userCont[1].creationResult.creationStatus).toBe(true);
 
     //console.log(testUserObj.userCont);
 
@@ -61,11 +61,11 @@ test('test error handling for user creation: test wrong username', async () => {
     await testUserObj.testUserCreation(2);
     await testUserObj.testUserCreation(3);
 
-    await expect(testUserObj.userCont[2].result.creationStatus).toBe(false);
-    await expect(testUserObj.userCont[2].result.Error).toBe('username not valid');
+    await expect(testUserObj.userCont[2].creationResult.creationStatus).toBe(false);
+    await expect(testUserObj.userCont[2].creationResult.Error).toBe('username not valid');
 
-    await expect(testUserObj.userCont[3].result.creationStatus).toBe(false);
-    await expect(testUserObj.userCont[3].result.Error).toBe('username not valid');
+    await expect(testUserObj.userCont[3].creationResult.creationStatus).toBe(false);
+    await expect(testUserObj.userCont[3].creationResult.Error).toBe('username not valid');
 
     //console.log(testUserObj.userCont);
 
@@ -76,11 +76,11 @@ test('test error handling for user creation: test wrong password', async () => {
     await testUserObj.testUserCreation(4);
     await testUserObj.testUserCreation(5);
 
-    await expect(testUserObj.userCont[4].result.creationStatus).toBe(false);
-    await expect(testUserObj.userCont[4].result.Error).toBe('password not secure enough');
+    await expect(testUserObj.userCont[4].creationResult.creationStatus).toBe(false);
+    await expect(testUserObj.userCont[4].creationResult.Error).toBe('password not secure enough');
 
-    await expect(testUserObj.userCont[5].result.creationStatus).toBe(false);
-    await expect(testUserObj.userCont[5].result.Error).toBe('password not secure enough');
+    await expect(testUserObj.userCont[5].creationResult.creationStatus).toBe(false);
+    await expect(testUserObj.userCont[5].creationResult.Error).toBe('password not secure enough');
 
     console.log(testUserObj.userCont);
 

@@ -19,7 +19,8 @@ const testUserObj = {
             username: `${userNameStr}${int}`,
             email: `${emailNameStr}${int}${emailDomainStr}`,
             password: `${passwordStr}`,
-            result: null
+            creationResult: null,
+            authResult: null
         }
 
         this.userCont.push(testUserObj);
@@ -30,7 +31,7 @@ const testUserObj = {
 
         const test = await dataBaseObj.createUser(this.userCont[testUserId].username, this.userCont[testUserId].email, this.userCont[testUserId].password);
 
-        this.userCont[testUserId].result = test;
+        this.userCont[testUserId].creationResult = test;
 
     },
 
