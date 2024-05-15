@@ -23,6 +23,10 @@ test('test checkUserLogin method', async() => {
     console.log(testUserObj.userCont);
 
     testUserObj.userCont[0].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[0].username, testUserObj.userCont[0].password);
+    testUserObj.userCont[1].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[1].username, testUserObj.userCont[1].password);
+
+    await expect(testUserObj.userCont[0].authResult.authSuccess).toBe(true);
+    await expect(testUserObj.userCont[1].authResult.authSuccess).toBe(false);
 
     console.log(testUserObj.userCont);
 
