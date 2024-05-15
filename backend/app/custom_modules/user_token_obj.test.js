@@ -5,12 +5,14 @@ const testUserObj = require('./test_user_obj');
 let dbConnection;
 
 testUserObj.generateUser('user with correct parameters','DummyTestlady', 'dummy.testlady', '@otis-ai-test.eu', 'Test001!');
+testUserObj.generateUser("user with correct parameters, for this one we'll test login with wrong password", "Pilou", "king.pilou", '@otis-ai-test.eu', 'Test001!');
 testUserObj.generateUser("user that won't be created in the database", "Natty", "queen.natty", '@otis-ai-test.eu', 'Test001!');
 
 beforeAll(async () => {
 
     dbConnection = await dataBaseObj.initDB();
     await testUserObj.testUserCreation(0);
+    await testUserObj.testUserCreation(1);
 
 });
   
@@ -23,10 +25,12 @@ test('test checkUserLogin method', async() => {
     console.log(testUserObj.userCont);
 
     testUserObj.userCont[0].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[0].username, testUserObj.userCont[0].password);
-    testUserObj.userCont[1].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[1].username, testUserObj.userCont[1].password);
+    testUserObj.userCont[1].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[1].username, 'didou&dede');
+    testUserObj.userCont[2].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[2].username, testUserObj.userCont[2].password);
 
     await expect(testUserObj.userCont[0].authResult.authSuccess).toBe(true);
     await expect(testUserObj.userCont[1].authResult.authSuccess).toBe(false);
+    await expect(testUserObj.userCont[2].authResult.authSuccess).toBe(false);
 
     console.log(testUserObj.userCont);
 
