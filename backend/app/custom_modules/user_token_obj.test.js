@@ -9,6 +9,7 @@ let dbConnection;
 testUserObj.generateUser('user with correct parameters','DummyTestlady', 'dummy.testlady', '@otis-ai-test.eu', 'Test001!');
 testUserObj.generateUser("user with correct parameters, for this one we'll test login with wrong password", "Pilou", "king.pilou", '@otis-ai-test.eu', 'Test001!');
 testUserObj.generateUser("user that won't be created in the database", "Natty", "queen.natty", '@otis-ai-test.eu', 'Test001!');
+testUserObj.generateUser("user with correct parameters, created to test failed token creation", "CafeTheGuineaPig", "cafe.guinea.pig", '@otis-ai-test.eu', 'Test001!');
 
 beforeAll(async () => {
 
@@ -35,7 +36,7 @@ test('test checkUserLogin method', async() => {
     await expect(testUserObj.userCont[2].authResult).toHaveProperty('authSuccess', false);
 
     console.log(testUserObj.userCont);
-    console.log(testUserObj.userCont[0].authResult);
+    // console.log(testUserObj.userCont[0].authResult);
 
     // Check that users contain the userIdEncryption object
     await expect(testUserObj.userCont[0].authResult).toHaveProperty('userIdEncryption');
