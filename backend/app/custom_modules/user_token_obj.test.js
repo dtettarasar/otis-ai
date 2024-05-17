@@ -33,8 +33,21 @@ test('test checkUserLogin method', async() => {
     await expect(testUserObj.userCont[2].authResult).toHaveProperty('authSuccess', false);
 
     console.log(testUserObj.userCont);
-
     console.log(testUserObj.userCont[0].authResult);
+
+    // Check that users contain the userIdEncryption object
+    await expect(testUserObj.userCont[0].authResult).toHaveProperty('userIdEncryption');
+    await expect(testUserObj.userCont[0].authResult.userIdEncryption).toBeInstanceOf(Object);
+
+    await expect(testUserObj.userCont[1].authResult).toHaveProperty('userIdEncryption');
+    await expect(testUserObj.userCont[1].authResult.userIdEncryption).toBeInstanceOf(Object);
+
+    await expect(testUserObj.userCont[2].authResult).toHaveProperty('userIdEncryption');
+    await expect(testUserObj.userCont[2].authResult.userIdEncryption).toBeInstanceOf(Object);
+
+    // Check that the userIdEncryption object has the iv & encryptedStr properties (for the the user successfully logged in)
+    await expect(testUserObj.userCont[0].authResult.userIdEncryption).toHaveProperty('iv');
+    await expect(testUserObj.userCont[0].authResult.userIdEncryption).toHaveProperty('encryptedStr');
 
 });
 
