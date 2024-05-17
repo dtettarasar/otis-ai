@@ -22,16 +22,24 @@ afterAll(() => {
 
 test('test checkUserLogin method', async() => {
 
-    console.log(testUserObj.userCont);
+    //console.log(testUserObj.userCont);
 
     testUserObj.userCont[0].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[0].username, testUserObj.userCont[0].password);
     testUserObj.userCont[1].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[1].username, 'didou&dede');
     testUserObj.userCont[2].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[2].username, testUserObj.userCont[2].password);
 
-    await expect(testUserObj.userCont[0].authResult.authSuccess).toBe(true);
-    await expect(testUserObj.userCont[1].authResult.authSuccess).toBe(false);
-    await expect(testUserObj.userCont[2].authResult.authSuccess).toBe(false);
+    await expect(testUserObj.userCont[0].authResult).toHaveProperty('authSuccess', true);
+    await expect(testUserObj.userCont[1].authResult).toHaveProperty('authSuccess', false);
+    await expect(testUserObj.userCont[2].authResult).toHaveProperty('authSuccess', false);
 
     console.log(testUserObj.userCont);
 
+    console.log(testUserObj.userCont[0].authResult);
+
 });
+
+test('test create token method', async() => {
+    
+
+
+})
