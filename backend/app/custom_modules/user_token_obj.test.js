@@ -4,6 +4,7 @@ const testUserObj = require('./test_user_obj');
 
 let dbConnection;
 
+// build the test users
 testUserObj.generateUser('user with correct parameters','DummyTestlady', 'dummy.testlady', '@otis-ai-test.eu', 'Test001!');
 testUserObj.generateUser("user with correct parameters, for this one we'll test login with wrong password", "Pilou", "king.pilou", '@otis-ai-test.eu', 'Test001!');
 testUserObj.generateUser("user that won't be created in the database", "Natty", "queen.natty", '@otis-ai-test.eu', 'Test001!');
@@ -22,12 +23,12 @@ afterAll(() => {
 
 test('test checkUserLogin method', async() => {
 
-    //console.log(testUserObj.userCont);
-
+    // Test the user authentication
     testUserObj.userCont[0].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[0].username, testUserObj.userCont[0].password);
     testUserObj.userCont[1].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[1].username, 'didou&dede');
     testUserObj.userCont[2].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[2].username, testUserObj.userCont[2].password);
 
+    // Check the authSuccess
     await expect(testUserObj.userCont[0].authResult).toHaveProperty('authSuccess', true);
     await expect(testUserObj.userCont[1].authResult).toHaveProperty('authSuccess', false);
     await expect(testUserObj.userCont[2].authResult).toHaveProperty('authSuccess', false);
@@ -48,6 +49,13 @@ test('test checkUserLogin method', async() => {
     // Check that the userIdEncryption object has the iv & encryptedStr properties (for the the user successfully logged in)
     await expect(testUserObj.userCont[0].authResult.userIdEncryption).toHaveProperty('iv');
     await expect(testUserObj.userCont[0].authResult.userIdEncryption).toHaveProperty('encryptedStr');
+
+    // Regex to check encryptedStr & iv formats
+    const ivRegex = /^[a-f0-9]{32}$/;
+    const encryptedStrRegex = /^[a-f0-9]{64}$/;
+
+    await expect(testUserObj.userCont[0].authResult.userIdEncryption.iv).toMatch(ivRegex);
+    await expect(testUserObj.userCont[0].authResult.userIdEncryption.encryptedStr).toMatch(encryptedStrRegex);
 
 });
 
