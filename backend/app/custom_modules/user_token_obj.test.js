@@ -1,3 +1,4 @@
+const env = require('dotenv').config();
 const userTokenObj = require('./user_token_obj');
 const dataBaseObj = require('./database_obj');
 const testUserObj = require('./test_user_obj');
@@ -61,6 +62,13 @@ test('test checkUserLogin method', async() => {
 
 test('test create token method', async() => {
     
+    testUserObj.userCont[0].tokenResult = await userTokenObj.createToken(testUserObj.userCont[0].authResult, process.env.ACCESS_TOKEN_SECRET, process.env.ACCESS_TOKEN_EXP);
+    console.log(testUserObj.userCont[0]);
 
+    // check that userCont[0].tokenResult contains a proper token
+    await expect(typeof testUserObj.userCont[0].tokenResult).toBe('string');
+    
+    const jwtRegex = /^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/;
+    await expect(testUserObj.userCont[0].tokenResult).toMatch(jwtRegex);
 
-})
+});

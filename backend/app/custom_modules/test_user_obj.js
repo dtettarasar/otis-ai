@@ -20,7 +20,8 @@ const testUserObj = {
             email: `${emailNameStr}${int}${emailDomainStr}`,
             password: `${passwordStr}`,
             creationResult: null,
-            authResult: null
+            authResult: null,
+            tokenResult: null
         }
 
         this.userCont.push(testUserObj);
