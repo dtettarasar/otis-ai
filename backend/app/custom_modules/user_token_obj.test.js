@@ -119,7 +119,7 @@ test('test create token method', async() => {
 test('test auth token method', async() => {
 
     testUserObj.userCont[0].authTokenResult = await userTokenObj.authToken(testUserObj.userCont[0].tokenResult, process.env.ACCESS_TOKEN_SECRET);
-    console.log(testUserObj.userCont[0]);
+    //console.log(testUserObj.userCont[0]);
 
     testUserObj.userCont[3].authTokenResult = await userTokenObj.authToken(testUserObj.userCont[3].tokenResult, process.env.ACCESS_TOKEN_SECRET);
     // console.log(testUserObj.userCont[3]);
@@ -165,6 +165,19 @@ test('auth refresh token method', async() => {
 
     testUserObj.userCont[0].refreshTokenResult = await userTokenObj.createToken(testUserObj.userCont[0].authResult, process.env.REFRESH_TOKEN_SECRET, process.env.REFRESH_TOKEN_EXP);
     testUserObj.userCont[4].refreshTokenResult = await userTokenObj.createToken(testUserObj.userCont[4].authResult, process.env.REFRESH_TOKEN_SECRET, process.env.REFRESH_TOKEN_EXP);
+
+    testUserObj.userCont[0].authRefreshTokenResult = await userTokenObj.authRefreshToken(testUserObj.userCont[0].refreshTokenResult, process.env.REFRESH_TOKEN_SECRET);
+    testUserObj.userCont[4].authRefreshTokenResult = await userTokenObj.authRefreshToken(testUserObj.userCont[4].refreshTokenResult, 'fake_secret_key');
+
+    await expect(testUserObj.userCont[0].authRefreshTokenResult.authSuccess).toBe(true);
+    await expect(testUserObj.userCont[4].authRefreshTokenResult.authSuccess).toBe(false);
+
+    await expect(testUserObj.userCont[0].authRefreshTokenResult).toBeInstanceOf(Object);
+    await expect(testUserObj.userCont[0].authRefreshTokenResult.userIdEncryption).toBeInstanceOf(Object);
+    await expect(testUserObj.userCont[0].authRefreshTokenResult.userIdEncryption).toHaveProperty('iv');
+    await expect(testUserObj.userCont[0].authRefreshTokenResult.userIdEncryption).toHaveProperty('encryptedStr');
+
+    await expect(testUserObj.userCont[4].authRefreshTokenResult.userIdEncryption).toBe(false);
 
     console.log(testUserObj.userCont);
 

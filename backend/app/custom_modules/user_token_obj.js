@@ -103,7 +103,7 @@ const userTokenObj = {
 
         const userLoginData = {
             authSuccess: false,
-            userIdEncryption: {}
+            userIdEncryption: false
         }
 
         console.log('init authRefreshToken method'); 
