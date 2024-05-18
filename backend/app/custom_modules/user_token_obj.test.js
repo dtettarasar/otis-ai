@@ -93,3 +93,14 @@ test('test create token method', async() => {
     await expect(testUserObj.userCont[0].tokenResult).toMatch(jwtRegex);
 
 });
+
+test('test auth token method', async() => {
+
+    testUserObj.userCont[0].authTokenResult = await userTokenObj.authToken(testUserObj.userCont[0].tokenResult, process.env.ACCESS_TOKEN_SECRET);
+    console.log(testUserObj.userCont[0]);
+
+    await expect(testUserObj.userCont[0].authTokenResult).toBeInstanceOf(Object);
+    await expect(testUserObj.userCont[0].authTokenResult.token).toBe(testUserObj.userCont[0].tokenResult);
+    await expect(testUserObj.userCont[0].authTokenResult.result.authSuccess).toBe(true);
+
+});
