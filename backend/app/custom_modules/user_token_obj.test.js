@@ -99,13 +99,25 @@ test('test auth token method', async() => {
     testUserObj.userCont[0].authTokenResult = await userTokenObj.authToken(testUserObj.userCont[0].tokenResult, process.env.ACCESS_TOKEN_SECRET);
     console.log(testUserObj.userCont[0]);
 
+    testUserObj.userCont[3].authTokenResult = await userTokenObj.authToken(testUserObj.userCont[3].tokenResult, process.env.ACCESS_TOKEN_SECRET);
+    console.log(testUserObj.userCont[3]);
+
     await expect(testUserObj.userCont[0].authTokenResult).toBeInstanceOf(Object);
     await expect(testUserObj.userCont[0].authTokenResult.token).toBe(testUserObj.userCont[0].tokenResult);
-    await expect(testUserObj.userCont[0].authTokenResult.result.authSuccess).toBe(true);
+    await expect(testUserObj.userCont[0].authTokenResult.status).toBe(true);
 
-    // Check that the user token contains the right userIdEncryption object (should be equal to the one generated from the checkUserLogin method) 
+    // Check that the user token contains the right userIdEncryption object (should be equal to the one generated from the checkUserLogin method)
+    await expect(testUserObj.userCont[0].authTokenResult.result).toBeInstanceOf(Object);
     await expect(testUserObj.userCont[0].authTokenResult.result.userIdEncryption).toBeInstanceOf(Object);
     await expect(testUserObj.userCont[0].authTokenResult.result.userIdEncryption.iv).toBe(testUserObj.userCont[0].authResult.userIdEncryption.iv);
     await expect(testUserObj.userCont[0].authTokenResult.result.userIdEncryption.encryptedStr).toBe(testUserObj.userCont[0].authResult.userIdEncryption.encryptedStr);
+
+    // Check the error handling: no token provided
+    await expect(testUserObj.userCont[3].authTokenResult).toBeInstanceOf(Object);
+    await expect(testUserObj.userCont[3].authTokenResult.token).toBe(testUserObj.userCont[3].tokenResult);
+    await expect(testUserObj.userCont[3].authTokenResult.status).toBe(false);
+    await expect(testUserObj.userCont[3].authTokenResult.result).toBeInstanceOf(Object);
+    await expect(testUserObj.userCont[3].authTokenResult.result.name).toBe('JsonWebTokenError');
+    await expect(testUserObj.userCont[3].authTokenResult.result.message).toBe('jwt must be provided');
 
 });
