@@ -57,12 +57,12 @@ const userTokenObj = {
         // Get the user for which we create the token
         // Data filled by the user on the login form
 
-        if (user) {
+        try {
 
             const accessToken = jwt.sign(user, secretKey, {expiresIn: expirationTime});
             return accessToken;
 
-        } else {
+        } catch (err) {
 
             console.error("create token error");
             return false;

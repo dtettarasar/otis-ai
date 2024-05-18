@@ -16,6 +16,7 @@ beforeAll(async () => {
     dbConnection = await dataBaseObj.initDB();
     await testUserObj.testUserCreation(0);
     await testUserObj.testUserCreation(1);
+    await testUserObj.testUserCreation(3);
 
 });
   
@@ -29,11 +30,13 @@ test('test checkUserLogin method', async() => {
     testUserObj.userCont[0].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[0].username, testUserObj.userCont[0].password);
     testUserObj.userCont[1].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[1].username, 'didou&dede');
     testUserObj.userCont[2].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[2].username, testUserObj.userCont[2].password);
+    testUserObj.userCont[3].authResult = await userTokenObj.checkUserLogin(testUserObj.userCont[3].username, testUserObj.userCont[3].password);
 
     // Check the authSuccess
     await expect(testUserObj.userCont[0].authResult).toHaveProperty('authSuccess', true);
     await expect(testUserObj.userCont[1].authResult).toHaveProperty('authSuccess', false);
     await expect(testUserObj.userCont[2].authResult).toHaveProperty('authSuccess', false);
+    await expect(testUserObj.userCont[3].authResult).toHaveProperty('authSuccess', true);
 
     console.log(testUserObj.userCont);
     // console.log(testUserObj.userCont[0].authResult);
@@ -48,9 +51,16 @@ test('test checkUserLogin method', async() => {
     await expect(testUserObj.userCont[2].authResult).toHaveProperty('userIdEncryption');
     await expect(testUserObj.userCont[2].authResult.userIdEncryption).toBeInstanceOf(Object);
 
+    await expect(testUserObj.userCont[3].authResult).toHaveProperty('userIdEncryption');
+    await expect(testUserObj.userCont[3].authResult.userIdEncryption).toBeInstanceOf(Object);
+
     // Check that the userIdEncryption object has the iv & encryptedStr properties (for the the user successfully logged in)
     await expect(testUserObj.userCont[0].authResult.userIdEncryption).toHaveProperty('iv');
     await expect(testUserObj.userCont[0].authResult.userIdEncryption).toHaveProperty('encryptedStr');
+
+    await expect(testUserObj.userCont[3].authResult.userIdEncryption).toHaveProperty('iv');
+    await expect(testUserObj.userCont[3].authResult.userIdEncryption).toHaveProperty('encryptedStr');
+
 
     // Regex to check encryptedStr & iv formats
     const ivRegex = /^[a-f0-9]{32}$/;
@@ -59,6 +69,9 @@ test('test checkUserLogin method', async() => {
     await expect(testUserObj.userCont[0].authResult.userIdEncryption.iv).toMatch(ivRegex);
     await expect(testUserObj.userCont[0].authResult.userIdEncryption.encryptedStr).toMatch(encryptedStrRegex);
 
+    await expect(testUserObj.userCont[3].authResult.userIdEncryption.iv).toMatch(ivRegex);
+    await expect(testUserObj.userCont[3].authResult.userIdEncryption.encryptedStr).toMatch(encryptedStrRegex);
+
 });
 
 test('test create token method', async() => {
@@ -66,8 +79,15 @@ test('test create token method', async() => {
     testUserObj.userCont[0].tokenResult = await userTokenObj.createToken(testUserObj.userCont[0].authResult, process.env.ACCESS_TOKEN_SECRET, process.env.ACCESS_TOKEN_EXP);
     console.log(testUserObj.userCont[0]);
 
+    testUserObj.userCont[3].tokenResult = await userTokenObj.createToken(testUserObj.userCont[3].authResult, false, process.env.ACCESS_TOKEN_EXP);
+    console.log(testUserObj.userCont[3]);
+
     // check that userCont[0].tokenResult contains a proper token
     await expect(typeof testUserObj.userCont[0].tokenResult).toBe('string');
+
+    // check that userCont[3].tokenResult is a bool and false;
+    await expect(typeof testUserObj.userCont[3].tokenResult).toBe('boolean');
+    await expect(testUserObj.userCont[3].tokenResult).toBe(false);
     
     const jwtRegex = /^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/;
     await expect(testUserObj.userCont[0].tokenResult).toMatch(jwtRegex);
