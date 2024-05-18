@@ -159,12 +159,13 @@ test('test auth token method', async() => {
     await expect(testUserObj.userCont[4].authTokenResult.result.name).toBe('JsonWebTokenError');
     await expect(testUserObj.userCont[4].authTokenResult.result.message).toBe('invalid signature');
 
-    console.log(testUserObj.userCont);
-
 });
 
 test('auth refresh token method', async() => {
 
+    testUserObj.userCont[0].refreshTokenResult = await userTokenObj.createToken(testUserObj.userCont[0].authResult, process.env.REFRESH_TOKEN_SECRET, process.env.REFRESH_TOKEN_EXP);
+    testUserObj.userCont[4].refreshTokenResult = await userTokenObj.createToken(testUserObj.userCont[4].authResult, process.env.REFRESH_TOKEN_SECRET, process.env.REFRESH_TOKEN_EXP);
 
+    console.log(testUserObj.userCont);
 
 });
