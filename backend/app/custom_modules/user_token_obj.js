@@ -64,7 +64,7 @@ const userTokenObj = {
 
         } catch (err) {
 
-            console.error("create token error");
+            console.error("create token error: " + err);
             return false;
 
         }
