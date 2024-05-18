@@ -103,4 +103,9 @@ test('test auth token method', async() => {
     await expect(testUserObj.userCont[0].authTokenResult.token).toBe(testUserObj.userCont[0].tokenResult);
     await expect(testUserObj.userCont[0].authTokenResult.result.authSuccess).toBe(true);
 
+    // Check that the user token contains the right userIdEncryption object (should be equal to the one generated from the checkUserLogin method) 
+    await expect(testUserObj.userCont[0].authTokenResult.result.userIdEncryption).toBeInstanceOf(Object);
+    await expect(testUserObj.userCont[0].authTokenResult.result.userIdEncryption.iv).toBe(testUserObj.userCont[0].authResult.userIdEncryption.iv);
+    await expect(testUserObj.userCont[0].authTokenResult.result.userIdEncryption.encryptedStr).toBe(testUserObj.userCont[0].authResult.userIdEncryption.encryptedStr);
+
 });
