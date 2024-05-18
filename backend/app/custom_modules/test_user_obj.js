@@ -23,6 +23,7 @@ const testUserObj = {
             authResult: null,
             tokenResult: null,
             authTokenResult: null,
+            refreshTokenResult: null,
             authRefreshTokenResult: null
         }
 

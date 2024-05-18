@@ -119,7 +119,7 @@ test('test create token method', async() => {
 test('test auth token method', async() => {
 
     testUserObj.userCont[0].authTokenResult = await userTokenObj.authToken(testUserObj.userCont[0].tokenResult, process.env.ACCESS_TOKEN_SECRET);
-    // console.log(testUserObj.userCont[0]);
+    console.log(testUserObj.userCont[0]);
 
     testUserObj.userCont[3].authTokenResult = await userTokenObj.authToken(testUserObj.userCont[3].tokenResult, process.env.ACCESS_TOKEN_SECRET);
     // console.log(testUserObj.userCont[3]);
@@ -136,6 +136,12 @@ test('test auth token method', async() => {
     await expect(testUserObj.userCont[0].authTokenResult.result.userIdEncryption).toBeInstanceOf(Object);
     await expect(testUserObj.userCont[0].authTokenResult.result.userIdEncryption.iv).toBe(testUserObj.userCont[0].authResult.userIdEncryption.iv);
     await expect(testUserObj.userCont[0].authTokenResult.result.userIdEncryption.encryptedStr).toBe(testUserObj.userCont[0].authResult.userIdEncryption.encryptedStr);
+
+    // Check that the user token contains iat and exp attributes, with number values
+    await expect(testUserObj.userCont[0].authTokenResult.result).toHaveProperty('iat');
+    await expect(testUserObj.userCont[0].authTokenResult.result).toHaveProperty('exp');
+    await expect(typeof testUserObj.userCont[0].authTokenResult.result.iat).toBe('number');
+    await expect(typeof testUserObj.userCont[0].authTokenResult.result.exp).toBe('number');
 
     // Check the error handling: no token provided
     await expect(testUserObj.userCont[3].authTokenResult).toBeInstanceOf(Object);
@@ -159,6 +165,6 @@ test('test auth token method', async() => {
 
 test('auth refresh token method', async() => {
 
-    
+
 
 });
