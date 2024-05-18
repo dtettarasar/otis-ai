@@ -156,3 +156,9 @@ test('test auth token method', async() => {
     console.log(testUserObj.userCont);
 
 });
+
+test('auth refresh token method', async() => {
+
+    
+
+});

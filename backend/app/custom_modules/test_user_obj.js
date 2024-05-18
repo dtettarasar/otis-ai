@@ -22,7 +22,8 @@ const testUserObj = {
             creationResult: null,
             authResult: null,
             tokenResult: null,
-            authTokenResult: null
+            authTokenResult: null,
+            authRefreshTokenResult: null
         }
 
         this.userCont.push(testUserObj);
