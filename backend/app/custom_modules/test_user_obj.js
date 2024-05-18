@@ -21,7 +21,8 @@ const testUserObj = {
             password: `${passwordStr}`,
             creationResult: null,
             authResult: null,
-            tokenResult: null
+            tokenResult: null,
+            authTokenResult: null
         }
 
         this.userCont.push(testUserObj);
