@@ -4,8 +4,8 @@
 
         <div class="d-flex flex-column">
 
-            <h2>Hello, {{ username }}!</h2>
-            <p>& welcome to your account :)</p>
+            <h2 class="display-4">Hello, {{ username }}!</h2>
+            <p class="display-6">& welcome to your account :)</p>
             
         </div>
 
