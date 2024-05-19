@@ -1,8 +1,19 @@
 <template>
 
-    <p>This is the credit section</p>
+    <div class="d-flex flex-wrap flex-row mb-3 mt-4 justify-content-between">
+        <div class="p-3 m-2 bg-body-secondary rounded flex-column flex-fill">
 
-    <p>Test: user has {{ credit }} credit(s)</p>
+            <h3>My Credits</h3>
+
+            <p><strong>Your current balance:</strong> <span class="display-6">{{ credit }} credit(s)</span></p>
+
+        </div>
+        <div class="p-3 m-2 bg-body-secondary rounded flex-column flex-fill">
+
+            <h3>Buy new Credits</h3>
+
+        </div>
+    </div>
 
 </template>
 
