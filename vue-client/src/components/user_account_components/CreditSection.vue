@@ -12,6 +12,8 @@
 
             <h3>Buy new Credits</h3>
 
+            <BuyCreditsForm></BuyCreditsForm>
+
         </div>
     </div>
 
@@ -20,10 +22,15 @@
 <script>
 
     import { mapState } from 'vuex';
+    import BuyCreditsForm from '@/components/forms/BuyCreditsForm.vue'
 
     export default {
 
         name: 'CreditSection',
+
+        components: {
+            BuyCreditsForm
+        },
 
         data() {
 
