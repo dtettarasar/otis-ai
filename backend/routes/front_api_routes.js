@@ -54,6 +54,17 @@ router.post('/user-create', async (req, res) => {
 
 });
 
+router.post('/user-add-credits', async (req, res) => {
+
+    console.log('post request from the add credits route');
+
+    res.json({
+        test: 'response from user-add-credits',
+        creditQuantity: req.body.creditQuantity
+    });
+
+});
+
 router.get('/user-auth', async (req, res) => {
 
     const authHeader = req.headers['authorization'];

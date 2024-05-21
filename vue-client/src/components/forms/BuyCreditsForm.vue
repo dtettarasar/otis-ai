@@ -18,6 +18,8 @@
 
 <script>
 
+    import axios from 'axios';
+
     export default {
 
         name: 'BuyCreditsForm',
@@ -26,10 +28,16 @@
 
             return {
 
-                creditQuantity:0
+                creditQuantity: 0,
 
             }
 
+        },
+
+        computed: {
+            addCreditsBackEndUrl() {
+                return this.$backendUrl + 'front-api/user-add-credits';
+            }
         },
 
         methods: {
@@ -38,6 +46,23 @@
 
                 console.log('init form submission');
                 console.log(this.creditQuantity);
+                console.log(this.addCreditsBackEndUrl);
+
+                try {
+
+                    const response = await axios.post(this.addCreditsBackEndUrl, {
+                        creditQuantity: this.creditQuantity
+                    });
+
+                    console.log("response data:")
+                    console.log(response.data);
+
+
+                } catch (err) {
+
+                    console.error(err);
+
+                }
 
             }
 
