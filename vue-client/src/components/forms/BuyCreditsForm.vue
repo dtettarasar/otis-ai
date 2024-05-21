@@ -4,10 +4,11 @@
 
         <form @submit.prevent="submitForm" method="post" >
 
-            <label for="quantity">Quantity (between 1 and 20):</label>
-            <input v-model.number="creditQuantity" type="number" id="quantity" name="quantity" min="1" max="20">
+            <label class="form-label" for="quantity">Quantity (between 1 and 20):</label>
 
-            <button type="submit">Buy</button>
+            <input class="form-control mb-2" v-model.number="creditQuantity" type="number" id="quantity" name="quantity" min="1" max="20">
+
+            <button class="btn btn-primary" type="submit">Buy</button>
 
         </form>
 
