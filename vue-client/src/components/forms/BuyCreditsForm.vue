@@ -5,7 +5,7 @@
         <form @submit.prevent="submitForm" method="post" >
 
             <label for="quantity">Quantity (between 1 and 20):</label>
-            <input type="number" id="quantity" name="quantity" min="1" max="20">
+            <input v-model.number="creditQuantity" type="number" id="quantity" name="quantity" min="1" max="20">
 
             <button type="submit">Buy</button>
 
@@ -25,6 +25,8 @@
 
             return {
 
+                creditQuantity:0
+
             }
 
         },
@@ -34,6 +36,7 @@
             async submitForm() {
 
                 console.log('init form submission');
+                console.log(this.creditQuantity);
 
             }
 
