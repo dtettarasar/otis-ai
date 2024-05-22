@@ -19,6 +19,7 @@
 <script>
 
     import axios from 'axios';
+    import Cookies from 'js-cookie';
 
     export default {
 
@@ -37,6 +38,9 @@
         computed: {
             addCreditsBackEndUrl() {
                 return this.$backendUrl + 'front-api/user-add-credits';
+            },
+            accessToken() {
+                return Cookies.get('accessToken');
             }
         },
 
@@ -51,7 +55,8 @@
                 try {
 
                     const response = await axios.post(this.addCreditsBackEndUrl, {
-                        creditQuantity: this.creditQuantity
+                        creditQuantity: this.creditQuantity,
+                        accessToken: this.accessToken
                     });
 
                     console.log("response data:")

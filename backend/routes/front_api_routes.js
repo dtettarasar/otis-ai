@@ -59,12 +59,20 @@ router.post('/user-add-credits', async (req, res) => {
 
     console.log('post request from the add credits route');
 
+    const reqObj = {
+        test: 'response from user-add-credits',
+        creditQuantity: req.body.creditQuantity,
+        accessToken: req.body.accessToken
+    }
+
+    const tokenData = userTokenObj.authToken(reqObj.accessToken, process.env.ACCESS_TOKEN_SECRET);
+
+    console.log('token data:')
+    console.log(tokenData);
+
     stripeApiObj.createCheckoutSession();
 
-    res.json({
-        test: 'response from user-add-credits',
-        creditQuantity: req.body.creditQuantity
-    });
+    res.json(reqObj);
 
 });
 
