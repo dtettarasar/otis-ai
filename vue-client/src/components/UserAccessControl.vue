@@ -62,7 +62,7 @@
 
             ...mapGetters(['getCookieExpTimestamp']),
 
-            loginBackEndUrl() {
+            userAuthBackEndUrl() {
                 return this.$backendUrl + 'front-api/user-auth';
             },
 
@@ -99,7 +99,7 @@
 
                 try {
 
-                    const response = await axiosWithAuth.get(this.loginBackEndUrl);
+                    const response = await axiosWithAuth.get(this.userAuthBackEndUrl);
                     
                     // console.log('response.data');
                     // console.log(response.data);
