@@ -5,6 +5,7 @@ const router = express.Router();
 const dataBaseObj = require('../app/custom_modules/database_obj');
 const userTokenObj = require('../app/custom_modules/user_token_obj');
 const strEncrypter = require('../app/custom_modules/str_encrypter');
+const stripeApiObj = require('../app/custom_modules/stripe_api_obj');
 
 router.post('/user-login', async (req, res) => {
 
@@ -57,6 +58,8 @@ router.post('/user-create', async (req, res) => {
 router.post('/user-add-credits', async (req, res) => {
 
     console.log('post request from the add credits route');
+
+    stripeApiObj.createCheckoutSession();
 
     res.json({
         test: 'response from user-add-credits',
