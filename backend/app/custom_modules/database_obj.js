@@ -132,6 +132,14 @@ const dataBaseObj = {
 
     },
 
+    async createStripeCustomerObj(userId) {
+
+        console.log('init createStripeCustomerObj method');
+
+        console.log('userId: ' + userId)
+
+    },
+
     async findUserById(userId) {
 
         const query = UserModel.findById(userId);

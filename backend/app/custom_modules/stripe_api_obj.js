@@ -1,4 +1,5 @@
 const stripe = require('stripe')(process.env.STRIPE_KEY);
+const dataBaseObj = require('./database_obj');
 
 const stripeApiObj = {
 
@@ -7,7 +8,11 @@ const stripeApiObj = {
         console.log('stripe api: init create checkout session method');
         console.log('userId: ' + userId);
         console.log('creditQuantity: ' + creditQuantity);
-        
+
+        console.log('------------');
+
+        let customer = await dataBaseObj.createStripeCustomerObj(userId);
+
         //console.log(stripe);
 
         /*
