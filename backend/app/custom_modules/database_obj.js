@@ -134,9 +134,13 @@ const dataBaseObj = {
 
     async createStripeCustomerObj(userId) {
 
+        let customer = {};
+
         console.log('init createStripeCustomerObj method');
 
-        console.log('userId: ' + userId)
+        const stripeCustomerId = await this.getUserStripeId(userId);
+        console.log('userId: ' + userId);
+        console.log("stripeCustomerId: " + stripeCustomerId);
 
     },
 
@@ -196,6 +200,16 @@ const dataBaseObj = {
         const userPsw = await query.exec();
 
         return userPsw;
+
+    },
+
+    async getUserStripeId(userID) {
+
+        const query = UserModel.findById(userID);
+        query.select('_id stripeCustomerId');
+        const result = await query.exec();
+
+        return result.stripeCustomerId;
 
     },
 
