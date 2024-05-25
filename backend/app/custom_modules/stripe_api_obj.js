@@ -9,11 +9,12 @@ const stripeApiObj = {
         console.log('userId: ' + userId);
         console.log('creditQuantity: ' + creditQuantity);
 
-        console.log('------------');
-
         let customer = await dataBaseObj.createStripeCustomerObj(userId);
 
-        //console.log(stripe);
+        console.log('customer data from stripe: ');
+        console.log(customer);
+
+        console.log('------------');
 
         /*
             Récupérer le user ID et la quantité de crédit acheté en paramètre de la méthode. 
