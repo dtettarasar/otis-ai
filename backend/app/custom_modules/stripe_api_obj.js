@@ -2,14 +2,16 @@ const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 const stripeApiObj = {
 
-    async createCheckoutSession() {
+    async createCheckoutSession(userId, creditQuantity) {
 
         console.log('stripe api: init create checkout session method');
+        console.log('userId: ' + userId);
+        console.log('creditQuantity: ' + creditQuantity);
+        
         //console.log(stripe);
 
         /*
-            Récupérer le token et la quantité de crédit acheté en paramètre de la méthode. 
-            Authentifier le token + décrypter le user id
+            Récupérer le user ID et la quantité de crédit acheté en paramètre de la méthode. 
             Vérifier que le user id est valide et qu'il correspond bien à un compte d'utilisateur présent dans mongodb
             Avec le user ID : récupérer ou créer le stripe customer account et récupérer le customer id. 
             Construire les liens des pages de success ou de cancel de payment

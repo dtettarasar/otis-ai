@@ -67,10 +67,12 @@ router.post('/user-add-credits', async (req, res) => {
 
     const tokenData = userTokenObj.authToken(reqObj.accessToken, process.env.ACCESS_TOKEN_SECRET);
 
-    console.log('token data:')
-    console.log(tokenData);
+    if (tokenData.result.authSuccess) {
 
-    stripeApiObj.createCheckoutSession();
+        const decryptUserID = await strEncrypter.method.decryptString(tokenData.result.userIdEncryption);
+        stripeApiObj.createCheckoutSession(decryptUserID, reqObj.creditQuantity);
+
+    }
 
     res.json(reqObj);
 
