@@ -62,7 +62,8 @@ router.post('/user-add-credits', async (req, res) => {
     const reqObj = {
         test: 'response from user-add-credits',
         creditQuantity: req.body.creditQuantity,
-        accessToken: req.body.accessToken
+        accessToken: req.body.accessToken,
+        checkoutSessionUrl: null
     }
 
     const tokenData = userTokenObj.authToken(reqObj.accessToken, process.env.ACCESS_TOKEN_SECRET);
@@ -73,6 +74,12 @@ router.post('/user-add-credits', async (req, res) => {
         const checkoutSession = await stripeApiObj.createCheckoutSession(decryptUserID, reqObj.creditQuantity);
 
         console.log(checkoutSession);
+
+        if (checkoutSession.creationStatus) {
+
+            reqObj.checkoutSessionUrl = checkoutSession.stripeResponse.url;
+
+        }
 
     }
 
