@@ -30,7 +30,7 @@
                 
             </div>
 
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button v-if="!hideSubmitBtn" type="submit" class="btn btn-primary">Login</button>
 
             <div v-if="showError" class="alert mt-3 alert-danger" role="alert">
                 <i class="bi bi-exclamation-circle"></i> Authentication failed. Please check your credentials and try again.
@@ -61,7 +61,8 @@
                 },
                 showError: false,
                 showSuccess: false,
-                showPassword: false
+                showPassword: false,
+                hideSubmitBtn: false
             }
         },
         computed: {
@@ -93,6 +94,7 @@
                     if (response.data.authSuccess) {
 
                         this.showSuccess = true;
+                        this.hideSubmitBtn = true;
                         this.showError = false;
 
                         Cookies.set('accessToken', response.data.accessToken, { sameSite: 'Strict' });
