@@ -12,7 +12,7 @@
         <div class="d-flex flex-wrap flex-row bd-highlight mb-3">
 
             <div class="p-2 bd-highlight">
-                <button type="button" class="btn btn-success">Create an article</button>
+                <button v-on:click="createArticle" type="button" class="btn btn-success">Create an article</button>
             </div>
 
             <div class="p-2 bd-highlight">
@@ -29,6 +29,7 @@
 <script>
 
     import { mapState } from 'vuex';
+    import { createArticleTrigger } from '@/custom_modules/createArticleTrigger';
 
     export default {
         name: 'UserAccountBanner',
@@ -58,6 +59,10 @@
         },
 
         methods: {
+
+            createArticle() {
+                createArticleTrigger();
+            }
 
         }
     }

@@ -87,6 +87,16 @@ router.post('/user-add-credits', async (req, res) => {
 
 });
 
+router.post('/user-create-article', async (req, res) => {
+
+    console.log('post request to create article');
+
+    const accessToken = req.body.accessToken;
+
+    console.log(accessToken);
+
+});
+
 router.get('/user-auth', async (req, res) => {
 
     const authHeader = req.headers['authorization'];
