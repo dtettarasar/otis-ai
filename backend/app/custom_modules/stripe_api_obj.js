@@ -51,7 +51,7 @@ const stripeApiObj = {
                 ],
                 mode: 'payment',
                 customer: customer.id,
-                success_url: `${clientUrl}/sucess-payment`,
+                success_url: `${clientUrl}/success-payment`,
                 cancel_url: `${clientUrl}/cancel-payment`
         
             });
