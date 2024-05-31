@@ -42,7 +42,7 @@ REFRESH_TOKEN_EXP='4h'
 In the .env file, add the link of the Vue client, to make sure the backend app can interact with the client. 
 
 ~~~
-VUE_CLIENT_SERVER="http://localhost:5173/"
+VUE_CLIENT_SERVER="http://localhost:5173"
 ~~~
 
 
