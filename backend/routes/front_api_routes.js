@@ -95,6 +95,11 @@ router.post('/user-create-article', async (req, res) => {
 
     console.log(accessToken);
 
+    res.json({
+        message: 'post request to create article',
+        accessToken: accessToken
+    })
+
 });
 
 router.get('/user-auth', async (req, res) => {
