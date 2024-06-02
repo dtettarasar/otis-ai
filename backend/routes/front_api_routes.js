@@ -89,6 +89,22 @@ router.post('/user-add-credits', async (req, res) => {
 
 router.post('/user-create-article', async (req, res) => {
 
+    /*
+    
+    Todo : create an article in the backend
+
+    This article should be provided with basic dummy content:
+    title: untitled
+    description: write a brief description of your article
+    Content: basic lorem ipsum written in markdown
+
+    Once the article is created, get the id of the article object created in mongoDB
+    Encrypt this id
+    send the encrypted id the in the format: iv_enrcyptId
+    this new string will be used as the link for the vue client to view the article. 
+    
+    */
+
     console.log('post request to create article');
 
     const accessToken = req.body.accessToken;
