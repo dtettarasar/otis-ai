@@ -90,7 +90,7 @@ router.post('/user-add-credits', async (req, res) => {
 router.post('/user-create-article', async (req, res) => {
 
     /*
-    
+
     Todo : create an article in the backend
 
     This article should be provided with basic dummy content:
@@ -110,6 +110,28 @@ router.post('/user-create-article', async (req, res) => {
     const accessToken = req.body.accessToken;
 
     console.log(accessToken);
+
+    const tokenData = userTokenObj.authToken(accessToken, process.env.ACCESS_TOKEN_SECRET);
+
+    if (tokenData.result.authSuccess) {
+
+        const decryptUserID = await strEncrypter.method.decryptString(tokenData.result.userIdEncryption);
+        console.log('decryptUserId: ' + decryptUserID);
+
+        const articleObj = {
+
+            title: 'Untitled',
+            description: 'This is a brief description for your article',
+            markdown: 'Write some text here: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada. ',
+            otisUserId: decryptUserID
+
+        };
+
+        const articleCreation = await dataBaseObj.createArticle(articleObj.title, articleObj.description, articleObj.markdown, articleObj.otisUserId);
+
+        console.log(articleCreation);
+
+    }
 
     res.json({
         message: 'post request to create article',
