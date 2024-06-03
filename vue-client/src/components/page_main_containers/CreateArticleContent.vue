@@ -30,7 +30,8 @@
         },
 
         mounted() {
-
+            console.log("New article created ID: ");
+            console.log(this.$route.params.id);
         },
 
         beforeCreate() {

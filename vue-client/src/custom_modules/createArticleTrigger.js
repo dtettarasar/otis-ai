@@ -26,6 +26,8 @@ export async function createArticleTrigger() {
         console.log("response data:")
         console.log(response.data);
 
+        window.location.href = `/create-article/${response.data.articleId}`;
+
     } catch (err) {
 
         console.error(err);
