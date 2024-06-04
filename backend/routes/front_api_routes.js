@@ -153,6 +153,15 @@ router.post('/user-create-article', async (req, res) => {
 
 });
 
+router.get('/article-data', async (req, res) => {
+
+    console.log('get request for article data route');
+    
+    const articleEncryptId = req.body.articleId;
+    console.log('articleEncryptId: ' + articleEncryptId);
+
+});
+
 router.get('/user-auth', async (req, res) => {
 
     const authHeader = req.headers['authorization'];

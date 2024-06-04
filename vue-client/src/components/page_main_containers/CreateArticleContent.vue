@@ -11,6 +11,7 @@
 <script>
 
     import { mapState } from 'vuex';
+    import { retrieveArticleData } from '@/custom_modules/retrieveArticleData.js';
 
     export default {
         name: 'CreateArticleContent.vue',
@@ -30,8 +31,9 @@
         },
 
         mounted() {
-            console.log("New article created ID: ");
-            console.log(this.$route.params.id);
+
+            retrieveArticleData(this.$route.params.id);
+
         },
 
         beforeCreate() {
