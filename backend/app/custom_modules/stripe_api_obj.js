@@ -26,7 +26,7 @@ const stripeApiObj = {
         console.log('userId: ' + userId);
         console.log('creditQuantity: ' + creditQuantity);
 
-        let customer = await dataBaseObj.createStripeCustomerObj(userId);
+        let customer = await this.createStripeCustomerObj(userId);
 
         console.log('customer data from stripe: ');
         console.log(customer);
@@ -72,7 +72,79 @@ const stripeApiObj = {
 
         return sessionObj;
 
-    }
+    },
+
+    async createStripeCustomerObj(userId) {
+
+        let customer = {};
+
+        // console.log('init createStripeCustomerObj method');
+
+        const stripeCustomerId = await dataBaseObj.getUserStripeId(userId);
+        // console.log('userId: ' + userId);
+        // console.log("stripeCustomerId: " + stripeCustomerId);
+
+        // Si l'utilisateur a un stripe user ID, récupérer les data du stripe user account
+        if (stripeCustomerId) {
+
+            try {
+
+                customer = await stripe.customers.retrieve(stripeCustomerId);
+
+                // console.log(customer);
+
+            } catch (error) {
+
+                console.log("error in createStripeCustomerObj method:");
+                console.log(error);
+
+            }
+
+        }
+
+        if (customer.deleted === true || !stripeCustomerId) {
+
+            // console.log("Stripe customer has been deleted or not created yet");
+
+            // Identifier le user pour lequel créer ou mettre à jour le stripe customer id
+            let userToUpdate = await dataBaseObj.findUserById(userId);
+
+            // console.log("user found");
+            // console.log(userToUpdate); 
+
+            if (!userToUpdate) {
+
+                console.log('error: user not found');
+
+            } else {
+
+                // Créer un nouveau stripe customer 
+                customer = await stripe.customers.create({
+                    email: userToUpdate.email,
+                    metadata: {
+                        description: 'Otis Customer',
+                        otisUserId: userId,
+                        username: userToUpdate.username
+                    },
+                    name: `otis_ai_${userToUpdate.username}_${userId}` 
+                });
+
+                userToUpdate.set({ stripeCustomerId: customer.id });
+                await userToUpdate.save();
+            }
+
+            // console.log('user to update after stripe user creation: ');
+            // console.log(userToUpdate);
+
+        }
+
+        // console.log('customer data:');
+        // console.log(customer);
+        // console.log("end of createStripeCustomerObj method----------------");
+
+        return customer;
+
+    },
 
 }
 
