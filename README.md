@@ -1,5 +1,5 @@
-# otis-ai
-Otis AI: Your Digital SEO Scribe! 
+# Papyrus-AI
+Papyrus AI: Your Digital SEO Scribe! 
 
 ## Connect your Database first
 create a .env file and store in it the connection string, using the variable name "DB_URL"
