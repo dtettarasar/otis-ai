@@ -7,6 +7,12 @@ const createDomPurify = require('dompurify');
 const {JSDOM} = require('jsdom');
 const dompurify = createDomPurify(new JSDOM().window);
 
+// Todo editer le modèle en fonction du nouvel editeur côté vue js:
+/*
+Si l'éditeur génère et édite directement du code html sans gérer du markdown, adapter le modèle pour que this.sanitizedHtml récupère du html au lieu du markdown
+Modifier également les fonction dans database Obj qui manipule les articles, pour gérer l'attribut html et non plus l'attribut markdown
+*/
+
 const ArticleSch = new mongoose.Schema({
     title: {type: String, required: true},
     description: {type: String},

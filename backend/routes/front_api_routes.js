@@ -160,6 +160,25 @@ router.get('/retrieve-article-data', async (req, res) => {
     console.log('req query');
     console.log(req.query);
 
+    //const articleIdSplit = req.query.articleId.split('_');
+    //console.log(articleIdSplit);
+
+    const articleIdObj = {
+        iv: req.query.articleId.split('_')[0],
+        encryptedStr: req.query.articleId.split('_')[1]
+    }
+
+    console.log('articleIdObj: ');
+    console.log(articleIdObj);
+
+    const decryptArticleId = await strEncrypter.method.decryptString(articleIdObj);
+    console.log('decryptArticleId: ');
+    console.log(decryptArticleId);
+
+    const articleData = await dataBaseObj.findArticleById(decryptArticleId);
+    console.log("articleData: ");
+    console.log(articleData);
+
     res.json({
         route: 'retrieve-article-data',
         articleId: req.query.articleId

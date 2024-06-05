@@ -273,6 +273,26 @@ const dataBaseObj = {
 
         }
 
+    },
+
+    async findArticleById(articleID) {
+        
+        //console.log("findArticleById");
+        //console.log(articleID);
+
+        try {
+
+            const query = ArticleModel.findById(articleID);
+            const articleFound = await query.exec();
+            //console.log(articleFound);
+            return articleFound;
+
+
+        } catch(err) {
+            console.log(err);
+            return false;
+        }
+
     }
 
 }
