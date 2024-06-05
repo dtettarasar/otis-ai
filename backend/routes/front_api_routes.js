@@ -153,12 +153,17 @@ router.post('/user-create-article', async (req, res) => {
 
 });
 
-router.get('/article-data', async (req, res) => {
+router.get('/retrieve-article-data', async (req, res) => {
 
     console.log('get request for article data route');
-    
-    const articleEncryptId = req.body.articleId;
-    console.log('articleEncryptId: ' + articleEncryptId);
+
+    console.log('req query');
+    console.log(req.query);
+
+    res.json({
+        route: 'retrieve-article-data',
+        articleId: req.query.articleId
+    });
 
 });
 
