@@ -181,7 +181,12 @@ router.get('/retrieve-article-data', async (req, res) => {
 
     res.json({
         route: 'retrieve-article-data',
-        articleId: req.query.articleId
+        articleId: req.query.articleId,
+        articleTitle: articleData.title,
+        articleDesc: articleData.description,
+        articleMd: articleData.markdown,
+        articleCreationDate: articleData.createdAt,
+        articleLastModifiedDate: articleData.lastModifiedAt
     });
 
 });
