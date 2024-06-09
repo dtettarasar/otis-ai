@@ -15,10 +15,15 @@ export async function retrieveArticleData(articleId) {
     const retrieveArticleBackendUrl = backendUrl + 'front-api/retrieve-article-data';
     const accessToken = Cookies.get('accessToken');
 
-    console.log('init retrieveArticleData function');
-    console.log('articleId: ');
-    console.log(articleId);
-    console.log(typeof articleId);
+    const articleData = {
+        id: articleId,
+        title: null, 
+        description: null,
+        content: null,
+        creationDate: null,
+        lastModifDate: null,
+        errorMessages: null
+    };
 
     try {
 
@@ -29,13 +34,19 @@ export async function retrieveArticleData(articleId) {
             }
         });
 
-        console.log("response data:");
-        console.log(response.data);
+        articleData.title = response.data.articleTitle;
+        articleData.description = response.data.articleDesc;
+        articleData.content = response.data.articleMd;
+        articleData.creationDate = response.data.articleCreationDate;
+        articleData.lastModifDate = response.data.articleLastModifiedDate;
+        
 
     } catch (err) {
 
-        console.error(err);
+        articleData.errorMessages = err;
 
     }
+
+    return articleData;
 
 };

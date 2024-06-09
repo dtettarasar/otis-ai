@@ -45,6 +45,11 @@ const router = createRouter({
       component: EditArticleView
     },
     {
+      path: '/article/:id?',
+      name: 'article',
+      component: CreateArticleView
+    },
+    {
       path: '/login',
       name: 'login',
       component: LoginView
