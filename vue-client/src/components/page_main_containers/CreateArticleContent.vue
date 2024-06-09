@@ -4,6 +4,8 @@
     <div>
         <h2>{{ username }} is connected to the Create Article page</h2>
     </div>
+
+    <ArticleEditorForm></ArticleEditorForm>
     
 
 </template>
@@ -11,10 +13,14 @@
 <script>
 
     import { mapState } from 'vuex';
-    import { retrieveArticleData } from '@/custom_modules/retrieveArticleData.js';
+    import ArticleEditorForm from '@/components/forms/ArticleEditorForm.vue';
 
     export default {
         name: 'CreateArticleContent.vue',
+
+        components: {
+            ArticleEditorForm
+        },
 
         data() {
 
@@ -31,8 +37,6 @@
         },
 
         mounted() {
-
-            retrieveArticleData(this.$route.params.id);
 
         },
 
