@@ -92,6 +92,8 @@
           },
 
           addKeyWrdField: null,
+          keywordsLimit: 10,
+          keywordMaxLength: 30,
           errorMessage: null,
           isEditMode: false
 
@@ -117,14 +119,31 @@
         addKeywords() {
 
           console.log('init add keywords method');
-          console.log('keyword value: ' + this.addKeyWrdField);
 
-          console.log("keyword length:");
-          console.log(this.addKeyWrdField.length);
-
+          let simplifiedKeyWord = null;
           
-          const simplifiedKeyWord = this.addKeyWrdField.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
-          console.log('simplified Keyword value: ' + simplifiedKeyWord);
+          if (this.articleObj.keywords.length == this.keywordsLimit ) {
+
+            console.log(`you can add a maximum of ${this.keywordsLimit} keywords`);
+
+          } else if (!this.addKeyWrdField) {
+
+            console.log('field should not be empty');
+
+          } else if (this.addKeyWrdField.length > this.keywordMaxLength) {
+
+            console.log(`make sure your keywords doesn't exceed ${this.keywordMaxLength} characters`);
+
+          } else {
+
+            simplifiedKeyWord = this.addKeyWrdField.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
+
+            console.log('keyword value: ');
+            console.log(this.addKeyWrdField);
+
+            console.log('simplified Keyword value: ' + simplifiedKeyWord);
+
+          }
 
         }
 
