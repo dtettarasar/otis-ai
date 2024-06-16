@@ -28,15 +28,15 @@
 
             <label class="form-label" for="keywords">Keywords</label>
 
-            <input id="keywords" type="text" class="form-control mb-4">
+            <input v-model="addKeyWrdField" id="keywords" type="text" class="form-control mb-4">
 
-            <button type="button" class="btn btn-secondary">Add keywords</button>
+            <button v-on:click="addKeywords" type="button" class="btn btn-secondary">Add keywords</button>
 
           </div>
 
         </div>
 
-        <div class="bg-dark-subtle rounded mt-4 mb-4 p-5">
+        <div v-if="!this.isEditMode" class="bg-dark-subtle rounded mt-4 mb-4 p-5">
 
           <h2>Generate Text with AI</h2>
 
@@ -84,12 +84,14 @@
             id: null,
             title: '',
             description: '',
+            keywords: [],
             content: '',
             creationDate: null,
             lastModifDate: null,
             errorMessages: null
           },
 
+          addKeyWrdField: null,
           errorMessage: null,
           isEditMode: false
 
@@ -108,8 +110,16 @@
         async saveArticle() {
 
           console.log('init save article method');
+          this.isEditMode = true;
 
         },
+
+        addKeywords() {
+
+          console.log('init add keywords method');
+          console.log('keyword value: ' + this.addKeyWrdField);
+
+        }
 
       },
 
