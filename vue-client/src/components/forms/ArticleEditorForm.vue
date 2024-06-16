@@ -42,6 +42,10 @@
 
           <p>The description and keywords defined above will be used to generate your article</p>
 
+          <p v-if="credit" class="text-primary mt-2">You have <strong>{{ credit }}</strong> credit(s).</p>
+
+          <p v-else class="text-danger mt-2" ><strong>You need credits to generate articles with AI</strong></p>
+
         </div>
 
         <button type="submit" class="btn btn-primary">Save</button>
@@ -56,6 +60,7 @@
 
     import { retrieveArticleData } from '@/custom_modules/retrieveArticleData.js';
     import { toRaw } from 'vue';
+    import { mapState } from 'vuex';
   
     export default {
         
@@ -79,6 +84,12 @@
           isEditMode: false
 
         };
+
+      },
+
+      computed: {
+            
+            ...mapState(['credit'])
 
       },
 
