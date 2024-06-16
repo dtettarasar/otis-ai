@@ -15,14 +15,32 @@
           <div class="mb-3">
 
             <label for="articleTitle" class="form-label">Title</label>
-            <input type="text" class="form-control" id="articleTitle" placeholder="write here your amazing title">
+            <input v-model="articleObj.title" type="text" class="form-control" id="articleTitle" placeholder="write here your amazing title">
 
           </div>
 
           <div class="mb-3">
             <label for="articleDescription" class="form-label">Description</label>
-            <textarea class="form-control" id="articleDescription" rows="3"></textarea>
+            <textarea v-model="articleObj.description" class="form-control" id="articleDescription" rows="3"></textarea>
           </div>
+
+          <div class="mb-3">
+
+            <label class="form-label" for="keywords">Keywords</label>
+
+            <input id="keywords" type="text" class="form-control mb-4">
+
+            <button type="button" class="btn btn-secondary">Add keywords</button>
+
+          </div>
+
+        </div>
+
+        <div class="bg-dark-subtle rounded mt-4 mb-4 p-5">
+
+          <h2>Generate Text with AI</h2>
+
+          <p>The description and keywords defined above will be used to generate your article</p>
 
         </div>
 
