@@ -84,7 +84,7 @@
             id: null,
             title: '',
             description: '',
-            keywords: [],
+            keywordObj: {},
             content: '',
             creationDate: null,
             lastModifDate: null,
@@ -94,6 +94,7 @@
           addKeyWrdField: null,
           keywordsLimit: 10,
           keywordMaxLength: 30,
+          keyWordIdCount: 0,
           errorMessage: null,
           isEditMode: false
 
@@ -122,7 +123,7 @@
 
           let simplifiedKeyWord = null;
           
-          if (this.articleObj.keywords.length == this.keywordsLimit ) {
+          if (Object.keys(this.articleObj.keywordObj).length == this.keywordsLimit ) {
 
             console.log(`you can add a maximum of ${this.keywordsLimit} keywords`);
 
@@ -137,11 +138,21 @@
           } else {
 
             simplifiedKeyWord = this.addKeyWrdField.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
+            const keywordIdVal = `keyword-tag-${this.keyWordIdCount}`;
+
+            this.articleObj.keywordObj[keywordIdVal] = simplifiedKeyWord;
 
             console.log('keyword value: ');
             console.log(this.addKeyWrdField);
 
             console.log('simplified Keyword value: ' + simplifiedKeyWord);
+
+            console.log('keywordObj: ');
+            console.log(toRaw(this.articleObj.keywordObj));
+
+            this.addKeyWrdField = '';
+
+            this.keyWordIdCount++;
 
           }
 
