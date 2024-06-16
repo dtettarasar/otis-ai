@@ -119,6 +119,13 @@
           console.log('init add keywords method');
           console.log('keyword value: ' + this.addKeyWrdField);
 
+          console.log("keyword length:");
+          console.log(this.addKeyWrdField.length);
+
+          
+          const simplifiedKeyWord = this.addKeyWrdField.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
+          console.log('simplified Keyword value: ' + simplifiedKeyWord);
+
         }
 
       },
