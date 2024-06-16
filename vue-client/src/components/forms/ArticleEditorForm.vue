@@ -42,9 +42,19 @@
 
           <p>The description and keywords defined above will be used to generate your article</p>
 
-          <p v-if="credit" class="text-primary mt-2">You have <strong>{{ credit }}</strong> credit(s).</p>
+          <div v-if="credit">
 
-          <p v-else class="text-danger mt-2" ><strong>You need credits to generate articles with AI</strong></p>
+            <p class="text-primary mt-2">You have <strong>{{ credit }}</strong> credit(s).</p>
+            <a type="button" class="btn btn-success ">Use 1 credit to generate an article</a>
+
+          </div>
+
+          <div v-else>
+
+            <p class="text-danger mt-2" ><strong>You need credits to generate articles with AI</strong></p>
+            <button disabled class="btn btn-success ">Use 1 credit to generate an article</button>
+            
+          </div>
 
         </div>
 
