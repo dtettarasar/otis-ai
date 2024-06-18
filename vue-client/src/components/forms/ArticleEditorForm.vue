@@ -30,6 +30,75 @@
 
             <input v-model="addKeyWrdField" id="keywords" type="text" class="form-control mb-4">
 
+            <div class="mb-4 d-flex justify-content-start flex-wrap" id="keywords-container">
+
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
+                <p class="fs-6 m-1 align-self-center">korn</p>
+                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              </div>
+
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
+                <p class="fs-6 m-1 align-self-center">slipknot</p>
+                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              </div>
+
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
+                <p class="fs-6 m-1 align-self-center">as i lay dying</p>
+                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              </div>
+
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
+                <p class="fs-6 m-1 align-self-center">children of bodom</p>
+                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              </div>
+
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
+                <p class="fs-6 m-1 align-self-center">jinjer</p>
+                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              </div>
+
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
+                <p class="fs-6 m-1 align-self-center">gojira</p>
+                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              </div>
+
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
+                <p class="fs-6 m-1 align-self-center">behemoth</p>
+                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              </div>
+
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
+                <p class="fs-6 m-1 align-self-center">megadeth</p>
+                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              </div>
+
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
+                <p class="fs-6 m-1 align-self-center">ghost</p>
+                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              </div>
+
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
+                <p class="fs-6 m-1 align-self-center">testament</p>
+                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              </div>
+
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
+                <p class="fs-6 m-1 align-self-center">trivium</p>
+                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              </div>
+
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
+                <p class="fs-6 m-1 align-self-center">slayer</p>
+                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              </div>
+
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
+                <p class="fs-6 m-1 align-self-center">anthrax</p>
+                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              </div>
+
+            </div>
+
             <button v-on:click="addKeywords" type="button" class="btn btn-secondary">Add keywords</button>
 
           </div>
