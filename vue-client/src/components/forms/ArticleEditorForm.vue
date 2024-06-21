@@ -67,7 +67,7 @@
           <div v-if="credit">
 
             <p class="text-primary mt-2">You have <strong>{{ credit }}</strong> credit(s).</p>
-            <a type="button" class="btn btn-success ">Use 1 credit to generate an article</a>
+            <a @click="generateArticle()" type="button" class="btn btn-success ">Use 1 credit to generate an article</a>
 
           </div>
 
@@ -137,6 +137,14 @@
 
           console.log('init save article method');
           this.isEditMode = true;
+
+        },
+
+        async generateArticle() {
+
+          console.log('init generate article method');
+          console.log('articleObj: ');
+          console.log(toRaw(this.articleObj));
 
         },
 
