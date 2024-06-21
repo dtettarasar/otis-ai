@@ -22,6 +22,7 @@
           <div class="mb-3">
             <label for="articleDescription" class="form-label">Description</label>
             <textarea v-model="articleObj.description" class="form-control" id="articleDescription" rows="3"></textarea>
+            <p class="mt-2">Character counter: <strong>{{ articleObj.description.length }} / {{ descriptionMaxLength }} </strong></p>
           </div>
 
           <div class="mb-3">
@@ -113,7 +114,7 @@
           addKeyWrdField: null,
           keywordsLimit: 10,
           keywordMaxLength: 30,
-          keyWordIdCount: 0,
+          descriptionMaxLength: 130,
           errorMessage: null,
           isEditMode: false
 
