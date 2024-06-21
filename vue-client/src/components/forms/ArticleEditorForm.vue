@@ -26,8 +26,17 @@
 
           <div class="mb-3">
 
-            <label class="form-label" for="keywords">Keywords</label>
+            <label class="form-label" for="keywords">Language</label>
+            <select v-model="articleObj.language" id="language" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+              <option value="EN">English</option>
+              <option value="FR">French</option>
+            </select>
 
+          </div>
+
+          <div class="mb-3">
+
+            <label class="form-label" for="keywords">Keywords</label>
             <input v-model="addKeyWrdField" id="keywords" type="text" class="form-control mb-4">
 
             <div class="mb-4 d-flex justify-content-start flex-wrap" id="keywords-container">
@@ -94,6 +103,7 @@
             title: '',
             description: '',
             keywordObj: [],
+            language: 'EN',
             content: '',
             creationDate: null,
             lastModifDate: null,
