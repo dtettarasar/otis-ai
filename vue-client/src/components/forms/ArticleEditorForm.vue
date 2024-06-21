@@ -32,69 +32,9 @@
 
             <div class="mb-4 d-flex justify-content-start flex-wrap" id="keywords-container">
 
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
-                <p class="fs-6 m-1 align-self-center">korn</p>
-                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
-              </div>
-
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
-                <p class="fs-6 m-1 align-self-center">slipknot</p>
-                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
-              </div>
-
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
-                <p class="fs-6 m-1 align-self-center">as i lay dying</p>
-                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
-              </div>
-
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
-                <p class="fs-6 m-1 align-self-center">children of bodom</p>
-                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
-              </div>
-
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
-                <p class="fs-6 m-1 align-self-center">jinjer</p>
-                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
-              </div>
-
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
-                <p class="fs-6 m-1 align-self-center">gojira</p>
-                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
-              </div>
-
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
-                <p class="fs-6 m-1 align-self-center">behemoth</p>
-                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
-              </div>
-
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
-                <p class="fs-6 m-1 align-self-center">megadeth</p>
-                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
-              </div>
-
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
-                <p class="fs-6 m-1 align-self-center">ghost</p>
-                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
-              </div>
-
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
-                <p class="fs-6 m-1 align-self-center">testament</p>
-                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
-              </div>
-
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
-                <p class="fs-6 m-1 align-self-center">trivium</p>
-                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
-              </div>
-
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
-                <p class="fs-6 m-1 align-self-center">slayer</p>
-                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
-              </div>
-
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" id="keyword-tag-0">
-                <p class="fs-6 m-1 align-self-center">anthrax</p>
-                <button class="btn-close align-self-center" type="button" aria-label="Close"></button>
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" v-for="(keyword, index) in articleObj.keywordObj" :key="index">
+                <p class="fs-6 m-1 align-self-center">{{keyword}}</p>
+                <button @click="removeKeyword(index)" class="btn-close align-self-center" type="button" aria-label="Close"></button>
               </div>
 
             </div>
@@ -153,7 +93,7 @@
             id: null,
             title: '',
             description: '',
-            keywordObj: {},
+            keywordObj: [],
             content: '',
             creationDate: null,
             lastModifDate: null,
@@ -207,9 +147,7 @@
           } else {
 
             simplifiedKeyWord = this.addKeyWrdField.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
-            const keywordIdVal = `keyword-tag-${this.keyWordIdCount}`;
-
-            this.articleObj.keywordObj[keywordIdVal] = simplifiedKeyWord;
+            this.articleObj.keywordObj.push(simplifiedKeyWord);
 
             console.log('keyword value: ');
             console.log(this.addKeyWrdField);
@@ -225,6 +163,13 @@
 
           }
 
+        },
+
+        removeKeyword(index) {
+          console.log('init remove keyword method');
+          this.articleObj.keywordObj.splice(index, 1);
+          console.log('Updated keywordObj: ');
+          console.log(toRaw(this.articleObj.keywordObj));
         }
 
       },
