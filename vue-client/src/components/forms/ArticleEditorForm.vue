@@ -39,15 +39,18 @@
 
             <label class="form-label" for="keywords">Keywords</label>
             <input v-model="addKeyWrdField" id="keywords" type="text" class="form-control mb-4">
+            <p class="mt-2">Character counter: <strong>{{ this.addKeyWrdField.length }} / {{ keywordMaxLength }} </strong></p>
 
-            <div class="mb-4 d-flex justify-content-start flex-wrap" id="keywords-container">
+            <div class="mb-2 d-flex justify-content-start flex-wrap" id="keywords-container">
 
-              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" v-for="(keyword, index) in articleObj.keywordObj" :key="index">
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" v-for="(keyword, index) in articleObj.keywordArr" :key="index">
                 <p class="fs-6 m-1 align-self-center">{{keyword}}</p>
                 <button @click="removeKeyword(index)" class="btn-close align-self-center" type="button" aria-label="Close"></button>
               </div>
 
             </div>
+
+            <p v-if="articleObj.keywordArr.length > 0" >Keyword(s) counter: <strong> {{ articleObj.keywordArr.length }} / {{ keywordsLimit }} </strong></p>
 
             <button v-on:click="addKeywords" type="button" class="btn btn-secondary">Add keywords</button>
 
@@ -103,7 +106,7 @@
             id: null,
             title: '',
             description: '',
-            keywordObj: [],
+            keywordArr: [],
             language: 'EN',
             content: '',
             creationDate: null,
@@ -111,7 +114,7 @@
             errorMessages: null
           },
 
-          addKeyWrdField: null,
+          addKeyWrdField: '',
           keywordsLimit: 10,
           keywordMaxLength: 30,
           descriptionMaxLength: 130,
@@ -143,7 +146,7 @@
 
           let simplifiedKeyWord = null;
           
-          if (Object.keys(this.articleObj.keywordObj).length == this.keywordsLimit ) {
+          if (Object.keys(this.articleObj.keywordArr).length == this.keywordsLimit ) {
 
             console.log(`you can add a maximum of ${this.keywordsLimit} keywords`);
 
@@ -158,15 +161,15 @@
           } else {
 
             simplifiedKeyWord = this.addKeyWrdField.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
-            this.articleObj.keywordObj.push(simplifiedKeyWord);
+            this.articleObj.keywordArr.push(simplifiedKeyWord);
 
             console.log('keyword value: ');
             console.log(this.addKeyWrdField);
 
             console.log('simplified Keyword value: ' + simplifiedKeyWord);
 
-            console.log('keywordObj: ');
-            console.log(toRaw(this.articleObj.keywordObj));
+            console.log('keywordArr: ');
+            console.log(toRaw(this.articleObj.keywordArr));
 
             this.addKeyWrdField = '';
 
@@ -178,9 +181,9 @@
 
         removeKeyword(index) {
           console.log('init remove keyword method');
-          this.articleObj.keywordObj.splice(index, 1);
-          console.log('Updated keywordObj: ');
-          console.log(toRaw(this.articleObj.keywordObj));
+          this.articleObj.keywordArr.splice(index, 1);
+          console.log('Updated keywordArr: ');
+          console.log(toRaw(this.articleObj.keywordArr));
         }
 
       },
