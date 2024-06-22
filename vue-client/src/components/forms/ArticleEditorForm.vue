@@ -121,7 +121,8 @@
           keywordMaxLength: 30,
           descriptionMaxLength: 130,
           errorMessage: null,
-          isEditMode: false
+          isEditMode: false,
+          isViewMode: false,
 
         };
 
