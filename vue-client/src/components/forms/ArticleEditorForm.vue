@@ -93,6 +93,8 @@
     import { retrieveArticleData } from '@/custom_modules/retrieveArticleData.js';
     import { toRaw } from 'vue';
     import { mapState } from 'vuex';
+    import axios from 'axios';
+    import Cookies from 'js-cookie';
   
     export default {
         
@@ -127,7 +129,13 @@
 
       computed: {
             
-            ...mapState(['credit'])
+            ...mapState(['credit']),
+
+            createArticleBackendUrl() {
+
+              return this.$backendUrl + 'front-api/user-create-article';
+
+            }
 
       },
 
@@ -145,6 +153,27 @@
           console.log('init generate article method');
           console.log('articleObj: ');
           console.log(toRaw(this.articleObj));
+
+          const accessToken = Cookies.get('accessToken');
+          console.log("accessToken:");
+          console.log(accessToken);
+
+          try {
+
+            const response = await axios.post(this.createArticleBackendUrl, {
+                accessToken: accessToken
+            });
+
+            console.log("response data:")
+            console.log(response.data);
+
+            //window.location.href = `/create-article/${response.data.articleId}`;
+
+          } catch (err) {
+
+            console.error(err);
+
+          }
 
         },
 

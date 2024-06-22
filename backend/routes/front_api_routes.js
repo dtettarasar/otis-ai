@@ -117,13 +117,14 @@ router.post('/user-create-article', async (req, res) => {
 
     };
 
-
+    
     const accessToken = req.body.accessToken;
 
     //console.log(accessToken);
 
     const tokenData = userTokenObj.authToken(accessToken, process.env.ACCESS_TOKEN_SECRET);
 
+    /*
     if (tokenData.result.authSuccess) {
 
         const decryptUserID = await strEncrypter.method.decryptString(tokenData.result.userIdEncryption);
@@ -144,12 +145,14 @@ router.post('/user-create-article', async (req, res) => {
         articleObj.encryptedIdStr = `${encryptedArticleId.iv}_${encryptedArticleId.encryptedStr}`;
 
     }
+    */
 
     res.json({
         message: 'post request to create article',
         accessToken: accessToken,
-        articleId: articleObj.encryptedIdStr
-    })
+        /*articleId: articleObj.encryptedIdStr*/
+        articleObj: articleObj
+    });
 
 });
 
