@@ -161,7 +161,10 @@
           try {
 
             const response = await axios.post(this.createArticleBackendUrl, {
-                accessToken: accessToken
+                accessToken: accessToken,
+                articleTitle: this.articleObj.title,
+                articleDesc: this.articleObj.description,
+                /*articleKeywords: this.articleObj.keywordArr*/
             });
 
             console.log("response data:")
@@ -235,7 +238,19 @@
 
           try {
 
-            this.articleObj = await retrieveArticleData(articleId);
+            const retrievedData = await retrieveArticleData(articleId);
+
+            if (retrievedData.errorMessages == null) {
+
+              this.articleObj.id = retrievedData.id;
+              this.articleObj.title = retrievedData.title;
+              this.articleObj.description = retrievedData.description;
+              this.articleObj.content = retrievedData.content;
+              this.articleObj.creationDate = retrievedData.creationDate;
+              this.articleObj.lastModifDate = retrievedData.lastModifDate;
+
+            }
+
             console.log(toRaw(this.articleObj));
 
           } catch (error) {

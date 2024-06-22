@@ -107,24 +107,24 @@ router.post('/user-create-article', async (req, res) => {
 
     console.log('post request to create article');
 
+    const accessToken = req.body.accessToken;
+
     const articleObj = {
 
-        title: 'Untitled',
-        description: 'This is a brief description for your article',
+        title: req.body.articleTitle,
+        description: req.body.articleDesc,
+        /*keywords: req.body.articleKeywords,*/
         markdown: 'Write some text here: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada. ',
         otisUserId: null,
         encryptedIdStr: null
 
     };
 
-    
-    const accessToken = req.body.accessToken;
-
     //console.log(accessToken);
 
     const tokenData = userTokenObj.authToken(accessToken, process.env.ACCESS_TOKEN_SECRET);
 
-    /*
+    
     if (tokenData.result.authSuccess) {
 
         const decryptUserID = await strEncrypter.method.decryptString(tokenData.result.userIdEncryption);
@@ -145,13 +145,13 @@ router.post('/user-create-article', async (req, res) => {
         articleObj.encryptedIdStr = `${encryptedArticleId.iv}_${encryptedArticleId.encryptedStr}`;
 
     }
-    */
+
+    console.log(articleObj);
 
     res.json({
         message: 'post request to create article',
         accessToken: accessToken,
-        /*articleId: articleObj.encryptedIdStr*/
-        articleObj: articleObj
+        articleId: articleObj.encryptedIdStr
     });
 
 });

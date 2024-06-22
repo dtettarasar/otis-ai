@@ -34,6 +34,7 @@ export async function retrieveArticleData(articleId) {
             }
         });
 
+        articleData.id = articleId;
         articleData.title = response.data.articleTitle;
         articleData.description = response.data.articleDesc;
         articleData.content = response.data.articleMd;
