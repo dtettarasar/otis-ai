@@ -29,8 +29,8 @@
 
             <label class="form-label" for="keywords">Language</label>
             <select v-model="articleObj.language" id="language" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-              <option value="EN">English</option>
-              <option value="FR">French</option>
+              <option value="en">English</option>
+              <option value="fr">French</option>
             </select>
 
           </div>
@@ -109,7 +109,7 @@
             title: '',
             description: '',
             keywordArr: [],
-            language: 'EN',
+            language: 'en',
             content: '',
             creationDate: null,
             lastModifDate: null,
@@ -164,7 +164,8 @@
                 accessToken: accessToken,
                 articleTitle: this.articleObj.title,
                 articleDesc: this.articleObj.description,
-                /*articleKeywords: this.articleObj.keywordArr*/
+                articleLang: this.articleObj.language,
+                articleKeywords: this.articleObj.keywordArr
             });
 
             console.log("response data:")

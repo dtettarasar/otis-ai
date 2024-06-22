@@ -113,7 +113,8 @@ router.post('/user-create-article', async (req, res) => {
 
         title: req.body.articleTitle,
         description: req.body.articleDesc,
-        /*keywords: req.body.articleKeywords,*/
+        keywords: req.body.articleKeywords,
+        language: req.body.articleLang,
         markdown: 'Write some text here: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada. ',
         otisUserId: null,
         encryptedIdStr: null
