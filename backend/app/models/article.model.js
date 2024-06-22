@@ -26,6 +26,10 @@ const ArticleSch = new mongoose.Schema({
         required: true,
         enum: ['en', 'fr'],
         default: 'en'
+    },
+    keywords: {
+        type: [String],
+        default: []
     }
 });
 
