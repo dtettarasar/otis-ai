@@ -20,7 +20,13 @@ const ArticleSch = new mongoose.Schema({
     createdAt: {type: Date, default: Date.now},
     lastModifiedAt: {type: Date, default: Date.now},
     otisUserId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    sanitizedHtml : {type: String, required: true}
+    sanitizedHtml : {type: String, required: true},
+    language: {
+        type: String,
+        required: true,
+        enum: ['en', 'fr'],
+        default: 'en'
+    }
 });
 
 ArticleSch.pre("validate", function (next) {

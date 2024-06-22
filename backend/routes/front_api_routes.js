@@ -133,7 +133,7 @@ router.post('/user-create-article', async (req, res) => {
 
         articleObj.otisUserId = decryptUserID;
 
-        const articleCreation = await dataBaseObj.createArticle(articleObj.title, articleObj.description, articleObj.markdown, articleObj.otisUserId);
+        const articleCreation = await dataBaseObj.createArticle(articleObj.title, articleObj.description, articleObj.markdown, articleObj.otisUserId, articleObj.keywords, articleObj.language);
 
         // console.log(articleCreation);
         // console.log('article id: ' + articleCreation._id);

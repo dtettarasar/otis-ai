@@ -241,7 +241,7 @@ const dataBaseObj = {
 
     // methods for article object
 
-    async createArticle(titleStr, descriptionStr, markdownStr, otisUserIdStr) {
+    async createArticle(titleStr, descriptionStr, markdownStr, otisUserIdStr, keywordsArr, language) {
 
         /*
             todo: 
@@ -249,12 +249,17 @@ const dataBaseObj = {
         */
 
         console.log("Database Obj: init create article method");
+        console.log('keywords to save: ');
+        console.log(keywordsArr);
+        console.log('language to save:');
+        console.log(language);
 
         let articleObj = new ArticleModel({
             title: titleStr,
             description: descriptionStr,
             markdown: markdownStr,
-            otisUserId: otisUserIdStr
+            otisUserId: otisUserIdStr,
+            language: language
         });
 
         try {
