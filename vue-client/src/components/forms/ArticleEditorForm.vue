@@ -247,6 +247,8 @@
               this.articleObj.title = retrievedData.title;
               this.articleObj.description = retrievedData.description;
               this.articleObj.content = retrievedData.content;
+              this.articleObj.language = retrievedData.language;
+              this.articleObj.keywordArr = retrievedData.keywords;
               this.articleObj.creationDate = retrievedData.creationDate;
               this.articleObj.lastModifDate = retrievedData.lastModifDate;
 

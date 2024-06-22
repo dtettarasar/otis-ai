@@ -21,6 +21,8 @@ export async function retrieveArticleData(articleId) {
         description: null,
         content: null,
         creationDate: null,
+        language:'en',
+        keywords: [],
         lastModifDate: null,
         errorMessages: null
     };
@@ -38,6 +40,8 @@ export async function retrieveArticleData(articleId) {
         articleData.title = response.data.articleTitle;
         articleData.description = response.data.articleDesc;
         articleData.content = response.data.articleMd;
+        articleData.language = response.data.articleLang;
+        articleData.keywords = response.data.articleKeywords;
         articleData.creationDate = response.data.articleCreationDate;
         articleData.lastModifDate = response.data.articleLastModifiedDate;
         

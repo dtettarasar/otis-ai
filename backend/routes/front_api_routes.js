@@ -189,6 +189,8 @@ router.get('/retrieve-article-data', async (req, res) => {
         articleTitle: articleData.title,
         articleDesc: articleData.description,
         articleMd: articleData.markdown,
+        articleLang: articleData.language,
+        articleKeywords: articleData.keywords,
         articleCreationDate: articleData.createdAt,
         articleLastModifiedDate: articleData.lastModifiedAt
     });
