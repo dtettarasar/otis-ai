@@ -93,6 +93,33 @@ describe('RegisterForm.vue', () => {
     
         // Assert that error message for invalid username is displayed
         expect(wrapper.find('.alert-danger').text()).toContain('The username can only contain letters');
-    });    
+    });
+    
+    it('shows error message when account creation fails', async () => {
+        // Mock axios post request to return failure
+        vi.spyOn(axios, 'post').mockRejectedValue(new Error('Account creation failed'));
+    
+        const wrapper = mount(RegisterForm);
+        const form = wrapper.find('form');
+    
+        // Simulate valid user input
+        await wrapper.setData({
+            user: {
+                name: 'validusername',
+                email: 'test@example.com',
+                pwd: 'Password1!',
+                pwdRepeat: 'Password1!'
+            }
+        });
+    
+        // Submit the form
+        await form.trigger('submit');
+
+        // Wait for Vue to re-render after form submission
+        await wrapper.vm.$nextTick();
+    
+        // Assert that error message for account creation failure is displayed
+        expect(wrapper.find('.alert-danger').text()).toContain('Account creation error');
+    });
 
 });
