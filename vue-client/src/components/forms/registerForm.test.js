@@ -72,6 +72,27 @@ describe('RegisterForm.vue', () => {
     
         // Assert that error message for insecure password is displayed
         expect(wrapper.find('.alert-danger').text()).toContain('Your password isn\'t secure enough');
+    });
+    
+    it('shows error message when username is invalid', async () => {
+        const wrapper = mount(RegisterForm);
+        const form = wrapper.find('form');
+    
+        // Simulate user input with invalid username
+        await wrapper.setData({
+            user: {
+                name: 'invalid@username',
+                email: 'test@example.com',
+                pwd: 'ValidPassword1!',
+                pwdRepeat: 'ValidPassword1!'
+            }
+        });
+    
+        // Submit the form
+        await form.trigger('submit');
+    
+        // Assert that error message for invalid username is displayed
+        expect(wrapper.find('.alert-danger').text()).toContain('The username can only contain letters');
     });    
 
 });
