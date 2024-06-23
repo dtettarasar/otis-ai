@@ -32,4 +32,25 @@ describe('RegisterForm.vue', () => {
         expect(wrapper.find('.alert-success').exists()).toBe(true);
     });
 
+    it('shows error message when passwords do not match', async () => {
+        const wrapper = mount(RegisterForm);
+        const form = wrapper.find('form');
+    
+        // Simulate user input with mismatched passwords
+        await wrapper.setData({
+            user: {
+                name: 'validusername',
+                email: 'test@example.com',
+                pwd: 'Password1!',
+                pwdRepeat: 'MismatchedPassword!'
+            }
+        });
+    
+        // Submit the form
+        await form.trigger('submit');
+    
+        // Assert that error message for password mismatch is displayed
+        expect(wrapper.find('.alert-danger').text()).toContain('Please make sure your password match.');
+    });    
+
 });
