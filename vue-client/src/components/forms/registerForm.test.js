@@ -51,6 +51,27 @@ describe('RegisterForm.vue', () => {
     
         // Assert that error message for password mismatch is displayed
         expect(wrapper.find('.alert-danger').text()).toContain('Please make sure your password match.');
+    });
+    
+    it('shows error message when password is not secure enough', async () => {
+        const wrapper = mount(RegisterForm);
+        const form = wrapper.find('form');
+    
+        // Simulate user input with insecure password
+        await wrapper.setData({
+            user: {
+                name: 'validusername',
+                email: 'test@example.com',
+                pwd: 'weakpassword',
+                pwdRepeat: 'weakpassword'
+            }
+        });
+    
+        // Submit the form
+        await form.trigger('submit');
+    
+        // Assert that error message for insecure password is displayed
+        expect(wrapper.find('.alert-danger').text()).toContain('Your password isn\'t secure enough');
     });    
 
 });
