@@ -93,10 +93,11 @@ router.post('/user-create-article', async (req, res) => {
 
     Todo : create an article in the backend
 
-    This article should be provided with basic dummy content:
-    title: untitled
-    description: write a brief description of your article
-    Content: basic lorem ipsum written in markdown
+    Get the article parameters from the vue client to generate the article (title, desc or keywords, language)
+    use these parameters to make an API call to open ai, to generate the article
+    Open AI will provide the content in markdown format. 
+    store this content in the markdown attribute of the articleObj.
+    Then create & save the article in MongoDB.
 
     Once the article is created, get the id of the article object created in mongoDB
     Encrypt this id
