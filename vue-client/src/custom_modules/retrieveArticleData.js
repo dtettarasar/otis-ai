@@ -39,7 +39,7 @@ export async function retrieveArticleData(articleId) {
         articleData.id = articleId;
         articleData.title = response.data.articleTitle;
         articleData.description = response.data.articleDesc;
-        articleData.content = response.data.articleMd;
+        articleData.content = response.data.articleContent;
         articleData.language = response.data.articleLang;
         articleData.keywords = response.data.articleKeywords;
         articleData.creationDate = response.data.articleCreationDate;

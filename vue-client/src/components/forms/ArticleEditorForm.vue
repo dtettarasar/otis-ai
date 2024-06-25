@@ -87,6 +87,12 @@
 
     </div>
 
+    <div class="mt-2" v-if="isViewMode && articleObj">
+      
+      <div v-html="articleObj.content" ></div>
+
+    </div>
+
   </template>
   
   <script>

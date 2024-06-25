@@ -139,7 +139,7 @@ router.post('/user-create-article', async (req, res) => {
         console.log(err);
 
     }
-    
+
     //console.log(accessToken);
 
     const tokenData = userTokenObj.authToken(accessToken, process.env.ACCESS_TOKEN_SECRET);
@@ -207,7 +207,7 @@ router.get('/retrieve-article-data', async (req, res) => {
         articleId: req.query.articleId,
         articleTitle: articleData.title,
         articleDesc: articleData.description,
-        articleMd: articleData.markdown,
+        articleContent: articleData.sanitizedHtml,
         articleLang: articleData.language,
         articleKeywords: articleData.keywords,
         articleCreationDate: articleData.createdAt,
