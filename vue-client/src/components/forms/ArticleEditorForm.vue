@@ -132,6 +132,13 @@
             
             ...mapState(['credit']),
 
+            keyWordsParamOk() {
+
+              const keyWordsParamOk = this.articleObj.keywordArr.length > 0 && this.articleObj.keywordArr.length <= this.keywordsLimit;
+              return keyWordsParamOk;
+
+            },
+
             createArticleBackendUrl() {
 
               return this.$backendUrl + 'front-api/user-create-article';
