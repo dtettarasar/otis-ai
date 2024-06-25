@@ -27,7 +27,7 @@ const aiArticleCreator = {
         const addParamInReq = `${paramsHasKeywords ? keywordsTxt : ''}${paramsHasKeywords && paramsHasDescription ? ' & ' : ''}${paramsHasDescription ? descriptionTxt : ''}`;
 
         const textRequest = `write an article optimized for search engine. to define the topics of the article and the lexical field, ${addParamInReq}. 
-        it should be written in markdown format. the language of the article should be ${language[chosenLanguage]}.
+        it should be written in html format, without the doctype, the head tag, or the html tag. you should use only text related tags, such as p, ul, ol, li and heading tags. the language of the article should be ${language[chosenLanguage]}.
         the article should contain subtitles for each section.`;
 
         return textRequest;
