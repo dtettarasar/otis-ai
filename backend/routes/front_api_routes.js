@@ -6,6 +6,7 @@ const dataBaseObj = require('../app/custom_modules/database_obj');
 const userTokenObj = require('../app/custom_modules/user_token_obj');
 const strEncrypter = require('../app/custom_modules/str_encrypter');
 const stripeApiObj = require('../app/custom_modules/stripe_api_obj');
+const aiArticleCreator = require('../app/custom_modules/ai_article_creator');
 
 router.post('/user-login', async (req, res) => {
 
@@ -121,6 +122,22 @@ router.post('/user-create-article', async (req, res) => {
         encryptedIdStr: null
 
     };
+
+    const prompt = aiArticleCreator.generatePrompt(articleObj.keywords, articleObj.description, articleObj.language);
+    //console.log(prompt);
+
+    try {
+
+        const aiArticleResponse = await aiArticleCreator.generateArticle(prompt);
+        // console.log(aiArticleResponse[0].message);
+        // console.log(typeof aiArticleResponse[0].message.content);
+        articleObj.markdown = aiArticleResponse[0].message.content;
+
+    } catch (err) {
+
+        console.log(err);
+
+    }
 
     //console.log(accessToken);
 
