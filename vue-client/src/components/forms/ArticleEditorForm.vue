@@ -139,6 +139,12 @@
 
             },
 
+            descParamOk() {
+
+              return this.articleObj.description !== '';
+
+            },
+
             createArticleBackendUrl() {
 
               return this.$backendUrl + 'front-api/user-create-article';
