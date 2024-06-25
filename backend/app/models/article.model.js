@@ -16,7 +16,8 @@ Modifier également les fonction dans database Obj qui manipule les articles, po
 const ArticleSch = new mongoose.Schema({
     title: {type: String, required: true},
     description: {type: String},
-    markdown: {type: String, required: true},
+    //markdown: {type: String, required: true},
+    content: {type: String, required: true},
     createdAt: {type: Date, default: Date.now},
     lastModifiedAt: {type: Date, default: Date.now},
     otisUserId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -35,11 +36,11 @@ const ArticleSch = new mongoose.Schema({
 
 ArticleSch.pre("validate", function (next) {
 
-    if (this.markdown) {
+    if (this.content) {
 
-        const markdownToHtml = marked(this.markdown);
+        //const markdownToHtml = marked(this.markdown);
 
-        this.sanitizedHtml = dompurify.sanitize(markdownToHtml);
+        this.sanitizedHtml = dompurify.sanitize(this.content);
 
     }
 

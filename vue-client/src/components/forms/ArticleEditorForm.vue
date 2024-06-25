@@ -2,6 +2,7 @@
     
     <div>
       <p v-if="isEditMode && articleObj">Editing Article ID: {{ articleObj.id }}</p>
+      <p v-if="isViewMode && articleObj">Viewing Article ID: {{ articleObj.id }}</p>
       <p v-else>Creating a New Article</p>
       <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
     </div>
@@ -58,7 +59,7 @@
 
         </div>
 
-        <div v-if="!this.isEditMode" class="bg-dark-subtle rounded mt-4 mb-4 p-5">
+        <div v-if="!this.isViewMode" class="bg-dark-subtle rounded mt-4 mb-4 p-5">
 
           <h2>Generate Text with AI</h2>
 
@@ -158,7 +159,7 @@
         async saveArticle() {
 
           console.log('init save article method');
-          this.isEditMode = true;
+          this.isViewMode = true;
 
         },
 
@@ -248,7 +249,7 @@
         const articleId = this.$route.params.id;
         if (articleId) {
 
-          this.isEditMode = true;
+          this.isViewMode = true;
           console.log('retrieving article data');
 
           try {

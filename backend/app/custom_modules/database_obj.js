@@ -241,7 +241,7 @@ const dataBaseObj = {
 
     // methods for article object
 
-    async createArticle(titleStr, descriptionStr, markdownStr, otisUserIdStr, keywordsArr, language) {
+    async createArticle(titleStr, descriptionStr, contentStr, otisUserIdStr, keywordsArr, language) {
 
         /*
             todo: 
@@ -253,7 +253,7 @@ const dataBaseObj = {
         let articleObj = new ArticleModel({
             title: titleStr,
             description: descriptionStr,
-            markdown: markdownStr,
+            content: contentStr,
             otisUserId: otisUserIdStr,
             language: language,
             keywords: keywordsArr

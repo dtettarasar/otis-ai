@@ -117,12 +117,13 @@ router.post('/user-create-article', async (req, res) => {
         description: req.body.articleDesc,
         keywords: req.body.articleKeywords,
         language: req.body.articleLang,
-        markdown: 'Write some text here: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada. ',
+        content: 'Write some text here: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada.',
         otisUserId: null,
         encryptedIdStr: null
 
     };
 
+    
     const prompt = aiArticleCreator.generatePrompt(articleObj.keywords, articleObj.description, articleObj.language);
     //console.log(prompt);
 
@@ -131,14 +132,14 @@ router.post('/user-create-article', async (req, res) => {
         const aiArticleResponse = await aiArticleCreator.generateArticle(prompt);
         // console.log(aiArticleResponse[0].message);
         // console.log(typeof aiArticleResponse[0].message.content);
-        articleObj.markdown = aiArticleResponse[0].message.content;
+        articleObj.content = aiArticleResponse[0].message.content;
 
     } catch (err) {
 
         console.log(err);
 
     }
-
+    
     //console.log(accessToken);
 
     const tokenData = userTokenObj.authToken(accessToken, process.env.ACCESS_TOKEN_SECRET);
@@ -151,7 +152,7 @@ router.post('/user-create-article', async (req, res) => {
 
         articleObj.otisUserId = decryptUserID;
 
-        const articleCreation = await dataBaseObj.createArticle(articleObj.title, articleObj.description, articleObj.markdown, articleObj.otisUserId, articleObj.keywords, articleObj.language);
+        const articleCreation = await dataBaseObj.createArticle(articleObj.title, articleObj.description, articleObj.content, articleObj.otisUserId, articleObj.keywords, articleObj.language);
 
         // console.log(articleCreation);
         // console.log('article id: ' + articleCreation._id);
