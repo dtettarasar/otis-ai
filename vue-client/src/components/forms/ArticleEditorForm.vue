@@ -156,6 +156,12 @@
 
               return this.$backendUrl + 'front-api/user-create-article';
 
+            },
+
+            retrieveArticleBackendUrl() {
+
+              return this.$backendUrl + 'front-api/retrieve-article-data';
+
             }
 
       },
@@ -199,6 +205,14 @@
             console.error(err);
 
           }
+
+        },
+
+        async testRetrieveArticleData(articleId) {
+
+          console.log('init the testRetrieveArticleData method');
+
+          const accessToken = Cookies.get('accessToken');
 
         },
 
@@ -257,6 +271,8 @@
 
           this.isViewMode = true;
           console.log('retrieving article data');
+
+          this.testRetrieveArticleData(articleId);
 
           try {
 
