@@ -214,6 +214,29 @@
 
           const accessToken = Cookies.get('accessToken');
 
+          try {
+
+            const response = await axios.get(this.retrieveArticleBackendUrl, {
+
+              params : {
+
+                articleId: articleId,
+                accessToken: accessToken
+
+              }
+
+            });
+
+            console.log(response.data);
+
+          } catch(err) {
+
+            console.error(err);
+
+          }
+
+          console.log('end of testRetrieveArticleData method');
+
         },
 
         addKeywords() {
@@ -291,7 +314,7 @@
 
             }
 
-            console.log(toRaw(this.articleObj));
+            //console.log(toRaw(this.articleObj));
 
           } catch (error) {
 
