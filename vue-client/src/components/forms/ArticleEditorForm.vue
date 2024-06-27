@@ -96,8 +96,7 @@
   </template>
   
   <script>
-
-    import { retrieveArticleData } from '@/custom_modules/retrieveArticleData.js';
+  
     import { toRaw } from 'vue';
     import { mapState } from 'vuex';
     import axios from 'axios';
@@ -229,6 +228,19 @@
 
             console.log(response.data);
 
+            if (response.data.errorMessages == null) {
+
+              this.articleObj.id = response.data.articleId;
+              this.articleObj.title = response.data.articleTitle;
+              this.articleObj.description = response.data.articleDesc;
+              this.articleObj.content = response.data.articleContent;
+              this.articleObj.language = response.data.articleLang;
+              this.articleObj.keywordArr = response.data.articleKeywords;
+              this.articleObj.creationDate = response.data.articleCreationDate;
+              this.articleObj.lastModifDate = response.data.articleLastModifiedDate;
+
+            }
+
           } catch(err) {
 
             console.error(err);
@@ -295,33 +307,7 @@
           this.isViewMode = true;
           console.log('retrieving article data');
 
-          this.testRetrieveArticleData(articleId);
-
-          try {
-
-            const retrievedData = await retrieveArticleData(articleId);
-
-            if (retrievedData.errorMessages == null) {
-
-              this.articleObj.id = retrievedData.id;
-              this.articleObj.title = retrievedData.title;
-              this.articleObj.description = retrievedData.description;
-              this.articleObj.content = retrievedData.content;
-              this.articleObj.language = retrievedData.language;
-              this.articleObj.keywordArr = retrievedData.keywords;
-              this.articleObj.creationDate = retrievedData.creationDate;
-              this.articleObj.lastModifDate = retrievedData.lastModifDate;
-
-            }
-
-            //console.log(toRaw(this.articleObj));
-
-          } catch (error) {
-
-            console.error('Error retrieving article data:', error);
-            this.errorMessage = 'Failed to load article data. Please try again later.';
-
-          }
+          await this.testRetrieveArticleData(articleId);
 
         }
 
