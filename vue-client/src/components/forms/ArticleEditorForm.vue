@@ -96,7 +96,7 @@
   </template>
   
   <script>
-  
+
     import { toRaw } from 'vue';
     import { mapState } from 'vuex';
     import axios from 'axios';
@@ -194,8 +194,17 @@
                 articleKeywords: this.articleObj.keywordArr
             });
 
-            console.log("response data:")
+            console.log("response data:");
             console.log(response.data);
+
+            console.log("article id: ");
+            console.log(response.data.articleId);
+
+            if (response.data.articleId) {
+
+              await this.testRetrieveArticleData(response.data.articleId);
+
+            }
 
             //window.location.href = `/create-article/${response.data.articleId}`;
 
