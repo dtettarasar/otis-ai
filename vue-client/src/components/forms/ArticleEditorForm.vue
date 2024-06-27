@@ -87,6 +87,16 @@
 
     </div>
 
+    <div class="mt-2 p-5 bg-dark-subtle rounded" v-if="isViewMode && articleObj" >
+
+      <h1>{{ articleObj.title }}</h1>
+
+      <p class="fs-5">creation date: {{ articleObj.creationDate }}</p>
+      <p class="fs-5">last modification date: {{ articleObj.lastModifDate }}</p>
+
+
+    </div>
+
     <div class="mt-2" v-if="isViewMode && articleObj">
       
       <div v-html="articleObj.content" ></div>
