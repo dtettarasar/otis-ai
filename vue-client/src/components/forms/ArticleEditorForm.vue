@@ -203,6 +203,7 @@
             if (response.data.articleId) {
 
               await this.testRetrieveArticleData(response.data.articleId);
+              this.isViewMode = true;
 
             }
 
