@@ -136,12 +136,6 @@
 
             async getUserArticlesIds(userIdObj) {
 
-                const testArticleIds = [
-                    'id123456789',
-                    'id789456123',
-                    'id456789123'
-                ]
-
                 const reqData = {
                     userId: userIdObj
                 };
@@ -158,9 +152,11 @@
                 })
                 .then(res => {
 
-                    console.log('Response from backend:', res.data);
+                    // console.log('Response from backend:', res.data);
+                    // console.log('article list from backend: ');
+                    // console.log(res.data.articleIdList);
 
-                    this.saveArticleIds(testArticleIds);
+                    this.saveArticleIds(res.data.articleIdList);
 
                     console.log('saved article Ids: ');
                     console.log(toRaw(this.articleIds));

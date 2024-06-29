@@ -140,5 +140,7 @@ export default createStore({
 
       }
 
+      // Todo : construire une nouvelle fonction qui va ajouter l'id d'un nouvel article créé dans le state.articleIds
+
   }
 })
