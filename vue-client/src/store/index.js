@@ -25,7 +25,8 @@ export default createStore({
       credit: 0,
       activeModal: null,
       cookieExpTimestamp: 0,
-      sessionCountdownTriggered: false
+      sessionCountdownTriggered: false,
+      articleIds: []
   },
   getters: {
     getCookieExpTimestamp: state => state.cookieExpTimestamp,
@@ -66,6 +67,10 @@ export default createStore({
 
       setSessionCountdown(state, sessionCountdownTriggered) {
         state.sessionCountdownTriggered = sessionCountdownTriggered;
+      },
+
+      setArticleIds(state, articleIds) {
+        state.articleIds = articleIds
       }
 
   },
@@ -127,6 +132,13 @@ export default createStore({
 
         commit('setSessionCountdown', sessionCountdownTriggered); 
 
+      },
+
+      retrieveArticleIds({commit}, articleIds) {
+
+        commit('setArticleIds', articleIds);
+
       }
+      
   }
 })
