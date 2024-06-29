@@ -13,9 +13,9 @@
                         <router-link class="nav-link" to="/">Home</router-link>
                         <router-link class="nav-link" to="/about">About</router-link>
                         <router-link v-if="this.userLoggedIn" class="nav-link" to="/all-user-article">All User Article</router-link>
-                        <router-link v-if="this.userLoggedIn" class="nav-link" to="/view-article">View article</router-link>
+                        <!--<router-link v-if="this.userLoggedIn" class="nav-link" to="/view-article">View article</router-link>-->
                         <router-link v-if="this.userLoggedIn" class="nav-link" to="/article">Create Article</router-link>
-                        <router-link v-if="this.userLoggedIn" class="nav-link" to="/edit-article">Edit article</router-link>
+                        <!--<router-link v-if="this.userLoggedIn" class="nav-link" to="/edit-article">Edit article</router-link>-->
                         <router-link v-if="this.userLoggedIn" class="nav-link" to="/user-account">User Account</router-link>
                         <router-link v-if="!this.userLoggedIn" class="nav-link" to="/login">Login</router-link>
                         <router-link v-if="!this.userLoggedIn" class="nav-link" to="/register">Register</router-link>
