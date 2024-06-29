@@ -111,6 +111,8 @@
                         this.getUserInitialData(response.data.result.userIdEncryption);
                         this.saveCookieExpTimestamp(response.data.result.exp);
 
+                        this.getUserArticlesIds(response.data.result.userIdEncryption);
+
                     }
 
                     if (this.loginStatus !== this.userLoggedIn) {
@@ -136,9 +138,8 @@
                 ]
 
                 console.log('init getUserArticlesIds');
-
-
-
+                console.log('userIdObj');
+                console.log(userIdObj);
 
             },
 
