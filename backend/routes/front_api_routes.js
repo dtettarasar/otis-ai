@@ -178,29 +178,26 @@ router.post('/user-create-article', async (req, res) => {
 
 router.get('/retrieve-article-data', async (req, res) => {
 
-    console.log('get request for article data route');
+    // console.log('get request for article data route');
 
-    console.log('req query');
-    console.log(req.query);
-
-    //const articleIdSplit = req.query.articleId.split('_');
-    //console.log(articleIdSplit);
+    // console.log('req query');
+    // console.log(req.query);
 
     const articleIdObj = {
         iv: req.query.articleId.split('_')[0],
         encryptedStr: req.query.articleId.split('_')[1]
     }
 
-    console.log('articleIdObj: ');
-    console.log(articleIdObj);
+    // console.log('articleIdObj: ');
+    // console.log(articleIdObj);
 
     const decryptArticleId = await strEncrypter.method.decryptString(articleIdObj);
-    console.log('decryptArticleId: ');
-    console.log(decryptArticleId);
+    // console.log('decryptArticleId: ');
+    // console.log(decryptArticleId);
 
     const articleData = await dataBaseObj.findArticleById(decryptArticleId);
-    console.log("articleData: ");
-    console.log(articleData);
+    // console.log("articleData: ");
+    // console.log(articleData);
 
     res.json({
         route: 'retrieve-article-data',
@@ -264,8 +261,8 @@ router.get('/refresh-token', async (req, res) => {
 
     if (refreshTokenAuthentication.authSuccess) {
 
-        console.log('refreshTokenAuthentication: '); 
-        console.log(refreshTokenAuthentication);
+        // console.log('refreshTokenAuthentication: '); 
+        //console.log(refreshTokenAuthentication);
 
         const accessToken = await userTokenObj.createToken(refreshTokenAuthentication, process.env.ACCESS_TOKEN_SECRET, process.env.ACCESS_TOKEN_EXP);
 
@@ -289,17 +286,17 @@ router.get('/refresh-token', async (req, res) => {
 
 router.get('/user-datas', async (req, res) => {
 
-    console.log('got request for user-datas route');
+    // console.log('got request for user-datas route');
 
     const userIdObj = req.query.userId;
-    console.log('User ID object:', userIdObj);
+    // console.log('User ID object:', userIdObj);
 
     const decryptUserID = await strEncrypter.method.decryptString(userIdObj);
-    console.log('decryptUserID: ' + decryptUserID);
+    // console.log('decryptUserID: ' + decryptUserID);
 
     // check that the user exist in db
     const findUser = await dataBaseObj.findUserById(decryptUserID);
-    console.log(findUser);
+    // console.log(findUser);
 
     const userData = {
         username: findUser.username,
