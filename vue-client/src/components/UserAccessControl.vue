@@ -22,6 +22,7 @@
 
 <script>
 
+    import { toRaw } from 'vue';
     import axios from 'axios';
     import Cookies from 'js-cookie';
     import { mapActions, mapState, mapGetters } from 'vuex';
@@ -58,7 +59,7 @@
 
         computed: {
 
-            ...mapState(['username', 'credit', 'userLoggedIn', 'userInitialInfoSaved']),
+            ...mapState(['username', 'credit', 'userLoggedIn', 'userInitialInfoSaved', 'articleIds']),
 
             ...mapGetters(['getCookieExpTimestamp']),
 
@@ -68,6 +69,10 @@
 
             getUserDataUrl() {
                 return this.$backendUrl + 'front-api/user-datas';
+            }, 
+
+            getUserArticlesIdsUrl() {
+                return this.$backendUrl + 'front-api/retrieve-article-ids-list'
             }
 
         },
@@ -137,9 +142,35 @@
                     'id456789123'
                 ]
 
+                const reqData = {
+                    userId: userIdObj
+                };
+
                 console.log('init getUserArticlesIds');
                 console.log('userIdObj');
                 console.log(userIdObj);
+
+                console.log('backend url:');
+                console.log(this.getUserArticlesIdsUrl);
+
+                await axios.get(this.getUserArticlesIdsUrl, {
+                    params: reqData
+                })
+                .then(res => {
+
+                    console.log('Response from backend:', res.data);
+
+                    this.saveArticleIds(testArticleIds);
+
+                    console.log('saved article Ids: ');
+                    console.log(toRaw(this.articleIds));
+
+                })
+                .catch(err => {
+
+                    console.error('Error fetching user data:', err);
+
+                });
 
             },
 
