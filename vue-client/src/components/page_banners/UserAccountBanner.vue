@@ -12,7 +12,7 @@
         <div class="d-flex flex-wrap flex-row bd-highlight mb-3">
 
             <div class="p-2 bd-highlight">
-                <button v-on:click="createArticle" type="button" class="btn btn-success">Create an article</button>
+                <a href="/article" class="btn btn-success">Create an article</a>
             </div>
 
             <div class="p-2 bd-highlight">
