@@ -85,7 +85,7 @@
 
         methods: {
 
-            ...mapActions(['updateUserLoggedIn', 'saveUserInfo', 'saveCookieExpTimestamp']),
+            ...mapActions(['updateUserLoggedIn', 'saveUserInfo', 'saveCookieExpTimestamp', 'saveArticleIds']),
 
             async fetchData() {
 
@@ -125,6 +125,21 @@
 
                 }
             
+            },
+
+            async getUserArticlesIds(userIdObj) {
+
+                const testArticleIds = [
+                    'id123456789',
+                    'id789456123',
+                    'id456789123'
+                ]
+
+                console.log('init getUserArticlesIds');
+
+
+
+
             },
 
             async getUserInitialData(userIdObj) {
@@ -174,14 +189,14 @@
                     //console.log('userDataObj from component method');
                     //console.log(userDataObj);
 
+                    this.saveUserInfo(userDataObj);
+
                 })
                 .catch(err => {
 
                     console.error('Error fetching user data:', err);
 
                 });
-
-                this.saveUserInfo(userDataObj);
 
             },
 

@@ -134,11 +134,11 @@ export default createStore({
 
       },
 
-      retrieveArticleIds({commit}, articleIds) {
+      saveArticleIds({commit}, articleIds) {
 
         commit('setArticleIds', articleIds);
 
       }
-      
+
   }
 })
