@@ -295,6 +295,27 @@ const dataBaseObj = {
             return false;
         }
 
+    },
+
+    async getArticleIdsList (userId) {
+
+        console.log('init the getArticleIdsList method from the databaseObj');
+        console.log("userId: ");
+        console.log(userId);
+
+        try {
+
+            const query = ArticleModel.find({otisUserId: userId}, { _id: 1 });
+            const articleIdsList = await query.exec();
+            return articleIdsList;
+
+        } catch (err) {
+
+            console.error(err);
+            return false;
+
+        }
+
     }
 
 }

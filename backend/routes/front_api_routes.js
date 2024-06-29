@@ -223,9 +223,14 @@ router.get('/retrieve-article-ids-list', async(req, res) => {
     const decryptUserID = await strEncrypter.method.decryptString(userIdObj);
     console.log('decryptUserID: ' + decryptUserID);
 
+    const articleIdList = await dataBaseObj.getArticleIdsList(decryptUserID);
+    console.log('articleIdList:')
+    console.log(articleIdList);
+
     res.json({
         msg: 'get request for article ids list route',
-        userIdObj: userIdObj
+        userIdObj: userIdObj,
+        articleIdList: articleIdList
     })
 
 });
