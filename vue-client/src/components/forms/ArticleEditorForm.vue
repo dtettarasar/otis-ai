@@ -9,7 +9,7 @@
 
     <div v-if="!this.isViewMode">
 
-      <form @submit.prevent="saveArticle" method="post" >
+      <form @submit.prevent="generateArticle" method="post" >
 
         <div class="bg-dark-subtle rounded mt-4 mb-4 p-5">
 
@@ -68,7 +68,7 @@
           <div v-if="credit">
 
             <p class="text-primary mt-2">You have <strong>{{ credit }}</strong> credit(s).</p>
-            <a @click="generateArticle()" type="button" class="btn btn-success ">Use 1 credit to generate an article</a>
+            <button type="submit" class="btn btn-success">Use 1 credit to generate an article</button>
 
           </div>
 
@@ -81,11 +81,11 @@
 
         </div>
 
-        <button type="submit" class="btn btn-primary">Save</button>
-
       </form>
 
     </div>
+
+    <!--Article in View mode-->
 
     <div class="mt-2 p-5 bg-dark-subtle rounded" v-if="isViewMode && articleObj" >
 
@@ -111,11 +111,13 @@
 
     </div>
 
-    <div class="mt-2" v-if="isViewMode && articleObj">
+    <div class="mt-4" v-if="isViewMode && articleObj">
       
       <div v-html="articleObj.content" ></div>
 
     </div>
+
+    <!--End of Article in View mode-->
 
   </template>
   
