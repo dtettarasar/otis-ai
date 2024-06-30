@@ -6,6 +6,7 @@ const {marked} = require("marked");
 const createDomPurify = require('dompurify');
 const {JSDOM} = require('jsdom');
 const dompurify = createDomPurify(new JSDOM().window);
+const strEncrypter = require('./str_encrypter');
 
 //Models
 const roleModel = require('../models/role.model');
@@ -297,17 +298,20 @@ const dataBaseObj = {
 
     },
 
-    async getArticleIdsList (userId) {
+    async getArticleIdsList (userIdObj) {
 
-        console.log('init the getArticleIdsList method from the databaseObj');
-        console.log("userId: ");
-        console.log(userId);
+        // console.log('init the getArticleIdsList method from the databaseObj');
+
+        let articleIdsList = null;
+        const encryptedArticleIds = [];
+
+        const decryptUserID = await strEncrypter.method.decryptString(userIdObj);
+        // console.log('decryptUserID: ' + decryptUserID);
 
         try {
 
-            const query = ArticleModel.find({otisUserId: userId}, { _id: 1 });
-            const articleIdsList = await query.exec();
-            return articleIdsList;
+            const query = ArticleModel.find({otisUserId: decryptUserID}, { _id: 1 });
+            articleIdsList = await query.exec();
 
         } catch (err) {
 
@@ -315,6 +319,21 @@ const dataBaseObj = {
             return false;
 
         }
+
+        if (articleIdsList) {
+
+            for (let i = 0; i < articleIdsList.length; i++) {
+
+                const encryptedArticleId = await strEncrypter.method.encryptString(articleIdsList[i]._id.toHexString());
+                encryptedArticleIds.push(`${encryptedArticleId.iv}_${encryptedArticleId.encryptedStr}`);
+        
+            }
+
+        }
+
+        // console.log(encryptedArticleIds);
+
+        return encryptedArticleIds;
 
     }
 

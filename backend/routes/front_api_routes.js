@@ -215,17 +215,10 @@ router.get('/retrieve-article-data', async (req, res) => {
 
 router.get('/retrieve-article-ids-list', async(req, res) => {
 
-    console.log('get request for article ids list route');
+    // console.log('get request for article ids list route');
     
     const userIdObj = req.query.userId;
-    console.log('User ID object:', userIdObj);
-
-    const decryptUserID = await strEncrypter.method.decryptString(userIdObj);
-    console.log('decryptUserID: ' + decryptUserID);
-
-    const articleIdList = await dataBaseObj.getArticleIdsList(decryptUserID);
-    console.log('articleIdList:')
-    console.log(articleIdList);
+    const articleIdList = await dataBaseObj.getArticleIdsList(userIdObj);
 
     res.json({
         msg: 'get request for article ids list route',
