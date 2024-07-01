@@ -140,12 +140,11 @@
                     userId: userIdObj
                 };
 
-                console.log('init getUserArticlesIds');
-                console.log('userIdObj');
-                console.log(userIdObj);
-
-                console.log('backend url:');
-                console.log(this.getUserArticlesIdsUrl);
+                // console.log('init getUserArticlesIds');
+                // console.log('userIdObj');
+                // console.log(userIdObj);
+                // console.log('backend url:');
+                // console.log(this.getUserArticlesIdsUrl);
 
                 await axios.get(this.getUserArticlesIdsUrl, {
                     params: reqData
@@ -158,8 +157,8 @@
 
                     this.saveArticleIds(res.data.articleIdList);
 
-                    console.log('saved article Ids: ');
-                    console.log(toRaw(this.articleIds));
+                    // console.log('saved article Ids: ');
+                    // console.log(toRaw(this.articleIds));
 
                 })
                 .catch(err => {

@@ -106,7 +106,7 @@
                 }
 
                 this.modalTriggered = true;
-                console.log('this.modalTriggered: ' + this.modalTriggered);
+                // console.log('this.modalTriggered: ' + this.modalTriggered);
 
                 // Todo : track the active modal in the vuex store
                 /* 
@@ -124,13 +124,13 @@
                 // Méthode a utiliser pour calculer le délai avant l'expiration du token pour afficher le modal
                 // Modal qui permettra à l'utilisateur de se déconnecter ou de rester connecté (en utilisant le refresh token pour accéder un nouveau access token)
                 
-                console.log("timeBeforeModalDisplay: " + this.timeBeforeModalDisplay);
-                console.log("timeBeforeSessionExp: " + this.timeBeforeSessionExp);
-                console.log("getCountdownToEndSession(): " + this.getCountdownToEndSession());
+                // console.log("timeBeforeModalDisplay: " + this.timeBeforeModalDisplay);
+                // console.log("timeBeforeSessionExp: " + this.timeBeforeSessionExp);
+                // console.log("getCountdownToEndSession(): " + this.getCountdownToEndSession());
 
                 if (this.timeBeforeModalDisplay <= 0 && !this.modalTriggered) {
 
-                    console.log('activate the modal!');
+                    // console.log('activate the modal!');
                     this.triggerModal();
 
                 }
@@ -149,8 +149,8 @@
 
                         } else if (this.modalTriggered) {
 
-                            console.log("getCountdownToEndSession(): " + this.getCountdownToEndSession());
-                            console.log("timeBeforeSessionExp(): " + this.timeBeforeSessionExp);
+                            // console.log("getCountdownToEndSession(): " + this.getCountdownToEndSession());
+                            // console.log("timeBeforeSessionExp(): " + this.timeBeforeSessionExp);
 
                         }
 
@@ -170,11 +170,11 @@
 
             async refreshToken() {
 
-                console.log('init refresh token session');
-                console.log('refreshTokenUrl: ' + this.refreshTokenUrl);
+                // console.log('init refresh token session');
+                // console.log('refreshTokenUrl: ' + this.refreshTokenUrl);
 
                 const refreshToken = Cookies.get('refreshToken');
-                console.log("refreshToken: " + refreshToken);
+                // console.log("refreshToken: " + refreshToken);
 
                 // Création d'une instance Axios avec le refresh token actuel
                 const axiosWithAuth = axiosInstance(refreshToken);
