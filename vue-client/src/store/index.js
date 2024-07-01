@@ -140,11 +140,7 @@ export default createStore({
 
       }
 
-<<<<<<< HEAD
       // Todo : construire une nouvelle fonction qui va ajouter l'id d'un nouvel article créé dans le state.articleIds
 
-=======
-      // Todo : construire une nouvelle fonction qui va ajouter l'id d'un nouvel article créé dans le state.
->>>>>>> aa22b3f (add comment in the store)
   }
 })
