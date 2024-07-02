@@ -2,10 +2,10 @@
     
     <div class="m-2 p-5 bg-dark-subtle rounded" >
 
-        <h1>title</h1>
+        <h1>{{ this.articleObj.title }}</h1>
 
-        <p class="fs-5 date-text">creation date: date value </p>
-        <p class="fs-5 date-text">last modification date: value </p>
+        <p class="fs-5 date-text"><strong>creation date:</strong> {{this.articleObj.creationDate}} </p>
+        <p class="fs-5 date-text"><strong>last modification date:</strong> {{this.articleObj.lastModifDate}} </p>
 
         <div>
 
@@ -13,13 +13,9 @@
 
             <div class="mb-2 d-flex justify-content-start flex-wrap">
 
-            <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row">
-                <p class="fs-6 m-1 align-self-center">keyword</p>
-            </div>
-
-            <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row">
-                <p class="fs-6 m-1 align-self-center">keyword</p>
-            </div>
+                <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" v-for="(keyword, index) in articleObj.keywordArr" :key="index">
+                    <p class="fs-6 m-1 align-self-center">{{keyword}}</p>
+                </div>
 
             </div>
 
@@ -38,6 +34,9 @@
 </template>
 
 <script>
+
+    import axios from 'axios';
+    import Cookies from 'js-cookie';
 
     export default {
         name: 'ArticleCard',
@@ -91,10 +90,46 @@
 
             async retrieveArticleData(articleId) {
 
+                const accessToken = Cookies.get('accessToken');
+
                 console.log('init the retrieveArticleData method from the article card');
 
                 console.log("articleID: ");
                 console.log(articleId);
+
+                try {
+
+                    const response = await axios.get(this.retrieveArticleBackendUrl, {
+
+                        params : {
+
+                            articleId: articleId,
+                            accessToken: accessToken
+
+                        }
+
+                    });
+
+                    console.log(response.data);
+
+                    if (response.data.errorMessages == null) {
+
+                        this.articleObj.id = response.data.articleId;
+                        this.articleObj.title = response.data.articleTitle;
+                        this.articleObj.description = response.data.articleDesc;
+                        this.articleObj.content = response.data.articleContent;
+                        this.articleObj.language = response.data.articleLang;
+                        this.articleObj.keywordArr = response.data.articleKeywords;
+                        this.articleObj.creationDate = response.data.articleCreationDate;
+                        this.articleObj.lastModifDate = response.data.articleLastModifiedDate;
+
+                    }
+
+                } catch(err) {
+
+                    console.error(err);
+
+                }
                 
                 console.log('end of the retrieveArticleData method from the article card');
 
