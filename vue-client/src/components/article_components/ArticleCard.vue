@@ -49,13 +49,47 @@
             }
         },
 
+        data() {
+
+            return {
+
+                articleObj: {
+
+                    id: null,
+                    title: '',
+                    description: '',
+                    keywordArr: [],
+                    language: 'en',
+                    content: '',
+                    creationDate: null,
+                    lastModifDate: null,
+                    errorMessages: null
+
+                }
+
+            }
+
+        },
+
         computed: {
 
             articlePageLink() {
 
                 return `/article/${this.articleId}`;
 
+            },
+
+            retrieveArticleBackendUrl() {
+
+                return this.$backendUrl + 'front-api/retrieve-article-data';
+
             }
+
+        },
+
+        methods: {
+
+
 
         }
 
