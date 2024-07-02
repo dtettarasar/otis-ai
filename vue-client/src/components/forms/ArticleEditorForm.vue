@@ -110,7 +110,7 @@
 
           <button class="btn btn-success m-1 p-2"><i class="bi bi-pen-fill"></i> Edit</button>
           <button class="btn btn-danger m-1 p-2"><i class="bi bi-trash-fill"></i> Delete</button>
-          <button class="btn btn-dark m-1 p-2"><i class="bi bi-file-richtext-fill"></i> All my articles</button>
+          <router-link class="btn btn-dark m-1 p-2" to="/all-user-article"><i class="bi bi-file-richtext-fill"></i> All my articles</router-link>
 
         </div>
 
