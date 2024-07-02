@@ -89,7 +89,26 @@
 
         methods: {
 
+            async retrieveArticleData(articleId) {
 
+                console.log('init the retrieveArticleData method from the article card');
+
+                console.log("articleID: ");
+                console.log(articleId);
+                
+                console.log('end of the retrieveArticleData method from the article card');
+
+            }
+
+        },
+
+        async mounted() {
+
+            if (this.articleId) {
+
+                await this.retrieveArticleData(this.articleId);
+
+            }
 
         }
 
