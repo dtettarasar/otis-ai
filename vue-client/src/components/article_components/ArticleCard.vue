@@ -25,7 +25,7 @@
 
             <div class="d-flex flex-row flex-wrap">
 
-                <button class="btn btn-dark m-1 p-2"><i class="bi bi-eye-fill"></i> View</button>
+                <router-link class="btn btn-dark m-1 p-2" :to=this.articlePageLink><i class="bi bi-eye-fill"></i> View</router-link>
                 <button class="btn btn-success m-1 p-2"><i class="bi bi-pen-fill"></i> Edit</button>
                 <button class="btn btn-danger m-1 p-2"><i class="bi bi-trash-fill"></i> Delete</button>
 
@@ -41,12 +41,24 @@
 
     export default {
         name: 'ArticleCard',
+        
         props: {
             articleId: {
                 type: String,
                 required: true
             }
+        },
+
+        computed: {
+
+            articlePageLink() {
+
+                return `/article/${this.articleId}`;
+
+            }
+
         }
+
     }
 
 </script>
