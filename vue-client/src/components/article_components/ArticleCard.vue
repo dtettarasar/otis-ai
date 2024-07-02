@@ -4,8 +4,8 @@
 
         <h1>{{ this.articleObj.title }}</h1>
 
-        <p class="fs-5 date-text"><strong>creation date:</strong> {{this.articleObj.creationDate}} </p>
-        <p class="fs-5 date-text"><strong>last modification date:</strong> {{this.articleObj.lastModifDate}} </p>
+        <p class="fs-5 date-text"><strong>creation date:</strong> {{this.formattedDates.creationDate}} </p>
+        <p class="fs-5 date-text"><strong>last modification date:</strong> {{this.formattedDates.lastModifDate}} </p>
 
         <div>
 
@@ -81,6 +81,17 @@
             retrieveArticleBackendUrl() {
 
                 return this.$backendUrl + 'front-api/retrieve-article-data';
+
+            },
+
+            formattedDates() {
+
+                return {
+
+                    creationDate: this.articleObj.creationDate ? new Date(this.articleObj.creationDate).toLocaleDateString() : '',
+                    lastModifDate: this.articleObj.lastModifDate ? new Date(this.articleObj.lastModifDate).toLocaleDateString() : '',
+
+                }
 
             }
 
