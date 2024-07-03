@@ -7,6 +7,8 @@
       <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
     </div>
 
+    <!--Article in Generate mode-->
+
     <div v-if="!this.isViewMode">
 
       <form @submit.prevent="generateArticle" method="post" >
@@ -108,7 +110,8 @@
 
         <div class="d-flex flex-row">
 
-          <button class="btn btn-success m-1 p-2"><i class="bi bi-pen-fill"></i> Edit</button>
+          <button v-on:click="switchToEditMode" class="btn btn-success m-1 p-2"><i class="bi bi-pen-fill"></i> Edit Mode</button>
+          <button v-on:click="switchToViewMode" class="btn btn-primary m-1 p-2"><i class="bi bi-eye-fill"></i> View Mode</button>
           <button class="btn btn-danger m-1 p-2"><i class="bi bi-trash-fill"></i> Delete</button>
           <router-link class="btn btn-dark m-1 p-2" to="/all-user-article"><i class="bi bi-file-richtext-fill"></i> All my articles</router-link>
 
@@ -163,6 +166,7 @@
           errorMessage: null,
           isEditMode: false,
           isViewMode: false,
+          isGenerateMode: false
 
         };
 
@@ -350,6 +354,18 @@
           this.articleObj.keywordArr.splice(index, 1);
           console.log('Updated keywordArr: ');
           console.log(toRaw(this.articleObj.keywordArr));
+        },
+
+        switchToEditMode() {
+
+          console.log("switch to edit mode");
+
+        },
+
+        switchToViewMode() {
+
+          console.log("switch to view mode");
+
         }
 
       },
