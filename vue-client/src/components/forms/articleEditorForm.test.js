@@ -106,5 +106,20 @@ describe('ArticleEditorForm.vue', () => {
 
     });
 
+    it('ne pas ajouter de mot clé si la limite est atteinte', async () => {
+
+        // Remplir keywordArr avec 10 mots-clés pour ce test spécifique
+        await wrapper.setData({
+            articleObj: {
+            keywordArr: Array(10).fill('keyword')
+            }
+        });
+
+        await wrapper.setData({ addKeyWrdField: 'NewKeyword' });
+        await wrapper.vm.addKeywords();
+        expect(wrapper.vm.articleObj.keywordArr.length).toBe(10); // toujours 10, le nouveau mot-clé n'est pas ajouté
+
+    });
+
 });
 
