@@ -111,13 +111,41 @@ describe('ArticleEditorForm.vue', () => {
         // Remplir keywordArr avec 10 mots-clés pour ce test spécifique
         await wrapper.setData({
             articleObj: {
-            keywordArr: Array(10).fill('keyword')
+                keywordArr: Array(10).fill('keyword')
             }
         });
 
         await wrapper.setData({ addKeyWrdField: 'NewKeyword' });
         await wrapper.vm.addKeywords();
         expect(wrapper.vm.articleObj.keywordArr.length).toBe(10); // toujours 10, le nouveau mot-clé n'est pas ajouté
+
+    });
+
+    it('vérifie les paramètres de descriptions et mot clés valides', async () => {
+
+        await wrapper.setData({
+            articleObj: {
+                description: 'Test Description',
+                keywordArr: ['keyword1', 'keyword2'],
+            }
+        });
+
+        expect(wrapper.vm.descParamOk).toBe(true);
+        expect(wrapper.vm.keyWordsParamOk).toBe(true);
+
+    });
+
+    it('vérifie les paramètres de descriptions et mots cles vides', async () => {
+
+        await wrapper.setData({
+            articleObj: {
+                description: '',
+                keywordArr: [],
+            }
+        });
+
+        expect(wrapper.vm.descParamOk).toBe(false);
+        expect(wrapper.vm.keyWordsParamOk).toBe(false);
 
     });
 
