@@ -65,20 +65,30 @@
 
           <h2>Generate Text with AI</h2>
 
-          <p>The description and keywords defined above will be used to generate your article</p>
+          <div v-if="!articleInCreation">
 
-          <div v-if="credit">
+            <p>The description and keywords defined above will be used to generate your article</p>
 
-            <p class="text-primary mt-2">You have <strong>{{ credit }}</strong> credit(s).</p>
-            <button type="submit" class="btn btn-success">Use 1 credit to generate an article</button>
+            <div v-if="credit">
+
+              <p class="text-primary mt-2">You have <strong>{{ credit }}</strong> credit(s).</p>
+              <button type="submit" class="btn btn-success">Use 1 credit to generate an article</button>
+
+            </div>
+
+            <div v-else>
+
+              <p class="text-danger mt-2" ><strong>You need credits to generate articles with AI</strong></p>
+              <button disabled class="btn btn-success ">Use 1 credit to generate an article</button>
+
+            </div>
 
           </div>
 
-          <div v-else>
+          <div v-else >
 
-            <p class="text-danger mt-2" ><strong>You need credits to generate articles with AI</strong></p>
-            <button disabled class="btn btn-success ">Use 1 credit to generate an article</button>
-            
+            <p>Article in creation, please wait :)</p>
+
           </div>
 
         </div>
@@ -166,7 +176,8 @@
           errorMessage: null,
           isEditMode: false,
           isViewMode: false,
-          isGenerateMode: false
+          isGenerateMode: false,
+          articleInCreation: false
 
         };
 
@@ -233,34 +244,42 @@
           console.log("accessToken:");
           console.log(accessToken);
 
-          try {
+          if (!this.descParamOk && !this.keyWordsParamOk) {
 
-            const response = await axios.post(this.createArticleBackendUrl, {
-                accessToken: accessToken,
-                articleTitle: this.articleObj.title,
-                articleDesc: this.articleObj.description,
-                articleLang: this.articleObj.language,
-                articleKeywords: this.articleObj.keywordArr
-            });
+            console.log("error: no parameters");
 
-            console.log("response data:");
-            console.log(response.data);
+          } else {
 
-            console.log("article id: ");
-            console.log(response.data.articleId);
+              try {
 
-            if (response.data.articleId) {
+                this.articleInCreation = true;
 
-              await this.testRetrieveArticleData(response.data.articleId);
-              this.isViewMode = true;
+                const response = await axios.post(this.createArticleBackendUrl, {
+                    accessToken: accessToken,
+                    articleTitle: this.articleObj.title ? this.articleObj.title : 'Untitled',
+                    articleDesc: this.articleObj.description,
+                    articleLang: this.articleObj.language,
+                    articleKeywords: this.articleObj.keywordArr
+                });
 
-            }
+                console.log("response data:");
+                console.log(response.data);
 
-            //window.location.href = `/create-article/${response.data.articleId}`;
+                console.log("article id: ");
+                console.log(response.data.articleId);
 
-          } catch (err) {
+                if (response.data.articleId) {
 
-            console.error(err);
+                  await this.testRetrieveArticleData(response.data.articleId);
+                  this.isViewMode = true;
+
+                }
+
+                } catch (err) {
+
+                  console.error(err);
+
+                }
 
           }
 
