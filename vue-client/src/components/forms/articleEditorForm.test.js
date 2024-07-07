@@ -98,5 +98,13 @@ describe('ArticleEditorForm.vue', () => {
 
     });
 
+    it('ne pas ajouter de mot clé si le champ est vide', async () => {
+
+        await wrapper.setData({ addKeyWrdField: '' });
+        await wrapper.vm.addKeywords();
+        expect(wrapper.vm.articleObj.keywordArr.length).toBe(0);
+
+    });
+
 });
 
