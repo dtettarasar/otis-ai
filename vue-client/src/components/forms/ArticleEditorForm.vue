@@ -145,7 +145,7 @@
   <script>
 
     import { toRaw } from 'vue';
-    import { mapState } from 'vuex';
+    import { mapState, mapActions } from 'vuex';
     import axios from 'axios';
     import Cookies from 'js-cookie';
   
@@ -227,6 +227,8 @@
 
       methods: {
 
+        ...mapActions(['addArticleId']),
+
         async saveArticle() {
 
           console.log('init save article method');
@@ -270,7 +272,10 @@
 
                 if (response.data.articleId) {
 
+                  // Récupère les données de l'article qui vient d'être créé + ajout de l'id de l'aricle dans le store
+
                   await this.testRetrieveArticleData(response.data.articleId);
+                  this.addArticleId(response.data.articleId);
                   this.isViewMode = true;
 
                 }

@@ -71,6 +71,12 @@ export default createStore({
 
       setArticleIds(state, articleIds) {
         state.articleIds = articleIds
+      },
+
+      addArticleId(state, articleId) {
+
+        state.articleIds.push(articleId);
+
       }
 
   },
@@ -137,6 +143,12 @@ export default createStore({
       saveArticleIds({commit}, articleIds) {
 
         commit('setArticleIds', articleIds);
+
+      },
+
+      addArticleId({commit}, articleId) {
+
+        commit('addArticleId', articleId);
 
       }
 
