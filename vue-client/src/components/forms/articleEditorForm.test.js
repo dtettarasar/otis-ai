@@ -90,5 +90,13 @@ describe('ArticleEditorForm.vue', () => {
         expect(wrapper.text()).toContain('Creating a New Article');
     });
 
+    it('ajoute un mot clé', async () => {
+
+        await wrapper.setData({ addKeyWrdField: 'TestKeyword' });
+        await wrapper.vm.addKeywords();
+        expect(wrapper.vm.articleObj.keywordArr).toContain('testkeyword'); // testkeyword car les mots-clés sont mis en minuscule
+
+    });
+
 });
 
