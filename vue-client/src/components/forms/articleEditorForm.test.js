@@ -1,8 +1,15 @@
-import { mount } from '@vue/test-utils';
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import ArticleEditorForm from '@/components/forms/ArticleEditorForm.vue';
+import { mount, flushPromises } from '@vue/test-utils';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { createRouter, createMemoryHistory } from 'vue-router';
 import { createStore } from 'vuex';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+
+import ArticleEditorForm from '@/components/forms/ArticleEditorForm.vue';
+
+// Mock d'axios et de js-cookie
+vi.mock('axios');
+vi.mock('js-cookie');
 
 // Créer mock du router 
 const router = createRouter({
@@ -46,7 +53,7 @@ describe('ArticleEditorForm.vue', () => {
                     isEditMode: true,
                     isViewMode: false,
                     articleObj: {
-                        id: 'test_id',
+                        id: null,
                         title: '',
                         description: '',
                         keywordArr: [],
@@ -75,13 +82,33 @@ describe('ArticleEditorForm.vue', () => {
     });
 
     it('affiche le message approprié en mode édition', async () => {
+
+        await wrapper.setData({
+            articleObj: {
+                id: 'test_id',
+            }
+        });
+
         expect(wrapper.text()).toContain('Editing Article ID: test_id');
+
     });
 
     it('affiche le message approprié en mode visualisation', async () => {
-        await wrapper.setData({ isEditMode: false, isViewMode: true });
+
+        await wrapper.setData({
+
+            articleObj: {
+                id: 'test_id',
+            },
+
+            isEditMode: false,
+            isViewMode: true
+
+        });
+
         await wrapper.vm.$nextTick();
         expect(wrapper.text()).toContain('Viewing Article ID: test_id');
+
     });
 
     it('affiche le message approprié en mode création', async () => {
@@ -146,6 +173,54 @@ describe('ArticleEditorForm.vue', () => {
 
         expect(wrapper.vm.descParamOk).toBe(false);
         expect(wrapper.vm.keyWordsParamOk).toBe(false);
+
+    });
+
+    it('génère proprement un article', async () => {
+
+        // Mock des cookies et appel axios
+        Cookies.get.mockReturnValue('mocked-access-token');
+        axios.post.mockResolvedValue({ data: { articleId: 'test_id' } });
+
+        axios.get.mockResolvedValue({
+            data: {
+                articleId: 'test_id',
+                articleTitle: 'Test Title',
+                articleDesc: 'Test Description',
+                articleContent: 'Test Content',
+                articleLang: 'en',
+                articleKeywords: ['keyword1', 'keyword2'],
+                articleCreationDate: '2024-01-01',
+                articleLastModifiedDate: '2024-01-01',
+            },
+        });
+
+        const wrapper = createComponent({
+            articleObj: {
+                description: 'Test Description',
+                keywordArr: ['keyword1', 'keyword2'],
+            },
+        });
+
+        await wrapper.setData({ articleObj: { id: null } }); // S'assurer que l'id est null au début
+
+        expect(wrapper.vm.articleObj.id).toBe(null); // Vérifier que l'ID est null au début
+
+        await wrapper.vm.generateArticle();
+        await flushPromises();
+
+        // Tester les infos de l'article enregistré dans le composant
+        expect(wrapper.vm.articleObj.id).toBe('test_id');
+        expect(wrapper.vm.articleObj.title).toBe('Test Title');
+        expect(wrapper.vm.articleObj.description).toBe('Test Description');
+        expect(wrapper.vm.articleObj.keywordArr).toStrictEqual(['keyword1', 'keyword2']);
+        expect(wrapper.vm.articleObj.language).toBe('en');
+        expect(wrapper.vm.articleObj.content).toBe('Test Content');
+        expect(wrapper.vm.articleObj.creationDate).toBe('2024-01-01');
+        expect(wrapper.vm.articleObj.lastModifDate).toBe('2024-01-01');
+
+        // vérifier que le composant passe en mode visualisation une fois l'article généré
+        expect(wrapper.vm.isViewMode).toBe(true);
 
     });
 
