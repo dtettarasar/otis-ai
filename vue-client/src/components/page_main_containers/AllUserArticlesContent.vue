@@ -9,7 +9,7 @@
 
         <div class="row">
 
-            <div class="col-12 col-md-6 col-lg-4 mb-3" v-for="articleId in articleIds" :key="articleId">
+            <div class="col-12 col-md-6 col-lg-4 mb-3" v-for="articleId in reverseArticleList" :key="articleId">
 
                 <ArticleCard :articleId="articleId"></ArticleCard>
 
@@ -47,6 +47,11 @@
         computed: {
 
             ...mapState(['username', 'articleIds']),
+
+            reverseArticleList() {
+                // pour afficher les articles les plus récents en premier
+                return this.articleIds.slice().reverse();
+            }
 
         },
 
