@@ -49,7 +49,10 @@
             ...mapState(['username', 'articleIds']),
 
             limitedArticleIds() {
-                return this.articleIds.slice(0, 3);
+                // slice() est utilisé sans arguments pour créer une copie du tableau et éviter de modifier l'original
+                // reverse() inverse l'ordre des articles pour récupérer les plus récents en premier
+                // slice(0, 3) pour obtenir les 3 premiers articles de ce tableau inversé, les 3 articles les plus récents
+                return this.articleIds.slice().reverse().slice(0, 3);
             }
 
         },
