@@ -9,15 +9,22 @@
 
         <div>
 
-            <p class="fs-5 mt-4">keywords:</p>
+            <div v-if="this.articleObj.keywordArr.length != 0">
 
-            <div class="mb-2 d-flex justify-content-start flex-wrap">
+                <p class="fs-5 mt-4">keywords:</p>
 
-                <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" v-for="(keyword, index) in articleObj.keywordArr" :key="index">
-                    <p class="fs-6 m-1 align-self-center">{{keyword}}</p>
+                <div class="mb-2 d-flex justify-content-start flex-wrap">
+
+                    <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" v-for="(keyword, index) in articleObj.keywordArr" :key="index">
+                        <p class="fs-6 m-1 align-self-center">{{keyword}}</p>
+                    </div>
+
                 </div>
 
             </div>
+            
+
+            
 
             <div class="d-flex flex-row flex-wrap">
 
