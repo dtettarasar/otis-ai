@@ -30,7 +30,7 @@
 
                 <router-link class="btn btn-dark m-1 p-2" :to=this.articlePageLink><i class="bi bi-eye-fill"></i> View</router-link>
                 <button class="btn btn-success m-1 p-2"><i class="bi bi-pen-fill"></i> Edit</button>
-                <button class="btn btn-danger m-1 p-2"><i class="bi bi-trash-fill"></i> Delete</button>
+                <button v-on:click="deleteArticle()" class="btn btn-danger m-1 p-2"><i class="bi bi-trash-fill"></i> Delete</button>
 
             </div>
 
@@ -150,6 +150,12 @@
                 }
                 
                 console.log('end of the retrieveArticleData method from the article card');
+
+            },
+
+            async deleteArticle() {
+               
+                console.log('init delete article');
 
             }
 
