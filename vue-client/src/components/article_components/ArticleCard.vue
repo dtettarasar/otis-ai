@@ -38,15 +38,25 @@
 
     </div>
 
+    <DeleteArticleModal :deleteArticleModalId="deleteArticleModalId" ></DeleteArticleModal>
+
 </template>
 
 <script>
 
     import axios from 'axios';
     import Cookies from 'js-cookie';
+    import { Modal } from 'bootstrap';
+    import DeleteArticleModal from '@/components/modals/DeleteArticleModal.vue';
 
     export default {
         name: 'ArticleCard',
+
+        components: {
+
+            DeleteArticleModal,
+
+        },
         
         props: {
             articleId: {
@@ -100,6 +110,10 @@
 
                 }
 
+            },
+
+            deleteArticleModalId() {
+                return `delete-article-${this.articleId}`
             }
 
         },
@@ -156,6 +170,9 @@
             async deleteArticle() {
                
                 console.log('init delete article');
+                console.log(this.deleteArticleModalId);
+                let myModal = new Modal(document.getElementById(this.deleteArticleModalId));
+                myModal.show();
 
             }
 
