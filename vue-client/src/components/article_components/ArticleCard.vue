@@ -38,7 +38,7 @@
 
     </div>
 
-    <DeleteArticleModal :deleteArticleModalId="deleteArticleModalId" ></DeleteArticleModal>
+    <DeleteArticleModal :articleId="articleId" ></DeleteArticleModal>
 
 </template>
 

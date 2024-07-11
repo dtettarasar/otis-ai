@@ -38,11 +38,19 @@
         },
 
         props: {
-            deleteArticleModalId: {
+            articleId: {
                 type: String,
                 required: true
             }
         },
+
+        computed: {
+
+            deleteArticleModalId() {
+                return `delete-article-${this.articleId}`
+            }
+
+        }
 
     }
 
