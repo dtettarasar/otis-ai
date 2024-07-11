@@ -122,7 +122,7 @@
 
           <button v-on:click="switchToEditMode" class="btn btn-success m-1 p-2"><i class="bi bi-pen-fill"></i> Edit Mode</button>
           <button v-on:click="switchToViewMode" class="btn btn-primary m-1 p-2"><i class="bi bi-eye-fill"></i> View Mode</button>
-          <button class="btn btn-danger m-1 p-2"><i class="bi bi-trash-fill"></i> Delete</button>
+          <button v-on:click="deleteArticle()" class="btn btn-danger m-1 p-2"><i class="bi bi-trash-fill"></i> Delete</button>
           <router-link class="btn btn-dark m-1 p-2" to="/all-user-article"><i class="bi bi-file-richtext-fill"></i> All my articles</router-link>
 
         </div>
@@ -140,18 +140,30 @@
 
     <!--End of Article in View mode-->
 
+    <DeleteArticleModal :articleId="articleObj.id" :articleTitle="articleObj.title" :creationDate="this.formattedDates.creationDate" ></DeleteArticleModal>
+
   </template>
   
   <script>
 
     import { toRaw } from 'vue';
     import { mapState, mapActions } from 'vuex';
+    import { Modal } from 'bootstrap';
     import axios from 'axios';
     import Cookies from 'js-cookie';
+    import DeleteArticleModal from '@/components/modals/DeleteArticleModal.vue';
+
+
   
     export default {
         
       name: 'ArticleEditorForm.vue',
+
+      components: {
+
+        DeleteArticleModal,
+
+      },
 
       data() {
 
@@ -221,6 +233,10 @@
 
               }
 
+            },
+
+            deleteArticleModalId() {
+                return `delete-article-${this.articleObj.id}`
             }
 
       },
@@ -389,6 +405,15 @@
         switchToViewMode() {
 
           console.log("switch to view mode");
+
+        },
+
+        async deleteArticle() {
+               
+               console.log('init delete article');
+               console.log(this.deleteArticleModalId);
+               let myModal = new Modal(document.getElementById(this.deleteArticleModalId));
+               myModal.show();
 
         }
 
