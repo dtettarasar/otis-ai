@@ -8,7 +8,9 @@
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete this article?</h1>
                 </div>
                 <div class="modal-body">
-                    <p>Do you want to delete this article ?</p>
+                    <h2>{{ articleTitle }}</h2>
+                    <p><strong>creation date: </strong> {{ creationDate }}</p> 
+                    <p>Keep in mind that once the article has been deleted, it cannot be recovered!</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger">I confirm deletion</button>
@@ -22,7 +24,6 @@
 
 <script>
 
-    import { Modal } from 'bootstrap';
     import Cookies from 'js-cookie';
 
     export default {
@@ -40,6 +41,14 @@
         props: {
             articleId: {
                 type: String,
+                required: true
+            },
+            articleTitle: {
+                type: String,
+                required: true
+            },
+            creationDate: {
+                type: String, // ou 'Date' si tu passes un objet Date directement
                 required: true
             }
         },

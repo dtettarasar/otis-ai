@@ -38,7 +38,7 @@
 
     </div>
 
-    <DeleteArticleModal :articleId="articleId" ></DeleteArticleModal>
+    <DeleteArticleModal :articleId="articleId" :articleTitle="articleObj.title" :creationDate="this.formattedDates.creationDate" ></DeleteArticleModal>
 
 </template>
 
