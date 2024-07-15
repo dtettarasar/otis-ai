@@ -285,21 +285,48 @@ const dataBaseObj = {
         // convertir l'article ID (string que l'on a reçu depuis le vue client) sous un object que l'on peut decrypter
         // Pour le userEncryptedId, celui-ci est déjà récupéré depuis le token, sous la forme d'un object que l'on peut décrypter
 
+        const result = {
+            deletionStatus: null,
+            encryptedArticleID: encryptedArticleID
+        }
+
         const articleIdObj = {
             iv: encryptedArticleID.split('_')[0],
             encryptedStr: encryptedArticleID.split('_')[1]
         }
 
-        console.log("articleIdObj");
-        console.log(articleIdObj);
+        console.log("articleIdObj:", articleIdObj);
 
         const decryptArticleId = await strEncrypter.method.decryptString(articleIdObj);
-        console.log('decryptArticleId: ');
-        console.log(decryptArticleId);
+        console.log('decryptArticleId:', decryptArticleId);
 
         const decryptUserId = await strEncrypter.method.decryptString(userEncryptedId);
-        console.log("decryptUserId: ");
-        console.log(decryptUserId);
+        console.log("decryptUserId:", decryptUserId);
+        console.log("decryptUserId type:", typeof decryptUserId);
+
+        const articleData = await this.findArticleById(decryptArticleId);
+        
+        const articleUserIdStr = articleData.otisUserId.toHexString();
+        const decryptUserIdStr = decryptUserId.toString();
+
+        console.log('user ID from article Data:', articleUserIdStr);
+        console.log('decryptUserId:', decryptUserIdStr);
+        console.log('Comparing:', articleUserIdStr, 'with', decryptUserIdStr);
+
+        if (articleUserIdStr === decryptUserIdStr) {
+
+            console.log("userID in article valid");
+            result.deletionStatus = true;
+            console.log(result);
+
+
+        } else {
+
+            result.deletionStatus = false;
+            result.error = "userID from article not equal to user ID from token"
+            console.log(result);
+
+        }
         
         /*
         try {

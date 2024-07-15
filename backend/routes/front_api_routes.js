@@ -197,6 +197,8 @@ router.post('/user-delete-article', async (req, res) => {
 
 router.get('/retrieve-article-data', async (req, res) => {
 
+    // Todo checker le user access token pour s'assurer que seul l'auteur d'un article peut accéder l'article en question. 
+
     // console.log('get request for article data route');
 
     // console.log('req query');
