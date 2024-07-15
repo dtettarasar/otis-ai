@@ -180,14 +180,17 @@ router.post('/user-delete-article', async (req, res) => {
 
     console.log('post request to delete article');
     const accessToken = req.body.accessToken;
-    const articleId = req.body.articleId
+    const articleEncryptedId = req.body.articleId
 
-    const articleDeletion = dataBaseObj.deleteArticle(articleId);
+    const tokenData = userTokenObj.authToken(accessToken, process.env.ACCESS_TOKEN_SECRET);
+    const userEncryptedId = tokenData.result.userIdEncryption;
+
+    const articleDeletion = dataBaseObj.deleteArticle(articleEncryptedId, userEncryptedId);
 
     res.json({
         message: 'post request to delete article',
         accessToken: accessToken,
-        articleId: articleId
+        articleId: req.body.articleId
     });
 
 });

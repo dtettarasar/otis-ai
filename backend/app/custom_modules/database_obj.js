@@ -278,9 +278,12 @@ const dataBaseObj = {
 
     },
 
-    async deleteArticle(encryptedArticleID) {
+    async deleteArticle(encryptedArticleID, userEncryptedId) {
 
         // Todo : also check the user ID from the token and make sure it matches with the User ID from the article
+
+        // convertir l'article ID (string que l'on a reçu depuis le vue client) sous un object que l'on peut decrypter
+        // Pour le userEncryptedId, celui-ci est déjà récupéré depuis le token, sous la forme d'un object que l'on peut décrypter
 
         const articleIdObj = {
             iv: encryptedArticleID.split('_')[0],
@@ -293,6 +296,10 @@ const dataBaseObj = {
         const decryptArticleId = await strEncrypter.method.decryptString(articleIdObj);
         console.log('decryptArticleId: ');
         console.log(decryptArticleId);
+
+        const decryptUserId = await strEncrypter.method.decryptString(userEncryptedId);
+        console.log("decryptUserId: ");
+        console.log(decryptUserId);
         
         /*
         try {
