@@ -13,7 +13,7 @@
                     <p>Keep in mind that once the article has been deleted, it cannot be recovered!</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger">I confirm deletion</button>
+                    <button v-on:click="initArticleDeletion()" type="button" class="btn btn-danger">I confirm deletion</button>
                     <button data-bs-dismiss="modal" type="button" class="btn btn-primary">Cancel</button>
                 </div>
             </div>
@@ -57,6 +57,24 @@
 
             deleteArticleModalId() {
                 return `delete-article-${this.articleId}`
+            }
+
+        },
+
+        methods: {
+
+            initArticleDeletion() {
+                console.log('init article deletion method');
+
+                const postObj = {
+
+                    accessToken: Cookies.get('accessToken'),
+                    articleId: this.articleId
+
+                }
+
+                console.log(postObj);
+
             }
 
         }
