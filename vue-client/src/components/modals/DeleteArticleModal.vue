@@ -57,7 +57,13 @@
 
             deleteArticleModalId() {
                 return `delete-article-${this.articleId}`
-            }
+            },
+
+            createArticleBackendUrl() {
+
+                return this.$backendUrl + 'front-api/user-delete-article';
+
+            },
 
         },
 
