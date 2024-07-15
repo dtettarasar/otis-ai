@@ -182,6 +182,8 @@ router.post('/user-delete-article', async (req, res) => {
     const accessToken = req.body.accessToken;
     const articleId = req.body.articleId
 
+    const articleDeletion = dataBaseObj.deleteArticle(articleId);
+
     res.json({
         message: 'post request to delete article',
         accessToken: accessToken,

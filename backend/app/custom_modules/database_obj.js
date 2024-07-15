@@ -278,6 +278,38 @@ const dataBaseObj = {
 
     },
 
+    async deleteArticle(encryptedArticleID) {
+
+        // Todo : also check the user ID from the token and make sure it matches with the User ID from the article
+
+        const articleIdObj = {
+            iv: encryptedArticleID.split('_')[0],
+            encryptedStr: encryptedArticleID.split('_')[1]
+        }
+
+        console.log("articleIdObj");
+        console.log(articleIdObj);
+
+        const decryptArticleId = await strEncrypter.method.decryptString(articleIdObj);
+        console.log('decryptArticleId: ');
+        console.log(decryptArticleId);
+        
+        /*
+        try {
+
+            await ArticleModel.findByIdAndDelete(articleID);
+            return true;
+
+        } catch(err) {
+
+            console.log(err);
+            return false;
+
+        }
+        */
+
+    },
+
     async findArticleById(articleID) {
         
         //console.log("findArticleById");
