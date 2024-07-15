@@ -176,6 +176,20 @@ router.post('/user-create-article', async (req, res) => {
 
 });
 
+router.post('/user-delete-article', async (req, res) => {
+
+    console.log('post request to delete article');
+    const accessToken = req.body.accessToken;
+    const articleId = req.body.articleId
+
+    res.json({
+        message: 'post request to delete article',
+        accessToken: accessToken,
+        articleId: articleId
+    });
+
+});
+
 router.get('/retrieve-article-data', async (req, res) => {
 
     // console.log('get request for article data route');

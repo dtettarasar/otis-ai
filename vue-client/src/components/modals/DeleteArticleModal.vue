@@ -25,6 +25,7 @@
 <script>
 
     import Cookies from 'js-cookie';
+    import axios from 'axios';
 
     export default {
 
@@ -59,7 +60,7 @@
                 return `delete-article-${this.articleId}`
             },
 
-            createArticleBackendUrl() {
+            deleteArticleBackendUrl() {
 
                 return this.$backendUrl + 'front-api/user-delete-article';
 
@@ -69,7 +70,7 @@
 
         methods: {
 
-            initArticleDeletion() {
+            async initArticleDeletion() {
                 console.log('init article deletion method');
 
                 const postObj = {
@@ -80,6 +81,18 @@
                 }
 
                 console.log(postObj);
+
+                try {
+
+                    const response = await axios.post(this.deleteArticleBackendUrl, postObj);
+                    console.log("response data:");
+                    console.log(response.data);
+
+                } catch (error) {
+
+                    console.error(error);
+
+                }
 
             }
 
