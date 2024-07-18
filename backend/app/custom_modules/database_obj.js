@@ -295,23 +295,25 @@ const dataBaseObj = {
             encryptedStr: encryptedArticleID.split('_')[1]
         }
 
-        console.log("articleIdObj:", articleIdObj);
+        // console.log("articleIdObj:", articleIdObj);
 
         const decryptArticleId = await strEncrypter.method.decryptString(articleIdObj);
-        console.log('decryptArticleId:', decryptArticleId);
+        // console.log('decryptArticleId:', decryptArticleId);
 
         const decryptUserId = await strEncrypter.method.decryptString(userEncryptedId);
-        console.log("decryptUserId:", decryptUserId);
-        console.log("decryptUserId type:", typeof decryptUserId);
+        // console.log("decryptUserId:", decryptUserId);
+        // console.log("decryptUserId type:", typeof decryptUserId);
 
         const articleData = await this.findArticleById(decryptArticleId);
         
         const articleUserIdStr = articleData.otisUserId.toHexString();
         const decryptUserIdStr = decryptUserId.toString();
 
+        /*
         console.log('user ID from article Data:', articleUserIdStr);
         console.log('decryptUserId:', decryptUserIdStr);
         console.log('Comparing:', articleUserIdStr, 'with', decryptUserIdStr);
+        */
 
         // Vérifier que l'user ID contenu dans le token est le même que le user ID dans l'article
         if (articleUserIdStr === decryptUserIdStr) {
@@ -322,7 +324,7 @@ const dataBaseObj = {
 
                 await ArticleModel.findByIdAndDelete(decryptArticleId);
                 result.deletionStatus = true;
-                console.log(result);
+                // console.log(result);
 
             } catch (err) {
 
@@ -336,9 +338,12 @@ const dataBaseObj = {
 
             result.deletionStatus = false;
             result.error = "userID from article not equal to user ID from token"
-            console.log(result);
+            // console.log(result);
 
         }
+
+        console.log(result);
+        return result;
 
     },
 
