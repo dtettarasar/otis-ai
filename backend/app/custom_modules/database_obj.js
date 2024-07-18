@@ -313,11 +313,23 @@ const dataBaseObj = {
         console.log('decryptUserId:', decryptUserIdStr);
         console.log('Comparing:', articleUserIdStr, 'with', decryptUserIdStr);
 
+        // Vérifier que l'user ID contenu dans le token est le même que le user ID dans l'article
         if (articleUserIdStr === decryptUserIdStr) {
 
             console.log("userID in article valid");
-            result.deletionStatus = true;
-            console.log(result);
+
+            try {
+
+                await ArticleModel.findByIdAndDelete(decryptArticleId);
+                result.deletionStatus = true;
+                console.log(result);
+
+            } catch (err) {
+
+                result.deletionStatus = false;
+                result.error = err
+
+            }
 
 
         } else {
@@ -327,20 +339,6 @@ const dataBaseObj = {
             console.log(result);
 
         }
-        
-        /*
-        try {
-
-            await ArticleModel.findByIdAndDelete(articleID);
-            return true;
-
-        } catch(err) {
-
-            console.log(err);
-            return false;
-
-        }
-        */
 
     },
 
