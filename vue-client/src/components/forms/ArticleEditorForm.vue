@@ -1,10 +1,15 @@
 <template>
     
     <div>
-      <p v-if="isEditMode && articleObj">Editing Article ID: {{ articleObj.id }}</p>
-      <p v-if="isViewMode && articleObj">Viewing Article ID: {{ articleObj.id }}</p>
-      <p v-else>Creating a New Article</p>
+
+      <div v-if="articleObj.retrievedStatus" >
+        <p v-if="isEditMode && articleObj">Editing Article ID: {{ articleObj.id }}</p>
+        <p v-if="isViewMode && articleObj">Viewing Article ID: {{ articleObj.id }}</p>
+        <p v-else>Creating a New Article</p>
+      </div>
+
       <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
+      
     </div>
 
     <!--Article in Generate mode-->
@@ -99,48 +104,65 @@
 
     <!--Article in View mode-->
 
-    <div class="mt-2 p-5 bg-dark-subtle rounded" v-if="isViewMode && articleObj" >
+    <div v-if="isViewMode && articleObj.retrievedStatus" >
 
-      <h1>{{ articleObj.title }}</h1>
+      <div class="mt-2 p-5 bg-dark-subtle rounded" v-if="isViewMode && articleObj.retrievedStatus" >
 
-      <p class="fs-5 date-text"><strong>creation date:</strong> {{ formattedDates.creationDate }}</p>
-      <p class="fs-5 date-text"><strong>last modification date:</strong> {{ formattedDates.lastModifDate }}</p>
+        <h1>{{ articleObj.title }}</h1>
 
-      <div>
+        <p class="fs-5 date-text"><strong>creation date:</strong> {{ formattedDates.creationDate }}</p>
+        <p class="fs-5 date-text"><strong>last modification date:</strong> {{ formattedDates.lastModifDate }}</p>
 
-        <p class="fs-5">keywords:</p>
+        <div>
 
-        <div class="mb-2 d-flex justify-content-start flex-wrap">
+            <p class="fs-5">keywords:</p>
 
-          <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" v-for="(keyword, index) in articleObj.keywordArr" :key="index">
-            <p class="fs-6 m-1 align-self-center">{{keyword}}</p>
-          </div>
+            <div class="mb-2 d-flex justify-content-start flex-wrap">
 
-        </div>
+              <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" v-for="(keyword, index) in articleObj.keywordArr" :key="index">
+                <p class="fs-6 m-1 align-self-center">{{keyword}}</p>
+              </div>
 
-        <div class="d-flex flex-row">
+            </div>
 
-          <button v-on:click="switchToEditMode" class="btn btn-success m-1 p-2"><i class="bi bi-pen-fill"></i> Edit Mode</button>
-          <button v-on:click="switchToViewMode" class="btn btn-primary m-1 p-2"><i class="bi bi-eye-fill"></i> View Mode</button>
-          <button v-on:click="deleteArticle()" class="btn btn-danger m-1 p-2"><i class="bi bi-trash-fill"></i> Delete</button>
-          <router-link class="btn btn-dark m-1 p-2" to="/all-user-article"><i class="bi bi-file-richtext-fill"></i> All my articles</router-link>
+            <div class="d-flex flex-row">
+
+              <button v-on:click="switchToEditMode" class="btn btn-success m-1 p-2"><i class="bi bi-pen-fill"></i> Edit Mode</button>
+              <button v-on:click="switchToViewMode" class="btn btn-primary m-1 p-2"><i class="bi bi-eye-fill"></i> View Mode</button>
+              <button v-on:click="deleteArticle()" class="btn btn-danger m-1 p-2"><i class="bi bi-trash-fill"></i> Delete</button>
+              <router-link class="btn btn-dark m-1 p-2" to="/all-user-article"><i class="bi bi-file-richtext-fill"></i> All my articles</router-link>
+
+            </div>
 
         </div>
 
       </div>
 
-
-    </div>
-
-    <div class="mt-4" v-if="isViewMode && articleObj">
+      <div class="mt-4">
       
-      <div v-html="articleObj.content" ></div>
+        <div v-html="articleObj.content" ></div>
+
+      </div>
 
     </div>
+
+    
+
+    
 
     <!--End of Article in View mode-->
 
-    <DeleteArticleModal :articleId="articleObj.id" :articleTitle="articleObj.title" :creationDate="this.formattedDates.creationDate" ></DeleteArticleModal>
+    <div v-if="articleObj.retrievedStatus" >
+
+      <DeleteArticleModal :articleId="articleObj.id" :articleTitle="articleObj.title" :creationDate="this.formattedDates.creationDate" ></DeleteArticleModal>
+
+    </div>
+
+    <div v-if="!articleObj.retrievedStatus && !this.isGenerateMode">
+
+      <p>Error retrieving article</p>
+
+    </div>
 
   </template>
   
@@ -152,8 +174,6 @@
     import axios from 'axios';
     import Cookies from 'js-cookie';
     import DeleteArticleModal from '@/components/modals/DeleteArticleModal.vue';
-
-
   
     export default {
         
@@ -170,6 +190,7 @@
         return {
 
           articleObj: {
+            retrievedStatus: null,
             id: null,
             title: '',
             description: '',
@@ -325,10 +346,12 @@
 
             });
 
+            console.log('response.data: ')
             console.log(response.data);
 
-            if (response.data.errorMessages == null) {
+            if (response.data.retrievedStatus !== null) {
 
+              this.articleObj.retrievedStatus = response.data.retrievedStatus
               this.articleObj.id = response.data.articleId;
               this.articleObj.title = response.data.articleTitle;
               this.articleObj.description = response.data.articleDesc;
@@ -337,6 +360,10 @@
               this.articleObj.keywordArr = response.data.articleKeywords;
               this.articleObj.creationDate = response.data.articleCreationDate;
               this.articleObj.lastModifDate = response.data.articleLastModifiedDate;
+
+            } else {
+
+              this.articleObj.retrievedStatus = response.data.retrievedStatus;
 
             }
 
@@ -422,12 +449,17 @@
       async mounted() {
 
         const articleId = this.$route.params.id;
+
         if (articleId) {
 
           this.isViewMode = true;
           console.log('retrieving article data');
 
           await this.testRetrieveArticleData(articleId);
+
+        } else {
+
+          this.isGenerateMode = true;
 
         }
 
