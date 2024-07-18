@@ -186,7 +186,7 @@ router.post('/user-delete-article', async (req, res) => {
     const userEncryptedId = tokenData.result.userIdEncryption;
 
     const articleDeletion = await dataBaseObj.deleteArticle(articleEncryptedId, userEncryptedId);
-    
+
     // console.log('articleDeletion');
     // console.log(articleDeletion);
 
@@ -222,17 +222,29 @@ router.get('/retrieve-article-data', async (req, res) => {
     // console.log("articleData: ");
     // console.log(articleData);
 
-    res.json({
-        route: 'retrieve-article-data',
-        articleId: req.query.articleId,
-        articleTitle: articleData.title,
-        articleDesc: articleData.description,
-        articleContent: articleData.sanitizedHtml,
-        articleLang: articleData.language,
-        articleKeywords: articleData.keywords,
-        articleCreationDate: articleData.createdAt,
-        articleLastModifiedDate: articleData.lastModifiedAt
-    });
+    if (!articleData) {
+
+        res.json({
+            retrievedStatus: false,
+            error: 'article not found'
+        })
+
+    } else {
+
+        res.json({
+            retrievedStatus: true,
+            route: 'retrieve-article-data',
+            articleId: req.query.articleId,
+            articleTitle: articleData.title,
+            articleDesc: articleData.description,
+            articleContent: articleData.sanitizedHtml,
+            articleLang: articleData.language,
+            articleKeywords: articleData.keywords,
+            articleCreationDate: articleData.createdAt,
+            articleLastModifiedDate: articleData.lastModifiedAt
+        });
+
+    }
 
 });
 
