@@ -26,6 +26,7 @@
 
     import Cookies from 'js-cookie';
     import axios from 'axios';
+    import { mapActions } from 'vuex';
 
     export default {
 
@@ -70,6 +71,8 @@
 
         methods: {
 
+            ...mapActions(['deleteArticleIdFromStore']),
+
             async initArticleDeletion() {
                 console.log('init article deletion method');
 
@@ -85,8 +88,19 @@
                 try {
 
                     const response = await axios.post(this.deleteArticleBackendUrl, postObj);
-                    console.log("response data:");
-                    console.log(response.data);
+                    console.log("response data articleDeletionResponse:");
+                    console.log(response.data.articleDeletionResponse);
+
+                    if (response.data.articleDeletionResponse.deletionStatus === true) {
+
+                        console.log("successfully deleted article: " + response.data.articleDeletionResponse.encryptedArticleID);
+                        this.deleteArticleIdFromStore(response.data.articleDeletionResponse.encryptedArticleID);
+
+                    } else {
+
+                        console.log("error: can't delete article: " + response.data.articleDeletionResponse.encryptedArticleID);
+
+                    }
 
                 } catch (error) {
 

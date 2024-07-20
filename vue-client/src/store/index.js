@@ -77,6 +77,15 @@ export default createStore({
 
         state.articleIds.push(articleId);
 
+      }, 
+
+      deleteArticleIdFromStore(state, articleId) {
+
+        console.log('init delete Article Id from store');
+        console.log('articleId to delete: ' + articleId);
+        console.log("articleIds array: ");
+        console.log(state.articleIds);
+
       }
 
   },
@@ -150,9 +159,13 @@ export default createStore({
 
         commit('addArticleId', articleId);
 
-      }
+      }, 
 
-      // Todo : construire une nouvelle fonction qui va ajouter l'id d'un nouvel article créé dans le state.articleIds
+      deleteArticleIdFromStore({commit}, articleId) {
+
+        commit('deleteArticleIdFromStore', articleId);
+
+      }
 
   }
 })
