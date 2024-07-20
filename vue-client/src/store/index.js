@@ -82,9 +82,20 @@ export default createStore({
       deleteArticleIdFromStore(state, articleId) {
 
         console.log('init delete Article Id from store');
-        console.log('articleId to delete: ' + articleId);
-        console.log("articleIds array: ");
-        console.log(state.articleIds);
+        console.log('articleId to delete:', articleId);
+    
+        // Faire une copie profonde de l'état avant suppression
+        const beforeDeletion = JSON.parse(JSON.stringify(state.articleIds));
+        console.log("articleIds array (before deletion):", beforeDeletion);
+
+        const index = state.articleIds.indexOf(articleId);
+        if (index > -1) {
+            state.articleIds.splice(index, 1);
+        }
+
+        // Faire une copie profonde de l'état après suppression
+        const afterDeletion = JSON.parse(JSON.stringify(state.articleIds));
+        console.log("articleIds array (after deletion):", afterDeletion);
 
       }
 
