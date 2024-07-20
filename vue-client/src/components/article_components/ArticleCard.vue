@@ -44,6 +44,15 @@
 
 <script>
 
+    /* 
+    
+    TODO: 
+
+    Trouver un moyen d'appeler le component DeleteArticleModal ailleurs qu'ici : car lors de la suppression de l'article id, l'article card associé est effacé de la page
+    ce qui par conséquent efface également le delete article modal et donc empêche de l'utiliser proprement
+    
+    */
+
     import axios from 'axios';
     import Cookies from 'js-cookie';
     import { Modal } from 'bootstrap';
