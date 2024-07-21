@@ -16,7 +16,7 @@
 
             <div class="col-12 col-md-6 col-lg-4 mb-3" v-for="articleId in limitedArticleIds" :key="articleId">
 
-                <ArticleCard :articleId="articleId"></ArticleCard>
+                <ArticleCard :articleId="articleId" @delete-article="prepareToDelete"></ArticleCard>
 
             </div>
 
@@ -26,14 +26,19 @@
     
     <CreditSection></CreditSection>
 
+    <DeleteArticleModal />
+
 </template>
 
 <script>
 
-    import { mapState } from 'vuex';
+    import { mapState, mapActions } from 'vuex';
+    import { Modal } from 'bootstrap';
+
     import UserAccountBanner from '@/components/page_banners/UserAccountBanner.vue';
     import CreditSection from '@/components/user_account_components/CreditSection.vue';
     import ArticleCard from '@/components/article_components/ArticleCard.vue';
+    import DeleteArticleModal from '@/components/modals/DeleteArticleModal.vue';
 
     export default {
         name: 'UserAccountContent',
@@ -41,7 +46,8 @@
         components: {
             UserAccountBanner,
             CreditSection,
-            ArticleCard
+            ArticleCard,
+            DeleteArticleModal,
         },
 
         data() {
@@ -76,6 +82,14 @@
         },
 
         methods: {
+
+            ...mapActions(['setDeleteArticleId']),
+
+            prepareToDelete(articleId) {
+                this.setDeleteArticleId(articleId);
+                const myModal = new Modal(document.getElementById('deleteArticleModal'));
+                myModal.show();
+            },
 
         }
     }
