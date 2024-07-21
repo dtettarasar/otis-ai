@@ -5,7 +5,12 @@
       <div v-if="articleObj.retrievedStatus" >
         <p v-if="isEditMode && articleObj">Editing Article ID: {{ articleObj.id }}</p>
         <p v-if="isViewMode && articleObj">Viewing Article ID: {{ articleObj.id }}</p>
-        <p v-else>Creating a New Article</p>
+      </div>
+
+      <div v-else>
+
+        <p>Creating a New Article</p>
+        
       </div>
 
       <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>

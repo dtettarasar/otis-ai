@@ -26,7 +26,8 @@ export default createStore({
       activeModal: null,
       cookieExpTimestamp: 0,
       sessionCountdownTriggered: false,
-      articleIds: []
+      articleIds: [],
+      deleteArticleId: null,
   },
   getters: {
     getCookieExpTimestamp: state => state.cookieExpTimestamp,
@@ -97,7 +98,15 @@ export default createStore({
         const afterDeletion = JSON.parse(JSON.stringify(state.articleIds));
         console.log("articleIds array (after deletion):", afterDeletion);
 
-      }
+      },
+
+      setDeleteArticleID(state, articleId) {
+        state.deleteArticleId = articleId;
+      },
+
+      clearDeleteArticleID(state) {
+        state.deleteArticleId = null;
+      },
 
   },
   // actions sert aux appels API et les méthodes que l'on appelle depuis les components pour interagir avec les données du store
@@ -176,7 +185,15 @@ export default createStore({
 
         commit('deleteArticleIdFromStore', articleId);
 
-      }
+      },
+
+      setDeleteArticleId({ commit }, articleId) {
+        commit('setDeleteArticleID', articleId);
+      },
+
+      clearDeleteArticleId({ commit }) {
+        commit('clearDeleteArticleID');
+      },
 
   }
 })

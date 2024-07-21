@@ -1,6 +1,5 @@
 <template>
 
-    
     <div>
         <h2>{{ username }} is connected to the All User Articles page</h2>
     </div>
@@ -11,7 +10,7 @@
 
             <div class="col-12 col-md-6 col-lg-4 mb-3" v-for="articleId in reverseArticleList" :key="articleId">
 
-                <ArticleCard :articleId="articleId"></ArticleCard>
+                <ArticleCard :articleId="articleId" @delete-article="prepareToDelete"></ArticleCard>
 
             </div>
 
@@ -19,12 +18,16 @@
 
     </div>
 
+    <DeleteArticleModal />
+
 </template>
 
 <script>
 
-    import { mapState } from 'vuex';
+    import { mapState, mapActions } from 'vuex';
     import ArticleCard from '@/components/article_components/ArticleCard.vue';
+    import DeleteArticleModal from '@/components/modals/DeleteArticleModal.vue';
+    import { Modal } from 'bootstrap';
     import { toRaw } from 'vue';
 
     export default {
@@ -32,7 +35,8 @@
 
         components: {
 
-            ArticleCard
+            ArticleCard,
+            DeleteArticleModal,
 
         },
 
@@ -71,8 +75,16 @@
 
         methods: {
 
-        }
-    }
+            ...mapActions(['setDeleteArticleId']),
+
+            prepareToDelete(articleId) {
+                this.setDeleteArticleId(articleId);
+                const myModal = new Modal(document.getElementById('deleteArticleModal'));
+                myModal.show();
+            },
+
+        },
+    };
 
 </script>
 

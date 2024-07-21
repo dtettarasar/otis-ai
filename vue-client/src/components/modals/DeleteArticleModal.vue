@@ -1,7 +1,7 @@
 <template>
 
     <!-- Modal -->
-    <div class="modal fade" :id="deleteArticleModalId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteArticleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -9,12 +9,12 @@
                 </div>
                 <div class="modal-body">
                     <h2>{{ articleTitle }}</h2>
-                    <p><strong>creation date: </strong> {{ creationDate }}</p> 
+                    <p><strong>Creation date: </strong>{{ creationDate }}</p>
                     <p>Keep in mind that once the article has been deleted, it cannot be recovered!</p>
                 </div>
                 <div class="modal-footer">
                     <button v-on:click="initArticleDeletion()" type="button" class="btn btn-danger">I confirm deletion</button>
-                    <button data-bs-dismiss="modal" type="button" class="btn btn-primary">Cancel</button>
+                    <button data-bs-dismiss="modal" type="button" class="btn btn-primary" @click="clearDeleteArticleId">Cancel</button>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
 
     import Cookies from 'js-cookie';
     import axios from 'axios';
-    import { mapActions } from 'vuex';
+    import { mapState, mapActions } from 'vuex';
 
     export default {
 
@@ -40,25 +40,12 @@
 
         },
 
-        props: {
-            articleId: {
-                type: String,
-                required: true
-            },
-            articleTitle: {
-                type: String,
-                required: true
-            },
-            creationDate: {
-                type: String, // ou 'Date' si tu passes un objet Date directement
-                required: true
-            }
-        },
-
         computed: {
 
+            ...mapState(['deleteArticleId']),
+
             deleteArticleModalId() {
-                return `delete-article-${this.articleId}`
+                return 'deleteArticleModal';
             },
 
             deleteArticleBackendUrl() {
@@ -67,19 +54,30 @@
 
             },
 
+            articleTitle() {
+                // Fetch article title from Vuex store or a method
+                return 'Test title'; // remplacer avec la méthode adéquate pour récupérer le titre
+            },
+
+            creationDate() {
+                // Fetch article creation date from Vuex store or a method
+                return '00/00/0000'; // remplacer avec la méthode adéquate pour récupérer la date
+            },
+
         },
 
         methods: {
 
-            ...mapActions(['deleteArticleIdFromStore']),
+            ...mapActions(['deleteArticleIdFromStore', 'clearDeleteArticleId']),
 
             async initArticleDeletion() {
+
                 console.log('init article deletion method');
 
                 const postObj = {
 
                     accessToken: Cookies.get('accessToken'),
-                    articleId: this.articleId
+                    articleId: this.deleteArticleId
 
                 }
 
@@ -106,12 +104,16 @@
 
                     console.error(error);
 
+                } finally {
+
+                    this.clearDeleteArticleId();
+
                 }
 
-            }
+            },
 
-        }
+        },
 
-    }
+    };
 
 </script>

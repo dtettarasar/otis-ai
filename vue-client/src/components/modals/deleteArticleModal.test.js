@@ -14,6 +14,8 @@ describe('DeleteArticleModal.vue', () => {
 
     beforeEach(() => {
         // Initialise les props avant chaque test
+
+        // A Ajuster car on utilise plus de props
         wrapper = createComponent({
             articleId: '12345',
             articleTitle: 'Test Article',

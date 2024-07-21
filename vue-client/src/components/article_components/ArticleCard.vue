@@ -2,21 +2,21 @@
     
     <div class="m-2 p-5 bg-dark-subtle rounded" >
 
-        <h1>{{ this.articleObj.title }}</h1>
+        <h1>{{ articleObj.title }}</h1>
 
-        <p class="fs-5 date-text"><strong>creation date:</strong> {{this.formattedDates.creationDate}} </p>
-        <p class="fs-5 date-text"><strong>last modification date:</strong> {{this.formattedDates.lastModifDate}} </p>
+        <p class="fs-5 date-text"><strong>creation date:</strong> {{ formattedDates.creationDate }} </p>
+        <p class="fs-5 date-text"><strong>last modification date:</strong> {{ formattedDates.lastModifDate }} </p>
 
         <div>
 
-            <div v-if="this.articleObj.keywordArr.length != 0">
+            <div v-if="articleObj.keywordArr.length != 0">
 
                 <p class="fs-5 mt-4">keywords:</p>
 
                 <div class="mb-2 d-flex justify-content-start flex-wrap">
 
                     <div class="badge m-1 p-1 bg-primary keyword-bdge d-flex flex-row" v-for="(keyword, index) in articleObj.keywordArr" :key="index">
-                        <p class="fs-6 m-1 align-self-center">{{keyword}}</p>
+                        <p class="fs-6 m-1 align-self-center">{{ keyword }}</p>
                     </div>
 
                 </div>
@@ -28,17 +28,15 @@
 
             <div class="d-flex flex-row flex-wrap">
 
-                <router-link class="btn btn-dark m-1 p-2" :to=this.articlePageLink><i class="bi bi-eye-fill"></i> View</router-link>
+                <router-link class="btn btn-dark m-1 p-2" :to=articlePageLink><i class="bi bi-eye-fill"></i> View</router-link>
                 <button class="btn btn-success m-1 p-2"><i class="bi bi-pen-fill"></i> Edit</button>
-                <button v-on:click="deleteArticle()" class="btn btn-danger m-1 p-2"><i class="bi bi-trash-fill"></i> Delete</button>
+                <button v-on:click="confirmDelete" class="btn btn-danger m-1 p-2"><i class="bi bi-trash-fill"></i> Delete</button>
 
             </div>
 
         </div>
 
     </div>
-
-    <DeleteArticleModal :articleId="articleId" :articleTitle="articleObj.title" :creationDate="this.formattedDates.creationDate" ></DeleteArticleModal>
 
 </template>
 
@@ -55,17 +53,9 @@
 
     import axios from 'axios';
     import Cookies from 'js-cookie';
-    import { Modal } from 'bootstrap';
-    import DeleteArticleModal from '@/components/modals/DeleteArticleModal.vue';
 
     export default {
         name: 'ArticleCard',
-
-        components: {
-
-            DeleteArticleModal,
-
-        },
         
         props: {
             articleId: {
@@ -121,10 +111,6 @@
 
             },
 
-            deleteArticleModalId() {
-                return `delete-article-${this.articleId}`
-            }
-
         },
 
         methods: {
@@ -155,14 +141,17 @@
 
                     if (response.data.errorMessages == null) {
 
-                        this.articleObj.id = response.data.articleId;
-                        this.articleObj.title = response.data.articleTitle;
-                        this.articleObj.description = response.data.articleDesc;
-                        this.articleObj.content = response.data.articleContent;
-                        this.articleObj.language = response.data.articleLang;
-                        this.articleObj.keywordArr = response.data.articleKeywords;
-                        this.articleObj.creationDate = response.data.articleCreationDate;
-                        this.articleObj.lastModifDate = response.data.articleLastModifiedDate;
+                        this.articleObj = {
+                            id: response.data.articleId,
+                            title: response.data.articleTitle,
+                            description: response.data.articleDesc,
+                            content: response.data.articleContent,
+                            language: response.data.articleLang,
+                            keywordArr: response.data.articleKeywords,
+                            creationDate: response.data.articleCreationDate,
+                            lastModifDate: response.data.articleLastModifiedDate,
+                            errorMessages: null,
+                        };
 
                     }
 
@@ -176,13 +165,23 @@
 
             },
 
-            async deleteArticle() {
-               
-                console.log('init delete article');
-                console.log(this.deleteArticleModalId);
-                let myModal = new Modal(document.getElementById(this.deleteArticleModalId));
-                myModal.show();
+            confirmDelete() {
 
+                /*
+
+                    Cliquer sur "Delete" : Quand tu cliques sur le bouton "Delete" dans ArticleCard, la méthode confirmDelete est appelée.
+
+                    Émettre un Événement : La méthode confirmDelete émet l'événement delete-article avec this.articleId comme argument.
+
+                    Écouter l'Événement : Le composant parent AllUserArticlesContent écoute cet événement avec @delete-article="prepareToDelete".
+
+                    Appeler une Méthode dans le Parent : Quand l'événement delete-article est capturé par le parent, la méthode prepareToDelete est appelée, recevant articleId en argument.
+                    
+                    Afficher le Modal : La méthode prepareToDelete met à jour l'état Vuex avec l'ID de l'article à supprimer et affiche le modal de confirmation en utilisant Bootstrap.
+
+                */
+
+                this.$emit('delete-article', this.articleId);
             }
 
         },
@@ -195,9 +194,9 @@
 
             }
 
-        }
+        },
 
-    }
+    };
 
 </script>
 
