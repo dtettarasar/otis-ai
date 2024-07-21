@@ -159,7 +159,7 @@
 
     <div v-if="articleObj.retrievedStatus" >
 
-      <DeleteArticleModal :articleId="articleObj.id" :articleTitle="articleObj.title" :creationDate="this.formattedDates.creationDate" ></DeleteArticleModal>
+      <DeleteArticleModal />
 
     </div>
 
@@ -269,7 +269,7 @@
 
       methods: {
 
-        ...mapActions(['addArticleId']),
+        ...mapActions(['addArticleId', 'setDeleteArticleId']),
 
         async saveArticle() {
 
@@ -442,10 +442,9 @@
 
         async deleteArticle() {
                
-               console.log('init delete article');
-               console.log(this.deleteArticleModalId);
-               let myModal = new Modal(document.getElementById(this.deleteArticleModalId));
-               myModal.show();
+          this.setDeleteArticleId(this.articleObj.id);
+          const myModal = new Modal(document.getElementById('deleteArticleModal'));
+          myModal.show();
 
         }
 
