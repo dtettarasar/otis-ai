@@ -94,6 +94,13 @@
                         console.log("successfully deleted article: " + response.data.articleDeletionResponse.encryptedArticleID);
                         this.deleteArticleIdFromStore(response.data.articleDeletionResponse.encryptedArticleID);
 
+                        /*
+
+                        TODO : faire le nécessaire ici pour mettre à jour le template : informer que l'article à bien été supprimé
+                        Si la modal a été invoqué depuis la page article editor, alors envoyer un événement pour l'article editor renvoie l'utilisateur vers la page all articles
+                        
+                        */
+
                     } else {
 
                         console.log("error: can't delete article: " + response.data.articleDeletionResponse.encryptedArticleID);
