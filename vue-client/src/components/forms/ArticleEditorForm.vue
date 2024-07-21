@@ -7,12 +7,6 @@
         <p v-if="isViewMode && articleObj">Viewing Article ID: {{ articleObj.id }}</p>
       </div>
 
-      <div v-else>
-
-        <p>Creating a New Article</p>
-        
-      </div>
-
       <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
       
     </div>
@@ -20,6 +14,8 @@
     <!--Article in Generate mode-->
 
     <div v-if="!this.isViewMode">
+
+      <p>Creating a New Article</p>
 
       <form @submit.prevent="generateArticle" method="post" >
 
