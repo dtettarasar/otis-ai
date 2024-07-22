@@ -4,18 +4,38 @@
     <div class="modal fade" id="deleteArticleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
+
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete this article?</h1>
                 </div>
-                <div class="modal-body">
-                    <h2>{{ articleTitle }}</h2>
-                    <p><strong>Creation date: </strong>{{ creationDate }}</p>
-                    <p>Keep in mind that once the article has been deleted, it cannot be recovered!</p>
+
+                <div v-if="!deletionDone && deleteArticleId">
+
+                    <div class="modal-body">
+                        <h2>{{ articleTitle }}</h2>
+                        <p><strong>Creation date: </strong>{{ creationDate }}</p>
+                        <p>Keep in mind that once the article has been deleted, it cannot be recovered!</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button v-on:click="initArticleDeletion()" type="button" class="btn btn-danger">I confirm deletion</button>
+                        <button data-bs-dismiss="modal" type="button" class="btn btn-primary" @click="clearDeleteArticleId">Cancel</button>
+                    </div>
+
                 </div>
-                <div class="modal-footer">
-                    <button v-on:click="initArticleDeletion()" type="button" class="btn btn-danger">I confirm deletion</button>
-                    <button data-bs-dismiss="modal" type="button" class="btn btn-primary" @click="clearDeleteArticleId">Cancel</button>
+
+                <div v-else-if="deletionDone && !deleteArticleId">
+
+                    <div class="modal-body">
+                        <h2>Deletion done</h2>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button data-bs-dismiss="modal" type="button" class="btn btn-primary" @click="handleClose">Close</button>
+                    </div>
+
                 </div>
+
             </div>
         </div>
     </div>
@@ -35,6 +55,8 @@
         data() {
 
             return {
+
+                deletionDone: false,
 
             }
 
@@ -74,6 +96,8 @@
 
                 console.log('init article deletion method');
 
+                console.log('id: ' + this.deleteArticleId);
+
                 const postObj = {
 
                     accessToken: Cookies.get('accessToken'),
@@ -93,6 +117,7 @@
 
                         console.log("successfully deleted article: " + response.data.articleDeletionResponse.encryptedArticleID);
                         this.deleteArticleIdFromStore(response.data.articleDeletionResponse.encryptedArticleID);
+                        this.deletionDone = true;
 
                         /*
 
@@ -117,6 +142,15 @@
 
                 }
 
+            },
+
+            handleClose() {
+                this.clearDeleteArticleId();
+                this.resetDeletionStatus();
+            },
+
+            resetDeletionStatus() {
+                this.deletionDone = false;
             },
 
         },
