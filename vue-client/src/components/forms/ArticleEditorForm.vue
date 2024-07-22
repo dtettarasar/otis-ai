@@ -128,8 +128,11 @@
 
             <div class="d-flex flex-row">
 
+              <!--
               <button v-on:click="switchToEditMode" class="btn btn-success m-1 p-2"><i class="bi bi-pen-fill"></i> Edit Mode</button>
               <button v-on:click="switchToViewMode" class="btn btn-primary m-1 p-2"><i class="bi bi-eye-fill"></i> View Mode</button>
+              -->
+              
               <button v-on:click="deleteArticle()" class="btn btn-danger m-1 p-2"><i class="bi bi-trash-fill"></i> Delete</button>
               <router-link class="btn btn-dark m-1 p-2" to="/all-user-article"><i class="bi bi-file-richtext-fill"></i> All my articles</router-link>
 
