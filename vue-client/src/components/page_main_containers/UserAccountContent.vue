@@ -26,7 +26,7 @@
     
     <CreditSection></CreditSection>
 
-    <DeleteArticleModal />
+    <DeleteArticleModal :redirection=false />
 
 </template>
 

@@ -18,7 +18,7 @@
 
     </div>
 
-    <DeleteArticleModal />
+    <DeleteArticleModal :redirection=false />
 
 </template>
 

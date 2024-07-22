@@ -28,10 +28,15 @@
 
                     <div class="modal-body">
                         <h2>Deletion done</h2>
+                        <p v-if="redirection" > You will be redirected to your account page shortly. </p>
                     </div>
 
-                    <div class="modal-footer">
-                        <button data-bs-dismiss="modal" type="button" class="btn btn-primary" @click="handleClose">Close</button>
+                    <div v-if="!redirection">
+
+                        <div class="modal-footer">
+                            <button data-bs-dismiss="modal" type="button" class="btn btn-primary" @click="handleClose">Close</button>
+                        </div>
+
                     </div>
 
                 </div>
@@ -51,6 +56,14 @@
     export default {
 
         name: 'DeleteArticleModal',
+
+        props: {
+            // Pour rediriger vers la page user account
+            redirection: {
+                type: Boolean,
+                required: true
+            }
+        },
 
         data() {
 
@@ -125,6 +138,15 @@
                         Si la modal a été invoqué depuis la page article editor, alors envoyer un événement pour l'article editor renvoie l'utilisateur vers la page all articles
                         
                         */
+
+                        if (this.redirection) {
+
+                            setTimeout(()=> {
+                                //this.$router.push('/user-account');
+                                window.location.href = '/user-account';
+                            }, 2000);
+
+                        }
 
                     } else {
 
