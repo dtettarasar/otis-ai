@@ -119,10 +119,10 @@
 
                 const accessToken = Cookies.get('accessToken');
 
-                console.log('init the retrieveArticleData method from the article card');
+                // console.log('init the retrieveArticleData method from the article card');
 
-                console.log("articleID: ");
-                console.log(articleId);
+                // console.log("articleID: ");
+                // console.log(articleId);
 
                 try {
 
@@ -137,7 +137,7 @@
 
                     });
 
-                    console.log(response.data);
+                    // console.log(response.data);
 
                     if (response.data.errorMessages == null) {
 
@@ -161,7 +161,7 @@
 
                 }
                 
-                console.log('end of the retrieveArticleData method from the article card');
+                // console.log('end of the retrieveArticleData method from the article card');
 
             },
 

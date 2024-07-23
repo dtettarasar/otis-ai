@@ -73,7 +73,11 @@
 
             getUserArticlesIdsUrl() {
                 return this.$backendUrl + 'front-api/retrieve-article-ids-list'
-            }
+            },
+
+            getUserArticlesDatasUrl() {
+                return this.$backendUrl + 'front-api/retrieve-article-all-datas'
+            },
 
         },
 
@@ -165,6 +169,32 @@
                     console.error('Error fetching user data:', err);
 
                 });
+
+            },
+
+            async getUserAllArticlesData(userIdObj) {
+
+                console.log("init getUserAllArticlesData method");
+
+                const reqData = {
+                    userId: userIdObj
+                };
+
+                await axios.get(this.getUserArticlesDatasUrl, {
+                    params: reqData
+                })
+                .then(res => {
+
+                    // console.log('Response from backend:', res.data);
+
+                })
+                .catch(err => {
+
+                    console.error('Error fetching user articles datas:', err);
+
+                });
+
+                console.log("end of getUserAllArticlesData method");
 
             },
 
