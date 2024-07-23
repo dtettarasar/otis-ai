@@ -404,6 +404,32 @@ const dataBaseObj = {
 
         return encryptedArticleIds;
 
+    },
+
+    async getUserAllArticleDatas (userIdObj) {
+
+        console.log('init the getUserAllArticleDatas method from the databaseObj');
+
+        const decryptUserID = await strEncrypter.method.decryptString(userIdObj);
+        console.log('decryptUserID: ' + decryptUserID);
+
+        try {
+
+            const query = ArticleModel.find({otisUserId: decryptUserID});
+            articleList = await query.exec();
+
+            console.log('articleList');
+            console.log(articleList);
+
+        } catch (err) {
+
+            console.error(err);
+            return false;
+
+        }
+
+        console.log('end of the getUserAllArticleDatas method from the databaseObj');
+
     }
 
 }
