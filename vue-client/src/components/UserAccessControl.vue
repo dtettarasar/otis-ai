@@ -120,6 +120,7 @@
                         this.getUserInitialData(response.data.result.userIdEncryption);
                         this.saveCookieExpTimestamp(response.data.result.exp);
                         this.getUserArticlesIds(response.data.result.userIdEncryption);
+                        this.getUserAllArticlesData(response.data.result.userIdEncryption);
 
                     }
 
@@ -185,7 +186,7 @@
                 })
                 .then(res => {
 
-                    // console.log('Response from backend:', res.data);
+                    console.log('Response from backend:', res.data);
 
                 })
                 .catch(err => {

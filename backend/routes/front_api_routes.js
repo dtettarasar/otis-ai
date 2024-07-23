@@ -263,6 +263,20 @@ router.get('/retrieve-article-ids-list', async(req, res) => {
 
 });
 
+router.get('/retrieve-article-all-datas', async(req, res) => {
+
+    const userIdObj = req.query.userId;
+    console.log('get request from the retrieve-article-all-datas route');
+    console.log("userIdObj");
+    console.log(userIdObj);
+
+    res.json({
+        msg:'get request from the retrieve-article-all-datas route',
+        userIdObj: userIdObj,
+    })
+
+});
+
 router.get('/user-auth', async (req, res) => {
 
     const authHeader = req.headers['authorization'];
