@@ -79,9 +79,11 @@
 
             ...mapState(['deleteArticleId']),
 
+            /*
             deleteArticleModalId() {
                 return 'deleteArticleModal';
             },
+            */
 
             deleteArticleBackendUrl() {
 
