@@ -410,6 +410,8 @@ const dataBaseObj = {
 
         console.log('init the getUserAllArticleDatas method from the databaseObj');
 
+        const articleDataToSend = [];
+
         const decryptUserID = await strEncrypter.method.decryptString(userIdObj);
         console.log('decryptUserID: ' + decryptUserID);
 
@@ -418,8 +420,31 @@ const dataBaseObj = {
             const query = ArticleModel.find({otisUserId: decryptUserID});
             articleList = await query.exec();
 
-            console.log('articleList');
-            console.log(articleList);
+            for (let i = 0; i < articleList.length; i++) {
+
+                const encryptedArticleId = await strEncrypter.method.encryptString(articleList[i]._id.toHexString());
+
+                const articleObj = {
+                    id: `${encryptedArticleId.iv}_${encryptedArticleId.encryptedStr}`,
+                    title: articleList[i].title,
+                    description: articleList[i].description,
+                    keywordArr: articleList[i].keywords,
+                    language: articleList[i].language,
+                    content: articleList[i].sanitizedHtml,
+                    creationDate: articleList[i].createdAt,
+                    lastModifDate: articleList[i].lastModifiedAt,
+                  }
+
+                  //console.log(articleObj);
+
+                  articleDataToSend.push(articleObj);
+
+            }
+
+            // console.log('articleDataToSend');
+            // console.log(articleDataToSend);
+
+            return articleDataToSend;
 
         } catch (err) {
 
@@ -428,7 +453,7 @@ const dataBaseObj = {
 
         }
 
-        console.log('end of the getUserAllArticleDatas method from the databaseObj');
+        // console.log('end of the getUserAllArticleDatas method from the databaseObj');
 
     }
 

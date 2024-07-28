@@ -271,10 +271,13 @@ router.get('/retrieve-article-all-datas', async(req, res) => {
     console.log(userIdObj);
 
     const articleDataList = await dataBaseObj.getUserAllArticleDatas(userIdObj);
+    console.log('articleDataList');
+    console.log(articleDataList);
 
     res.json({
         msg:'get request from the retrieve-article-all-datas route',
-        userIdObj: userIdObj,
+        // userIdObj: userIdObj,
+        articleDataList: articleDataList
     })
 
 });
