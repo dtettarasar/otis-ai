@@ -27,6 +27,7 @@ export default createStore({
       cookieExpTimestamp: 0,
       sessionCountdownTriggered: false,
       articleIds: [],
+      articleDataList: [],
       deleteArticleId: null,
   },
   getters: {
@@ -71,7 +72,15 @@ export default createStore({
       },
 
       setArticleIds(state, articleIds) {
-        state.articleIds = articleIds
+        state.articleIds = articleIds;
+      },
+
+      setArticleDataList(state, articleDataList) {
+        
+        state.articleDataList = articleDataList;
+        console.log('saved the article data list: '); 
+        console.log(state.articleDataList);
+
       },
 
       addArticleId(state, articleId) {
@@ -172,6 +181,13 @@ export default createStore({
       saveArticleIds({commit}, articleIds) {
 
         commit('setArticleIds', articleIds);
+
+      },
+
+      saveArticleDataList({commit}, articleDataList) {
+
+        console.log('init the saveArticleDataList from the vuex store');
+        commit('setArticleDataList', articleDataList);
 
       },
 

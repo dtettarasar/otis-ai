@@ -94,7 +94,7 @@
 
         methods: {
 
-            ...mapActions(['updateUserLoggedIn', 'saveUserInfo', 'saveCookieExpTimestamp', 'saveArticleIds']),
+            ...mapActions(['updateUserLoggedIn', 'saveUserInfo', 'saveCookieExpTimestamp', 'saveArticleIds', 'saveArticleDataList']),
 
             async fetchData() {
 
@@ -186,7 +186,13 @@
                 })
                 .then(res => {
 
-                    console.log('Response from backend:', res.data);
+                    console.log('Response from backend:', res.data.articleDataList);
+
+                    if(res.data.articleDataList.length >= 1) {
+
+                        this.saveArticleDataList(res.data.articleDataList);
+
+                    }
 
                 })
                 .catch(err => {

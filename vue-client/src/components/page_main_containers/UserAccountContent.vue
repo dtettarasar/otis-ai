@@ -60,7 +60,7 @@
 
         computed: {
             
-            ...mapState(['username', 'articleIds']),
+            ...mapState(['username', 'articleIds', 'articleDataList']),
 
             limitedArticleIds() {
                 // slice() est utilisé sans arguments pour créer une copie du tableau et éviter de modifier l'original
