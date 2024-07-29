@@ -14,9 +14,9 @@
 
         <div class="row">
 
-            <div class="col-12 col-md-6 col-lg-4 mb-3" v-for="articleId in limitedArticleIds" :key="articleId">
+            <div class="col-12 col-md-6 col-lg-4 mb-3" v-for="articleObj in limitedArticleDataList" :key="articleObj.id">
 
-                <ArticleCard :articleId="articleId" @delete-article="prepareToDelete"></ArticleCard>
+                <ArticleCard :articleId="articleObj.id" @delete-article="prepareToDelete"></ArticleCard>
 
             </div>
 
@@ -62,12 +62,21 @@
             
             ...mapState(['username', 'articleIds', 'articleDataList']),
 
+            /*
             limitedArticleIds() {
                 // slice() est utilisé sans arguments pour créer une copie du tableau et éviter de modifier l'original
                 // reverse() inverse l'ordre des articles pour récupérer les plus récents en premier
                 // slice(0, 3) pour obtenir les 3 premiers articles de ce tableau inversé, les 3 articles les plus récents
                 return this.articleIds.slice().reverse().slice(0, 3);
-            }
+            },
+            */
+
+            limitedArticleDataList() {
+                // slice() est utilisé sans arguments pour créer une copie du tableau et éviter de modifier l'original
+                // reverse() inverse l'ordre des articles pour récupérer les plus récents en premier
+                // slice(0, 3) pour obtenir les 3 premiers articles de ce tableau inversé, les 3 articles les plus récents
+                return this.articleDataList.slice().reverse().slice(0, 3);
+            },
 
         },
 
