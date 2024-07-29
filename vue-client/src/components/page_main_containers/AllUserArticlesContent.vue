@@ -8,9 +8,9 @@
 
         <div class="row">
 
-            <div class="col-12 col-md-6 col-lg-4 mb-3" v-for="articleId in reverseArticleList" :key="articleId">
+            <div class="col-12 col-md-6 col-lg-4 mb-3" v-for="articleObj in reverseArticleList" :key="articleObj.id">
 
-                <ArticleCard :articleId="articleId" @delete-article="prepareToDelete"></ArticleCard>
+                <ArticleCard :articleId="articleObj.id" @delete-article="prepareToDelete"></ArticleCard>
 
             </div>
 
@@ -50,12 +50,12 @@
 
         computed: {
 
-            ...mapState(['username', 'articleIds']),
+            ...mapState(['username', 'articleDataList']),
 
             reverseArticleList() {
                 // pour afficher les articles les plus récents en premier
-                return this.articleIds.slice().reverse();
-            }
+                return this.articleDataList.slice().reverse();
+            },
 
         },
 
