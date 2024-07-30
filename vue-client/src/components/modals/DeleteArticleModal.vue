@@ -105,7 +105,7 @@
 
         methods: {
 
-            ...mapActions(['deleteArticleIdFromStore', 'clearDeleteArticleId']),
+            ...mapActions(['deleteArticleIdFromStore', 'deleteArticleObjFromStore','clearDeleteArticleId']),
 
             async initArticleDeletion() {
 
@@ -132,6 +132,7 @@
 
                         console.log("successfully deleted article: " + response.data.articleDeletionResponse.encryptedArticleID);
                         this.deleteArticleIdFromStore(response.data.articleDeletionResponse.encryptedArticleID);
+                        this.deleteArticleObjFromStore(response.data.articleDeletionResponse.encryptedArticleID);
                         this.deletionDone = true;
 
                         /*
