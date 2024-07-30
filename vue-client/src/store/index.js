@@ -87,7 +87,13 @@ export default createStore({
 
         state.articleIds.push(articleId);
 
-      }, 
+      },
+
+      addArticleObj(state, articleObj) {
+
+        state.articleDataList.push(articleObj);
+
+      },
 
       deleteArticleIdFromStore(state, articleId) {
 
@@ -194,6 +200,12 @@ export default createStore({
       addArticleId({commit}, articleId) {
 
         commit('addArticleId', articleId);
+
+      }, 
+
+      addArticleObj({commit}, articleObj) {
+
+        commit('addArticleObj', articleObj);
 
       }, 
 

@@ -268,7 +268,7 @@
 
       methods: {
 
-        ...mapActions(['addArticleId', 'setDeleteArticleId']),
+        ...mapActions(['addArticleId', 'setDeleteArticleId', 'addArticleObj']),
 
         async saveArticle() {
 
@@ -317,6 +317,7 @@
 
                   await this.testRetrieveArticleData(response.data.articleId);
                   this.addArticleId(response.data.articleId);
+                  this.addArticleObj(this.articleObj);
                   this.isViewMode = true;
 
                 }
