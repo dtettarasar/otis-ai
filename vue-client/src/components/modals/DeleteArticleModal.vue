@@ -12,8 +12,19 @@
                 <div v-if="!deletionDone && deleteArticleId">
 
                     <div class="modal-body">
-                        <h2>{{ articleTitle }}</h2>
-                        <p><strong>Creation date: </strong>{{ creationDate }}</p>
+
+                        <div v-if="articleObj">
+
+                            <h2>{{ articleObj.title }}</h2>
+                            <p><strong>Description: </strong>{{ articleObj.description }}</p>
+                            <p><strong>Creation date: </strong>{{ this.formattedDates.creationDate }}</p>
+
+                        </div>
+
+                        <div v-else>
+                            <p><strong>Error: </strong> can't get article infos</p>
+                        </div>
+
                         <p>Keep in mind that once the article has been deleted, it cannot be recovered!</p>
                     </div>
 
@@ -97,14 +108,15 @@
 
             },
 
-            articleTitle() {
-                // Fetch article title from Vuex store or a method
-                return 'Test title'; // remplacer avec la méthode adéquate pour récupérer le titre
-            },
+            formattedDates() {
 
-            creationDate() {
-                // Fetch article creation date from Vuex store or a method
-                return '00/00/0000'; // remplacer avec la méthode adéquate pour récupérer la date
+                return {
+
+                    creationDate: this.articleObj.creationDate ? new Date(this.articleObj.creationDate).toLocaleDateString() : '',
+                    lastModifDate: this.articleObj.lastModifDate ? new Date(this.articleObj.lastModifDate).toLocaleDateString() : '',
+
+                }
+
             },
 
         },
