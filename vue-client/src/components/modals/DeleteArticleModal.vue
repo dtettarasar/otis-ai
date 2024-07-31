@@ -51,7 +51,7 @@
 
     import Cookies from 'js-cookie';
     import axios from 'axios';
-    import { mapState, mapActions } from 'vuex';
+    import { mapState, mapActions, mapGetters } from 'vuex';
 
     export default {
 
@@ -78,6 +78,12 @@
         computed: {
 
             ...mapState(['deleteArticleId']),
+
+            ...mapGetters(['getArticleById']),
+
+            articleObj() {
+                return this.getArticleById(this.deleteArticleId);
+            },
 
             /*
             deleteArticleModalId() {
@@ -112,6 +118,10 @@
                 console.log('init article deletion method');
 
                 console.log('id: ' + this.deleteArticleId);
+
+                console.log('articleObj: ');
+
+                console.log(this.articleObj);
 
                 const postObj = {
 

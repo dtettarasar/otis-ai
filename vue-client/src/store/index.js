@@ -31,8 +31,14 @@ export default createStore({
       deleteArticleId: null,
   },
   getters: {
+    
     getCookieExpTimestamp: state => state.cookieExpTimestamp,
-    getSessionCountdownTriggered: state => state.sessionCountdownTriggered
+    getSessionCountdownTriggered: state => state.sessionCountdownTriggered,
+
+    getArticleById: (state) => (articleId) => {
+      return state.articleDataList.find(article => article.id === articleId);
+    },
+
   },
   // Fait l'intermédiaire entre actions et state
   mutations: {
@@ -97,12 +103,12 @@ export default createStore({
 
       deleteArticleIdFromStore(state, articleId) {
 
-        console.log('init delete Article Id from store');
-        console.log('articleId to delete:', articleId);
+        // console.log('init delete Article Id from store');
+        // console.log('articleId to delete:', articleId);
     
         // Faire une copie profonde de l'état avant suppression
         const beforeDeletion = JSON.parse(JSON.stringify(state.articleIds));
-        console.log("articleIds array (before deletion):", beforeDeletion);
+        // console.log("articleIds array (before deletion):", beforeDeletion);
 
         const index = state.articleIds.indexOf(articleId);
         if (index > -1) {
@@ -111,29 +117,29 @@ export default createStore({
 
         // Faire une copie profonde de l'état après suppression
         const afterDeletion = JSON.parse(JSON.stringify(state.articleIds));
-        console.log("articleIds array (after deletion):", afterDeletion);
+        // console.log("articleIds array (after deletion):", afterDeletion);
 
       },
 
       deleteArticleObjFromStore(state, articleId) {
 
-        console.log('init delete Article Obj from store');
-        console.log('articleId to delete:', articleId);
+        // console.log('init delete Article Obj from store');
+        // console.log('articleId to delete:', articleId);
 
         // Faire une copie profonde de l'état avant suppression
         const beforeDeletion = JSON.parse(JSON.stringify(state.articleDataList));
-        console.log("articleDataList array (before deletion):", beforeDeletion);
+        // console.log("articleDataList array (before deletion):", beforeDeletion);
 
         const index = state.articleDataList.findIndex(article => article.id === articleId);
 
         if (index !== -1) {
 
           state.articleDataList.splice(index, 1);
-          console.log(`Article with ID: ${articleId} has been deleted from store.`);
+          // console.log(`Article with ID: ${articleId} has been deleted from store.`);
 
           // Faire une copie profonde de l'état après suppression
           const afterDeletion = JSON.parse(JSON.stringify(state.articleDataList));
-          console.log("articleDataList array (after deletion):", afterDeletion);
+          // console.log("articleDataList array (after deletion):", afterDeletion);
 
         } else {
 
@@ -245,7 +251,7 @@ export default createStore({
 
       deleteArticleObjFromStore({commit}, articleId) {
 
-        console.log('Deleting article object with ID:', articleId);
+        // console.log('Deleting article object with ID:', articleId);
         commit('deleteArticleObjFromStore', articleId);
 
       },
