@@ -30,7 +30,6 @@ describe('DeleteArticleModal.vue', () => {
         // Mock the vuex store
         actions = {
 
-            deleteArticleIdFromStore: vi.fn(),
             deleteArticleObjFromStore: vi.fn(),
             clearDeleteArticleId: vi.fn()
 
@@ -107,7 +106,6 @@ describe('DeleteArticleModal.vue', () => {
     it('handles article deletion correctly', async () => {
         // Simule la suppression de l'article
         await wrapper.find('button.btn-danger').trigger('click');
-        expect(actions.deleteArticleIdFromStore).toHaveBeenCalled();
         expect(actions.deleteArticleObjFromStore).toHaveBeenCalled();
         expect(wrapper.vm.deletionDone).toBe(true);
     });
