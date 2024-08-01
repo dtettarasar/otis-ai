@@ -123,7 +123,7 @@
 
         methods: {
 
-            ...mapActions(['deleteArticleIdFromStore', 'deleteArticleObjFromStore','clearDeleteArticleId']),
+            ...mapActions(['deleteArticleObjFromStore','clearDeleteArticleId']),
 
             async initArticleDeletion() {
 
@@ -153,16 +153,8 @@
                     if (response.data.articleDeletionResponse.deletionStatus === true) {
 
                         console.log("successfully deleted article: " + response.data.articleDeletionResponse.encryptedArticleID);
-                        this.deleteArticleIdFromStore(response.data.articleDeletionResponse.encryptedArticleID);
                         this.deleteArticleObjFromStore(response.data.articleDeletionResponse.encryptedArticleID);
                         this.deletionDone = true;
-
-                        /*
-
-                        TODO : faire le nécessaire ici pour mettre à jour le template : informer que l'article à bien été supprimé
-                        Si la modal a été invoqué depuis la page article editor, alors envoyer un événement pour l'article editor renvoie l'utilisateur vers la page all articles
-                        
-                        */
 
                         if (this.redirection) {
 
