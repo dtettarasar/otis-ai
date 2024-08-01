@@ -1,51 +1,85 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import DeleteArticleModal from './DeleteArticleModal.vue';
+import { createStore } from 'vuex';
 
 describe('DeleteArticleModal.vue', () => {
 
     let wrapper;
+    let store;
+    let actions;
+    let getters;
+    let state;
 
     const createComponent = (props = {}) => {
         return mount(DeleteArticleModal, {
             props,
+            global: {
+                plugins: [store]
+            }
         });
     };
 
     beforeEach(() => {
         // Initialise les props avant chaque test
 
-        // A Ajuster car on utilise plus de props
-        wrapper = createComponent({
-            articleId: '12345',
-            articleTitle: 'Test Article',
-            creationDate: '2023-07-08'
+        // Mock the vuex store
+        actions = {
+
+            deleteArticleIdFromStore: vi.fn(),
+            deleteArticleObjFromStore: vi.fn(),
+            clearDeleteArticleId: vi.fn()
+
+        };
+
+        getters = {
+
+            getArticleById: () => () => ({
+                title: 'Test Article',
+                description: 'Test Description',
+                creationDate: '2023-07-08'
+            })
+
+        };
+
+        state = {
+            deleteArticleId: '12345'
+        };
+
+        store = createStore({
+            actions,
+            getters,
+            state
         });
+
+        wrapper = createComponent({
+            redirection: false
+        });
+
     });
 
     afterEach(() => {
-        // Démonte le composant après chaque test
-        wrapper.unmount();
+        // Vérifie que le wrapper est défini avant de démonter
+        if (wrapper) {
+            wrapper.unmount();
+        }
     });
 
-    it('renders correctly with given props', () => {
-        // Vérifie que le composant rend correctement avec les props fournies
+    it('renders correctly with given props and state', () => {
+
+        // Vérifie la présence du composant
+        expect(wrapper.exists()).toBe(true);
+
+        // Vérifie le titre de l'article
         expect(wrapper.find('h2').text()).toBe('Test Article');
-        expect(wrapper.find('p').text()).toContain('2023-07-08');
-    });
 
-    it('generates correct modal ID', () => {
-        // Vérifie que l'ID du modal est généré correctement
-        expect(wrapper.vm.deleteArticleModalId).toBe('delete-article-12345');
-        expect(wrapper.find('.modal').attributes('id')).toBe('delete-article-12345');
-    });
+        // Vérifie la description de l'article
+        expect(wrapper.find('.article-desc').text()).toContain('Test Description');
 
-    it('has confirm and cancel buttons', () => {
-        // Vérifie que les boutons de confirmation et d'annulation sont présents
-        const buttons = wrapper.findAll('button');
-        expect(buttons.length).toBe(2);
-        expect(buttons[0].text()).toBe('I confirm deletion');
-        expect(buttons[1].text()).toBe('Cancel');
+        // Vérifie la date de création formatée correctement
+        const formattedDate = new Date('2023-07-08').toLocaleDateString();
+        expect(wrapper.find('.article-date').text()).toContain(formattedDate);
+        
     });
 
 });

@@ -16,8 +16,8 @@
                         <div v-if="articleObj">
 
                             <h2>{{ articleObj.title }}</h2>
-                            <p><strong>Description: </strong>{{ articleObj.description }}</p>
-                            <p><strong>Creation date: </strong>{{ this.formattedDates.creationDate }}</p>
+                            <p class="article-desc"><strong>Description: </strong>{{ articleObj.description }}</p>
+                            <p><strong>Creation date: </strong><span class="article-date">{{ this.formattedDates.creationDate }}</span></p>
 
                         </div>
 
