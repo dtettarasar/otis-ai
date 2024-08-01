@@ -2,6 +2,10 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import DeleteArticleModal from './DeleteArticleModal.vue';
 import { createStore } from 'vuex';
+import axios from 'axios';
+
+// Mock the axios module
+vi.mock('axios');
 
 describe('DeleteArticleModal.vue', () => {
 
@@ -52,6 +56,16 @@ describe('DeleteArticleModal.vue', () => {
             state
         });
 
+        // Mock axios.post to return a resolved promise with specific response
+        axios.post.mockResolvedValue({
+            data: {
+                articleDeletionResponse: {
+                    deletionStatus: true,
+                    encryptedArticleID: 'encrypted12345'
+                }
+            }
+        });
+
         wrapper = createComponent({
             redirection: false
         });
@@ -79,7 +93,23 @@ describe('DeleteArticleModal.vue', () => {
         // Vérifie la date de création formatée correctement
         const formattedDate = new Date('2023-07-08').toLocaleDateString();
         expect(wrapper.find('.article-date').text()).toContain(formattedDate);
-        
+
+    });
+
+    it('has confirm and cancel buttons', () => {
+        // Vérifie que les boutons de confirmation et d'annulation sont présents
+        const buttons = wrapper.findAll('button');
+        expect(buttons.length).toBe(2);
+        expect(buttons[0].text()).toBe('I confirm deletion');
+        expect(buttons[1].text()).toBe('Cancel');
+    });
+
+    it('handles article deletion correctly', async () => {
+        // Simule la suppression de l'article
+        await wrapper.find('button.btn-danger').trigger('click');
+        expect(actions.deleteArticleIdFromStore).toHaveBeenCalled();
+        expect(actions.deleteArticleObjFromStore).toHaveBeenCalled();
+        expect(wrapper.vm.deletionDone).toBe(true);
     });
 
 });
