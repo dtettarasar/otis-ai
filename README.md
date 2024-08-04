@@ -71,39 +71,39 @@ When deploying to a server that requires a traditional setup, follow these steps
 2. **Prepare the Directory Structure**:
    Ensure that the `dist` directory, `server.js`, and `package.json` are in the correct locations.
 
-   - Your project structure should look like this:
-     ```
-     /srv/data/web/vhosts/default/
-     ├── dist/
-     │   ├── index.html
-     │   ├── assets/
-     │   │   ├── fichier1.js
-     │   │   ├── fichier2.css
-     │   │   └── ...
-     ├── server.js
-     └── package.json
-     ```
+- Your project structure should look like this:
+~~~
+ /srv/data/web/vhosts/default/
+ ├── dist/
+ │   ├── index.html
+ │   ├── assets/
+ │   │   ├── fichier1.js
+ │   │   ├── fichier2.css
+ │   │   └── ...
+ ├── server.js
+ └── package.json
+~~~
 
 3. **Create or Update `server.js`**:
 
-   Ensure that `server.js` is configured to serve the static files from the `dist` directory.
+Ensure that `server.js` is configured to serve the static files from the `dist` directory.
     
-   ~~~
-   const express = require('express');
-   const path = require('path');
-   const app = express();
-   const port = process.env.PORT || 8080;
+~~~
+const express = require('express');
+const path = require('path');
+const app = express();
+const port = process.env.PORT || 8080;
 
-   app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
-   app.get('*', (req, res) => {
-       res.sendFile(path.join(__dirname, 'dist/index.html'));
-   });
+app.get('*', (req, res) => {
+   res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
 
-   app.listen(port, () => {
-       console.log(`Server is running on port ${port}`);
-   });
-   ~~~
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+~~~
 
 4. **Create or Update package.json:**
 
