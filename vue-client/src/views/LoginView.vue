@@ -1,8 +1,24 @@
-<script setup>
+<script>
+
+  import PageTitle from '@/components/PageTitle.vue'
+  import LoginForm from '@/components/forms/LoginForm.vue'
+
+  export default {
+    name: 'LoginView',
+    components: {
+      PageTitle,
+      LoginForm
+    }
+
+  };
+
 </script>
 
 <template>
   <main>
-    <h1>Login</h1>
+    <PageTitle txtValue="Login Page"></PageTitle>
+
+    <LoginForm></LoginForm>
+    
   </main>
 </template>

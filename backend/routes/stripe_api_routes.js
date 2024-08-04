@@ -12,8 +12,9 @@ const stripe = require('stripe')(process.env.STRIPE_KEY);
 const userTokenClass = require('../app/custom_modules/user_token_class');
 const userToken = new userTokenClass();
 
-const dataBaseClass = require('../app/config/db.config');
+const stripeApiObj = require('../app/custom_modules/stripe_api_obj');
 
+const dataBaseClass = require('../app/config/db.config');
 const dataBase = new dataBaseClass();
 //dataBase.initDB();
 
@@ -39,6 +40,11 @@ router.post('/webhook', async (request, response) => {
     console.log('start webhook route -------------------------------');
 
     const sig = request.headers['stripe-signature'];
+
+    console.log('sig data');
+
+    console.log(sig);
+
     let event;
 
     try {

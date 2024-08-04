@@ -1,14 +1,26 @@
-import './assets/main.css'
+import './assets/main.css';
+import { createApp } from 'vue';
 
-import { createApp } from 'vue'
 
-import App from './App.vue'
-import router from './router'
-//import store from './store'
+import App from './App.vue';
+import router from './router';
+import store from './store';
 
-const app = createApp(App)
+import backendConfig from './backend.config';
 
-app.use(router)
-//app.use(store)
+const app = createApp(App);
 
-app.mount('#app')
+let backendUrl;
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+   backendUrl = backendConfig.development;
+} else {
+   backendUrl = backendConfig.production;
+}
+
+app.config.globalProperties.$backendUrl = backendUrl;
+
+app.use(router);
+app.use(store);
+
+app.mount('#app');

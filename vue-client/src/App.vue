@@ -1,30 +1,31 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterView } from 'vue-router';
 import 'bootstrap';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import NavBar from '@/components/NavBar.vue'
+import Footer from '@/components/Footer.vue'
 </script>
 
 <template>
   <header>
     <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/all-user-article">All User Article</RouterLink>
-        <RouterLink to="/view-article">View article</RouterLink>
-        <RouterLink to="/create-article">Create Article</RouterLink>
-        <RouterLink to="/edit-article">Edit article</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
-        <RouterLink to="/register">Register</RouterLink>
-        <RouterLink to="/user-account">User Account</RouterLink>
-      </nav>
+      <NavBar></NavBar>
     </div>
   </header>
 
-  <RouterView />
+  <div id="inner-content" class="container">
+    <RouterView />
+  </div>
+
+  <Footer></Footer>
 </template>
 
 <style scoped>
+
+#inner-content {
+  margin-top: 40px;
+}
 
 nav a {
   margin: 5px;

@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PageTitle.vue > matches the snapshot 1`] = `
+"<div>
+  <h1 id="page-title">Snapshot Title</h1>
+</div>"
+`;

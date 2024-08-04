@@ -8,6 +8,8 @@ import EditArticleView from '@/views/EditArticleView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import UserAccountView from '@/views/UserAccountView.vue'
+import SuccessPaymentView from '@/views/SuccessPaymentView.vue'
+import CancelPaymentView from '@/views/CancelPaymentView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,7 +35,7 @@ const router = createRouter({
       component: ArticleView
     },
     {
-      path: '/create-article',
+      path: '/create-article/:id',
       name: 'create article',
       component: CreateArticleView
     },
@@ -41,6 +43,11 @@ const router = createRouter({
       path: '/edit-article',
       name: 'edit article',
       component: EditArticleView
+    },
+    {
+      path: '/article/:id?',
+      name: 'article',
+      component: CreateArticleView
     },
     {
       path: '/login',
@@ -56,6 +63,16 @@ const router = createRouter({
       path: '/user-account',
       name: 'user account',
       component: UserAccountView
+    },
+    {
+      path: '/success-payment',
+      name: 'success payment',
+      component : SuccessPaymentView
+    },
+    {
+      path: '/cancel-payment',
+      name: 'cancel payment',
+      component: CancelPaymentView
     }
   ]
 })
